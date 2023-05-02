@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './index.css';
+
+// Pages
 import Layout from './pages/Layout';
 import Home from './pages/Home';
 import MyBookshelf from './pages/MyBookshelf';
@@ -23,6 +27,4 @@ export default function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <App />
-);
+root.render(<App />);
