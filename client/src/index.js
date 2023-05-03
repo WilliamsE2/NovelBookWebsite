@@ -8,6 +8,7 @@ import './index.css';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
 import MyBookshelf from './pages/MyBookshelf';
+import Discover from './pages/Discover';
 import Account from './pages/Account';
 import NoPage404 from './pages/NoPage404';
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="mybookshelf" element={<MyBookshelf />} />
+          <Route path="discover" element={<Discover />} />
           <Route path="account" element={<Account />} />
           <Route path="*" element={<NoPage404 />} />
         </Route>

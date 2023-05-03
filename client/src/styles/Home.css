@@ -4,10 +4,10 @@
     margin: 0;
 }
 
-.container {
+.home-container {
     margin: auto;
     width: 100%;
-    background-color: lightblue;
+    font-size: 100%;
 }
 
 .home {
