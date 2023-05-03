@@ -2,6 +2,9 @@ import { Outlet, Link } from "react-router-dom";
 
 import '../styles/Layout.css';
 
+// Components
+import SearchBar from '../components/SearchBar.js';
+
 const Layout = () => {
     return (
         <>
@@ -34,6 +37,7 @@ const Layout = () => {
                     </ul>
 
                     <ul className="nav-menu-right">
+                        <SearchBar />
                         <li className="nav-item">
                             <Link to="/account" className="nav-link">
                                 <div className="nav-div">
