@@ -5,6 +5,27 @@
     font-family: 'Gill Sans', 'Verdana';
 }
 
+.search-div {
+    width: 100%;
+    display: inline-block;
+}
+
+.search-box {
+    width: 100%;
+    min-width: fit-content;
+    height: 1.8em;
+    font-family: 'Arial';
+    font-size: 1.0em;
+}
+
+.search-box::placeholder {
+    margin-left: 1em;
+}
+
+.search-button {
+    
+}
+
 .search-results-div {
     position: absolute;
 }
@@ -16,4 +37,8 @@
     text-align: left;
     border: black ridge 1px;
     border-radius: 10px;
+}
+
+.search-result-text {
+    font-family: 'Arial';
 }

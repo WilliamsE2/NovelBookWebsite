@@ -2,7 +2,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Gill Sans', 'Verdana';
+    font-family: 'Gill Sans', 'Verdana', 'Arial';
 }
 
 .layout-container {
@@ -19,8 +19,8 @@
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    width: 80%;
-    min-height: 70px;
+    width: 70%;
+    min-height: 60px;
     background-color: white;
 }
 
@@ -36,6 +36,7 @@
     justify-content: space-between;
     align-items: center;
     float: right;
+    width: 40%;
 }
 
 .nav-item {
@@ -113,4 +114,10 @@
 
 .gap-fix {
     gap: 0.1em;
+}
+
+.searchbar-div {
+    display: inline-block;
+    width: 70%;
+    margin-right: 0.5em;
 }

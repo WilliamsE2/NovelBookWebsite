@@ -37,7 +37,11 @@ const Layout = () => {
                     </ul>
 
                     <ul className="nav-menu-right">
-                        <SearchBar />
+
+                        <div className="searchbar-div">
+                            <SearchBar />
+                        </div>
+
                         <li className="nav-item">
                             <Link to="/account" className="nav-link">
                                 <div className="nav-div">
