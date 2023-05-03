@@ -18,13 +18,15 @@ const Layout = () => {
                         <li className="nav-item mybookshelf-nav-item">
                             <Link to="/mybookshelf" className="nav-link">
                                 <div className="nav-div">
-                                    <p className="nav-text">MyBookShelf</p>
+                                    <img className='book-icon' src={require('../assets/book-icon.png')} alt='Book Icon'/>
+                                    <p className="nav-text">My BookShelf</p>
                                 </div>
                             </Link>
                         </li>
                         <li className="nav-item">
                             <Link to="/discover" className="nav-link">
-                                <div className="nav-div">
+                                <div className="nav-div gap-fix">
+                                    <img className='compass-icon' src={require('../assets/compass-icon.png')} alt='Compass Icon'/>
                                     <p className="nav-text">Discover</p>
                                 </div>
                             </Link>
@@ -35,6 +37,7 @@ const Layout = () => {
                         <li className="nav-item">
                             <Link to="/account" className="nav-link">
                                 <div className="nav-div">
+                                    <img className='account-icon' src={require('../assets/profile-icon.png')} alt='Account Icon'/>
                                     <p className="nav-text">Account</p>
                                 </div>
                             </Link>
