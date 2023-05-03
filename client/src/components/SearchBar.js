@@ -18,30 +18,35 @@ const SearchBar = () => {
         { title: "American Psycho", author: "Bret Easton Ellis" },
         { title: "Casino Royale", author: "Ian Fleming" },
         { title: "Game of Thrones", author: "George R.R. Martin" },
-        { title: "The Hobbit", author: "J.R.R. Tolkien" }
+        { title: "The Hobbit", author: "J.R.R. Tolkien" },
+        { title: "This is an increidbly long title just trying to do a big long test ahhaahhah", author: "Author" }
     ];
 
     return (
         <div className='search-div'>
-            <input className='search-box' placeholder='Enter Search' onChange={event => setSearchInput(event.target.value)} />
+            <input className='search-box' placeholder='Search books' onChange={event => setSearchInput(event.target.value)} />
             <div className='search-button'></div>
-            <div className='search-results-div'>
+            <div className='search-results-box-outer'>
+                <div className='search-results-box-inner'>
                 {
                     countries.filter(post => {
                         if (searchInput === '') {
                             return false;
                         } else if (post.title.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
                             return post;
+                        }else if (post.author.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
+                            return post;
                         } else {
                             return false;
                         }
                     }).map((post, index) => (
                         <div className='search-result' key={index}>    
-                            <p className='search-result-text'>{post.title}</p>
-                            <p className='search-result-text'>{post.author}</p>
+                            <p className='search-result-text search-result-title'>{post.title}</p>
+                            <p className='search-result-text search-result-author'>by {post.author}</p>
                         </div>
                     ))
                 }
+                </div>
             </div>
         </div>
     );
