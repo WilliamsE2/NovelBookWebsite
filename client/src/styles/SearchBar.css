@@ -5,7 +5,11 @@
     font-family: 'Gill Sans', 'Verdana';
 }
 
-.search-bar {
+.search-results-div {
+    position: absolute;
+}
+
+.search-result {
     padding-left: 10px;
     margin: 3px;
     width: 20rem;

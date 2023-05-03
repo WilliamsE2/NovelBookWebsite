@@ -35,22 +35,25 @@ const SearchBar = () => {
 
     return (
         <div>
-            <input placeholder="Enter Search" onChange={event => setSearchInput(event.target.value)} />
-            {
-                countries.filter(post => {
-                    if (post.name.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
-                        return post;
-                    } 
-                    else {
-                        return post;
-                    }
-                }).map((post, index) => (
-                    <div className="search-bar" key={index}>
-                        <p>{post.name}</p>
-                        <p>{post.continent}</p>
-                    </div>
-                ))
-            }
+            <input className='search-box' placeholder='Enter Search' onChange={event => setSearchInput(event.target.value)} />
+            <div className='search-results-div'>
+                {
+                    countries.filter(post => {
+                        if (searchInput === '') {
+                            return false;
+                        } else if (post.name.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
+                            return post;
+                        } else {
+                            return false;
+                        }
+                    }).map((post, index) => (
+                        <div className='search-result' key={index}>    
+                            <p>{post.name}</p>
+                            <p>{post.continent}</p>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     );
 }
