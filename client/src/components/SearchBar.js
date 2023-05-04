@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from "react-router-dom";
 
 import '../styles/SearchBar.css';
 
@@ -8,7 +9,7 @@ const SearchBar = () => {
 
     const countries = [
         { title: "Basic Economics", author: "Thomas Sowell" },
-        { title: "You Can't Be Serious", author: "Kap Penn" },
+        { title: "You Can't Be Serious", author: "Kal Penn" },
         { title: "Divergent", author: "Veronica Roth" },
         { title: "1776", author: "David McCullough" },
         { title: "Atomic Habits", author: "James Clear" },
@@ -26,6 +27,7 @@ const SearchBar = () => {
         <div className='search-div'>
             <input className='search-box' placeholder='Search books' onChange={event => setSearchInput(event.target.value)} />
             <div className='search-button'></div>
+            <Link to="/book" className="search-results-link">
             <div className='search-results-box-outer'>
                 <div className='search-results-box-inner'>
                 {
@@ -34,7 +36,7 @@ const SearchBar = () => {
                             return false;
                         } else if (post.title.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
                             return post;
-                        }else if (post.author.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
+                        } else if (post.author.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
                             return post;
                         } else {
                             return false;
@@ -48,6 +50,7 @@ const SearchBar = () => {
                 }
                 </div>
             </div>
+            </Link>
         </div>
     );
 }

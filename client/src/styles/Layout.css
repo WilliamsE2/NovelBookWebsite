@@ -36,7 +36,7 @@
     justify-content: space-between;
     align-items: center;
     float: right;
-    width: 50%;
+    width: 45%;
 }
 
 .nav-item {
@@ -45,7 +45,7 @@
 
 .mybookshelf-nav-item {
     margin-left: 3em;
-    margin-right: 3em;
+    margin-right: 2em;
 }
 
 .nav-link {
