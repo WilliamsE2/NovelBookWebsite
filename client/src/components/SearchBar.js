@@ -7,6 +7,10 @@ const SearchBar = () => {
 
     const [searchInput, setSearchInput] = useState("");
 
+    const handleCollapse = () => {
+        setSearchInput('');
+    };
+
     const countries = [
         { title: "Basic Economics", author: "Thomas Sowell" },
         { title: "You Can't Be Serious", author: "Kal Penn" },
@@ -27,29 +31,29 @@ const SearchBar = () => {
         <div className='search-div'>
             <input className='search-box' placeholder='Search books' onChange={event => setSearchInput(event.target.value)} />
             <div className='search-button'></div>
-            <Link to="/book" className="search-results-link">
-            <div className='search-results-box-outer'>
-                <div className='search-results-box-inner'>
-                {
-                    countries.filter(post => {
-                        if (searchInput === '') {
-                            return false;
-                        } else if (post.title.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
-                            return post;
-                        } else if (post.author.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
-                            return post;
-                        } else {
-                            return false;
-                        }
-                    }).map((post, index) => (
-                        <div className='search-result' key={index}>    
-                            <p className='search-result-text search-result-title'>{post.title}</p>
-                            <p className='search-result-text search-result-author'>by {post.author}</p>
-                        </div>
-                    ))
-                }
+            <Link to="/book" onClick={handleCollapse} className="search-results-link">
+                <div className='search-results-box-outer'>
+                    <div className='search-results-box-inner'>
+                    {
+                        countries.filter(post => {
+                            if (searchInput === '') {
+                                return false;
+                            } else if (post.title.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
+                                return post;
+                            } else if (post.author.toLocaleLowerCase().includes(searchInput.toLowerCase())) {
+                                return post;
+                            } else {
+                                return false;
+                            }
+                        }).map((post, index) => (
+                            <div className='search-result' key={index}>    
+                                <p className='search-result-text search-result-title'>{post.title}</p>
+                                <p className='search-result-text search-result-author'>by {post.author}</p>
+                            </div>
+                        ))
+                    }
+                    </div>
                 </div>
-            </div>
             </Link>
         </div>
     );
