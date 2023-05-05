@@ -17,3 +17,6 @@ node index.js
 cd client
 npm start
 ```
+```bash
+npx kill-port 3000
+```

@@ -121,3 +121,10 @@
     width: 70%;
     margin-right: 0.5em;
 }
+
+.current-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

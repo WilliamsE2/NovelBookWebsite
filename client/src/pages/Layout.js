@@ -54,7 +54,9 @@ const Layout = () => {
                 </nav>
             </div>
 
-            <Outlet />
+            <div className="current-page">
+                <Outlet />
+            </div>
 
             <div>
                 <p>Copyright @EvanWilliams</p>
