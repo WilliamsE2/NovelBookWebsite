@@ -94,6 +94,14 @@
     background-color: #ffedcc;
 }
 
+.book-list-result:has(.checkmark-image) {
+    background-color: #ffedcc;
+}
+
+.book-list-result:has(.checkmark-image):hover {
+    background-color: #ffd280;
+}
+
 .book-list-result-text {
     padding-left: 1em;
     margin-right: 0.5em;
@@ -109,6 +117,11 @@
 }
 
 .plus-image {
+    width: 1.1em;
+    float: right;
+}
+
+.checkmark-image {
     width: 1.1em;
     float: right;
 }

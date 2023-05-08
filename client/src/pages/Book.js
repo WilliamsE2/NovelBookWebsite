@@ -8,6 +8,7 @@ import BookSelector from '../components/BookSelector';
 const Book = () => {
 
     const [openList, changeOpenList] = useState(false);
+    const [inList, changeInList] = useState(false);
 
     const bookRecs = [
         {
@@ -26,17 +27,20 @@ const Book = () => {
             'title': 'Harry Potter and the Deathly Hallows',
             'author': 'J.K. Rowling'
         }
-    ]
+    ] 
 
-    const lists = [
+    let lists = [
         {
-            'title': 'My Reading List'
+            'title': 'My Reading List',
+            'added': inList
         },
         {
-            'title': 'Read'
+            'title': 'Read',
+            'added': inList
         },
         {
-            'title': 'Favorites'
+            'title': 'Favorites',
+            'added': inList
         },
         {
             'title': 'Create a list +'
@@ -63,7 +67,9 @@ const Book = () => {
                             }).map((list, index) => (
                                 <div className='book-list-result' key={index}>
                                     <p className='book-list-result-text'>{list.title}</p>
-                                    <img className='plus-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                    {
+                                        list.added ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                    }
                                 </div>
                             ))
                         }
