@@ -43,7 +43,8 @@ const Book = () => {
             'added': inList
         },
         {
-            'title': 'Create a list +'
+            'title': 'Dummy',
+            'added': inList
         }
     ]
 
@@ -57,22 +58,30 @@ const Book = () => {
                     </div>
                     <div className='book-list-results-box-outer'>
                         <div className='book-list-results-box-inner'>
-                        {
-                            lists.filter(list => {
-                                if (openList === false) {
-                                    return false;
-                                } else {
-                                    return list;
-                                }
-                            }).map((list, index) => (
-                                <div className='book-list-result' key={index}>
-                                    <p className='book-list-result-text'>{list.title}</p>
-                                    {
-                                        list.added ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                            {
+                                lists.filter(list => {
+                                    if (openList === false) {
+                                        return false;
+                                    } else {
+                                        return list;
                                     }
-                                </div>
-                            ))
-                        }
+                                }).map((list, index) => (
+                                    <div className='book-list-result' key={index}>
+                                        <p className='book-list-result-text'>{list.title}</p>
+                                        {
+                                            list.added ? <img className='plus-and-checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-and-checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                        }
+                                    </div>
+                                ))
+                            }
+                            {
+                                openList ?
+                                    <div className='book-list-result'>
+                                        <p className='book-list-result-text'>Create a New List</p>
+                                        <img className='plus-and-checkmark-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                    </div>
+                                : <div></div>
+                            }
                         </div>
                 </div>
                 </div>

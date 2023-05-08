@@ -116,14 +116,10 @@
     overflow: visible;
 }
 
-.plus-image {
-    width: 1.1em;
+.plus-and-checkmark-image {
     float: right;
-}
-
-.checkmark-image {
     width: 1.1em;
-    float: right;
+    cursor: pointer;
 }
 
 .amazon-button {
