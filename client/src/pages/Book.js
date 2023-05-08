@@ -29,10 +29,19 @@ const Book = () => {
         <div className='book-container'>
             <div className='column-left'>
                 <img className='book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
-                <div className='book-button'>
-                    <p>Add to Reading List</p>
+                <div className='book-add-list'>
+                    <div className='test-div-1'>
+                        <div className='book-button'>
+                            <p>Add to Reading List</p>
+                        </div>
+                    </div>
+                    <div className='test-div-2'>
+                        <div className='down-arrow-button'>
+                            <img className='down-arrow-image' src={require('../assets/down-arrow.png')} alt='Down Arrow'/>
+                        </div>
+                    </div>
                 </div>
-                <a className='book-button' target='_blank' rel="noopener noreferrer" href='https://www.amazon.com/Harry-Potter-Deathly-Hallows-Book/dp/0545139708'>
+                <a className='book-button amazon-button' target='_blank' rel="noopener noreferrer" href='https://www.amazon.com/Harry-Potter-Deathly-Hallows-Book/dp/0545139708'>
                     <img className='amazon-image' src={require('../assets/amazon-logo.png')} alt='Amazon Logo'/>
                 </a>
                 <div className='book-review-stars'>

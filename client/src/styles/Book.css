@@ -24,13 +24,20 @@
     width: 15em;
 }
 
+.book-add-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
 .book-button {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 0.5em;
     width: 17em;
     height: 2.3em;
     font-size: 1.2em;
@@ -41,6 +48,35 @@
 .book-button:hover {
     transition: 0.2s;
     background-color: #ffedcc;
+}
+
+.test-div-1 {
+    display: absolute;
+    background-color: lightblue;
+}
+
+.test-div-2 {
+    display: absolute;
+    left: 0px;
+    background-color: lightgreen;
+}
+
+.down-arrow-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1em;
+    width: 2.7em;
+    height: 2.7em;
+    border: 2px orange solid;
+}
+
+.down-arrow-image {
+    width: 2.3em;
+}
+
+.amazon-button {
+    margin-top: 0.5em;
 }
 
 .amazon-image {
@@ -110,5 +146,5 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 2em;
+    gap: 1.5em;
 }
