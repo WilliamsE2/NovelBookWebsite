@@ -59,7 +59,7 @@
     border-radius: 2px;
 }
 
-.search-results-box-outer-inner {
+.search-results-box-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -50,29 +50,67 @@
     background-color: #ffedcc;
 }
 
-.test-div-1 {
-    display: absolute;
-    background-color: lightblue;
+.book-button-text {
+    font-size: 1.1em;
 }
 
-.test-div-2 {
-    display: absolute;
-    left: 0px;
-    background-color: lightgreen;
+.book-list-results-box-outer {
+    position: absolute;
+    margin-top: 16em;
+    width: 21em;
+    max-height: 32em;
+    overflow: scroll;
 }
 
-.down-arrow-button {
+.book-list-results-box-outer:has(.book-list-result) {
+    border: 2px orange solid;
+    border-radius: 2px;
+}
+
+.book-list-results-box-inner {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 1em;
-    width: 2.7em;
-    height: 2.7em;
-    border: 2px orange solid;
+    width: 100%;
 }
 
-.down-arrow-image {
-    width: 2.3em;
+.book-list-result {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    min-width: fit-content;
+    width: 97.1%;
+    height: 3em;
+    font-size: 1em;
+    color: black;
+    background-color: white;
+}
+
+.book-list-result:hover {
+    transition: 0.2s;
+    background-color: #ffedcc;
+}
+
+.book-list-result-text {
+    padding-left: 1em;
+    margin-right: 0.5em;
+    width: 16em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: 'Arial';
+}
+
+.book-list-result-text:hover {
+    overflow: visible;
+}
+
+.plus-image {
+    width: 1.1em;
+    float: right;
 }
 
 .amazon-button {

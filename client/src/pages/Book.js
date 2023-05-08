@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 
 import '../styles/Book.css';
 
@@ -5,6 +6,8 @@ import '../styles/Book.css';
 import BookSelector from '../components/BookSelector';
 
 const Book = () => {
+
+    const [openList, changeOpenList] = useState(false);
 
     const bookRecs = [
         {
@@ -25,21 +28,47 @@ const Book = () => {
         }
     ]
 
+    const lists = [
+        {
+            'title': 'My Reading List'
+        },
+        {
+            'title': 'Read'
+        },
+        {
+            'title': 'Favorites'
+        },
+        {
+            'title': 'Create a list +'
+        }
+    ]
+
     return (
         <div className='book-container'>
             <div className='column-left'>
                 <img className='book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
                 <div className='book-add-list'>
-                    <div className='test-div-1'>
-                        <div className='book-button'>
-                            <p>Add to Reading List</p>
-                        </div>
+                    <div className='book-button' onClick={() => changeOpenList(!openList)}>
+                        <p className='book-button-text'>Add to List</p>
                     </div>
-                    <div className='test-div-2'>
-                        <div className='down-arrow-button'>
-                            <img className='down-arrow-image' src={require('../assets/down-arrow.png')} alt='Down Arrow'/>
+                    <div className='book-list-results-box-outer'>
+                        <div className='book-list-results-box-inner'>
+                        {
+                            lists.filter(list => {
+                                if (openList === false) {
+                                    return false;
+                                } else {
+                                    return list;
+                                }
+                            }).map((list, index) => (
+                                <div className='book-list-result' key={index}>
+                                    <p className='book-list-result-text'>{list.title}</p>
+                                    <img className='plus-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                </div>
+                            ))
+                        }
                         </div>
-                    </div>
+                </div>
                 </div>
                 <a className='book-button amazon-button' target='_blank' rel="noopener noreferrer" href='https://www.amazon.com/Harry-Potter-Deathly-Hallows-Book/dp/0545139708'>
                     <img className='amazon-image' src={require('../assets/amazon-logo.png')} alt='Amazon Logo'/>
