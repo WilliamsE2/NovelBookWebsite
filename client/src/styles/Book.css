@@ -116,7 +116,68 @@
     overflow: visible;
 }
 
-.plus-and-checkmark-image {
+.book-create-new-list {
+    background-color: #ffedcc;
+}
+
+.book-create-new-list-text {
+    color: #cc8400;
+}
+
+.book-create-new-list-edit {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    min-width: fit-content;
+    width: 97.1%;
+    height: 3em;
+    font-size: 1em;
+    color: black;
+    background-color: #ffd280;
+}
+
+.book-create-new-list-input {
+    padding: 1px;
+    outline: none;
+    margin-left: 0.8em;
+    margin-right: 2.6em;
+    width: 12em;
+    text-indent: 0.4em;
+    font-size: 1em;
+    font-family: 'Arial';
+    border: 1px orange solid;
+    border-radius: 2px;
+    color: black;
+}
+
+.book-create-new-list-input::placeholder {
+    opacity: 0.7;
+}
+
+.book-create-new-list-input:focus {
+    padding: 1px;
+    outline: none;
+    border: 1px orange solid;
+    border-radius: 2px;
+    box-shadow: 0 0 2px  rgba(0,0,0,.5);
+}
+
+.plus-image {
+    float: right;
+    width: 1.1em;
+    cursor: pointer;
+}
+
+.plus-image-rotate {
+    transform: rotate(45deg);
+    float: right;
+    margin-right: 0.5em;
+    width: 1.3em;
+}
+
+.checkmark-image {
     float: right;
     width: 1.1em;
     cursor: pointer;

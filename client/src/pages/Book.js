@@ -9,6 +9,8 @@ const Book = () => {
 
     const [openList, changeOpenList] = useState(false);
     const [inList, changeInList] = useState(false);
+    const [createList, changeCreateList] = useState(false);
+    const [newListInput, setNewListInput] = useState("");
 
     const bookRecs = [
         {
@@ -69,18 +71,25 @@ const Book = () => {
                                     <div className='book-list-result' key={index}>
                                         <p className='book-list-result-text'>{list.title}</p>
                                         {
-                                            list.added ? <img className='plus-and-checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-and-checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                            list.added ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
                                         }
                                     </div>
                                 ))
                             }
                             {
                                 openList ?
-                                    <div className='book-list-result'>
-                                        <p className='book-list-result-text'>Create a New List</p>
-                                        <img className='plus-and-checkmark-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
-                                    </div>
-                                : <div></div>
+                                        createList ?
+                                            <div className='book-create-new-list-edit'>
+                                                <input className='book-create-new-list-text book-create-new-list-input' placeholder='List Name' onChange={event => setNewListInput(event.target.value)} />
+                                                <img className='plus-image plus-image-rotate' onClick={() => changeCreateList(!createList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                                <img className='checkmark-image' onClick={() => changeCreateList(!createList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
+                                            </div>
+                                        :
+                                            <div className='book-list-result book-create-new-list'>
+                                                <p className='book-list-result-text book-create-new-list-text'>Create a New List</p>
+                                                <img className='plus-image' onClick={() => changeCreateList(!createList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                            </div>
+                                : ''
                             }
                         </div>
                 </div>
