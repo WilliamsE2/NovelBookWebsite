@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Rating } from '@mui/material';
 
 import '../styles/Book.css';
 
@@ -10,7 +11,8 @@ const Book = () => {
     const [openList, changeOpenList] = useState(false);
     const [inList, changeInList] = useState(false);
     const [createList, changeCreateList] = useState(false);
-    const [newListInput, setNewListInput] = useState("");
+    const [newListInput, changeNewListInput] = useState("");
+    const [userRating, changeUserRating] = useState(null);
 
     const bookRecs = [
         {
@@ -80,7 +82,7 @@ const Book = () => {
                                 openList ?
                                         createList ?
                                             <div className='book-create-new-list-edit'>
-                                                <input className='book-create-new-list-text book-create-new-list-input' placeholder='List Name' onChange={event => setNewListInput(event.target.value)} />
+                                                <input className='book-create-new-list-text book-create-new-list-input' placeholder='List Name' onChange={event => changeNewListInput(event.target.value)} />
                                                 <img className='plus-image plus-image-rotate' onClick={() => changeCreateList(!createList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
                                                 <img className='checkmark-image' onClick={() => changeCreateList(!createList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
                                             </div>
@@ -97,8 +99,17 @@ const Book = () => {
                 <a className='book-button amazon-button' target='_blank' rel="noopener noreferrer" href='https://www.amazon.com/Harry-Potter-Deathly-Hallows-Book/dp/0545139708'>
                     <img className='amazon-image' src={require('../assets/amazon-logo.png')} alt='Amazon Logo'/>
                 </a>
-                <div className='book-review-stars'>
-                    <p>Write a Review</p>
+                <div className='book-user-rating-button'>
+                    <Rating
+                        className='book-user-rating-stars'
+                        name="simple-controlled"
+                        value={userRating}
+                        size='large'
+                        onChange={(event, newRating) => {
+                            changeUserRating(newRating);
+                        }}
+                    />
+                    <p className='book-user-rating-write-review-button'>Write a Review</p>
                 </div>
             </div>
             <div className='column-right'>

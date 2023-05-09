@@ -20,3 +20,9 @@ npm start
 ```bash
 npx kill-port 3000
 ```
+
+# Installation
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
