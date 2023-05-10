@@ -283,3 +283,74 @@
     align-items: flex-start;
     gap: 1.5em;
 }
+
+.book-review {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 2em;
+}
+
+.book-review-user {
+
+}
+
+.book-review-user-title {
+
+}
+
+.book-review-community {
+
+}
+
+.book-review-community-title {
+
+}
+
+.book-review-community-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.book-review-community-rating-stars {
+    transform: scale(1.5);
+    transform-origin: center;
+}
+
+.book-review-community-rating-text {
+
+}
+
+.book-review-community-rating-amount-text {
+
+}
+
+.book-review-community-review-amount-text {
+
+}
+
+.book-review-rating-differences {
+
+}
+
+.book-review-rating-differences-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.book-review-rating-differences-stars-text {
+    width: 4em;
+}
+
+.book-review-rating-differences-bar {
+    height: 2em;
+    width: 100%;
+}
+
+.book-review-rating-differences-amount-text {
+    
+}

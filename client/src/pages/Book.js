@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Rating } from '@mui/material';
+import { Rating, Pagination, LinearProgress } from '@mui/material';
 
 import '../styles/Book.css';
 
@@ -11,6 +11,7 @@ const Book = () => {
     const [openList, changeOpenList] = useState(false);
     const [inList, changeInList] = useState(false);
     const [createList, changeCreateList] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [newListInput, changeNewListInput] = useState("");
     const [userRating, changeUserRating] = useState(null);
 
@@ -49,6 +50,18 @@ const Book = () => {
         {
             'title': 'Dummy',
             'added': inList
+        }
+    ]
+
+    let reviews = [
+        {
+            'id': 1,
+            'name': 'Evan Williams',
+            'rating': 4,
+            'description': 'A book worth reading once a year.',
+            'likes': 7,
+            'creation_date': 'February 13, 2023',
+            'update_date': 'March, 6, 2023'
         }
     ]
 
@@ -104,6 +117,7 @@ const Book = () => {
                         className='book-user-rating-stars'
                         name="simple-controlled"
                         value={userRating}
+                        defaultValue={0}
                         size='large'
                         onChange={(event, newRating) => {
                             changeUserRating(newRating);
@@ -137,9 +151,55 @@ const Book = () => {
                         </div>
                     </div>
                     <div className='book-review'>
-                        <p>Overall rating</p>
-                        <p>Your review at top if exists</p>
-                        <p>Review component</p>
+                        <div className='book-review-user'>
+                            <p className='book-review-user-title'>My Review</p>
+
+                        </div>
+                        <div className='book-review-community'>
+                            <p className='book-review-community-title'>Community Rating & Reviews</p>
+                            <div className='book-review-community-rating'>
+                                <Rating
+                                    className='book-review-community-rating-stars'
+                                    name="read-only"
+                                    value={3.64}
+                                    defaultValue={2.5}
+                                    precision={0.1}
+                                    size='large'
+                                    readOnly
+                                />
+                                <p className='book-review-community-rating-text'>3.64</p>
+                                <p className='book-review-community-rating-amount-text'>24 ratings</p>
+                                <p className='book-review-community-review-amount-text'>11 reviews</p>
+                            </div>
+                            <div className='book-review-rating-differences'>
+                                <div className='book-review-rating-differences-row'>
+                                    <p className='book-review-rating-differences-stars-text'>5 stars</p>
+                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={16} />
+                                    <p className='book-review-rating-differences-amount-text'>4</p>
+                                </div>
+                                <div className='book-review-rating-differences-row'>
+                                    <p className='book-review-rating-differences-stars-text'>4 stars</p>
+                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={38} />
+                                    <p className='book-review-rating-differences-amount-text'>9</p>
+                                </div>
+                                <div className='book-review-rating-differences-row'>
+                                    <p className='book-review-rating-differences-stars-text'>3 stars</p>
+                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={25} />
+                                    <p className='book-review-rating-differences-amount-text'>6</p>
+                                </div>
+                                <div className='book-review-rating-differences-row'>
+                                    <p className='book-review-rating-differences-stars-text'>2 stars</p>
+                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={13} />
+                                    <p className='book-review-rating-differences-amount-text'>3</p>
+                                </div>
+                                <div className='book-review-rating-differences-row'>
+                                    <p className='book-review-rating-differences-stars-text'>1 star</p>
+                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={8} />
+                                    <p className='book-review-rating-differences-amount-text'>2</p>
+                                </div>
+                            </div>
+                            <p>List of review component</p>
+                        </div>
                     </div>
                 </div>
             </div>
