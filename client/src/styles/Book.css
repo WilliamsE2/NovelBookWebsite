@@ -292,11 +292,12 @@
 }
 
 .book-review-user {
-
+    padding-top: 1em;
+    border-top: 2px #ffedcc solid;
 }
 
 .book-review-user-title {
-
+    font-size: 1.4em;
 }
 
 .book-review-community {
@@ -304,7 +305,7 @@
 }
 
 .book-review-community-title {
-
+    font-size: 1.4em;
 }
 
 .book-review-community-rating {
@@ -312,45 +313,64 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-top: 1.5em;
 }
 
 .book-review-community-rating-stars {
     transform: scale(1.5);
     transform-origin: center;
+    margin-left: 1em;
 }
 
 .book-review-community-rating-text {
-
+    margin-left: 1.8em;
+    font-size: 1.8em;
 }
 
 .book-review-community-rating-amount-text {
-
+    padding-top: 0.2em;
+    margin-left: 1.5em;
+    color: gray;
 }
 
 .book-review-community-review-amount-text {
-
+    padding-top: 0.2em;
+    margin-left: 0.5em;
+    color: gray;
 }
 
 .book-review-rating-differences {
-
+    margin-top: 1.2em;
 }
 
 .book-review-rating-differences-row {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
 }
 
 .book-review-rating-differences-stars-text {
+    padding-bottom: 0.2em;
     width: 4em;
 }
 
+.book-review-rating-differences-stars-text:hover {
+    text-decoration: underline;
+    text-decoration-color: orange;
+}
+
 .book-review-rating-differences-bar {
-    height: 2em;
+    padding: 0.3em;
     width: 100%;
 }
 
+.book-review-rating-differences-bar:hover {
+    box-shadow: 0 0 10px gray;
+}
+
 .book-review-rating-differences-amount-text {
-    
+    text-align: center;
+    width: 2em;
 }
