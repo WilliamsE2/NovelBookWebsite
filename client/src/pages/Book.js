@@ -4,8 +4,8 @@ import { Rating, Pagination, LinearProgress } from '@mui/material';
 import '../styles/Book.css';
 
 // Components
-import BookSelector from '../components/BookSelector';
-import { green } from '@mui/material/colors';
+import BookSelector from '../components/BookSelector.js';
+import Review from '../components/Review.js';
 
 const Book = () => {
 
@@ -199,7 +199,9 @@ const Book = () => {
                                     <p className='book-review-rating-differences-amount-text'>2</p>
                                 </div>
                             </div>
-                            <p>List of review component</p>
+                            <div className='book-review-list'>
+                                <Review />
+                            </div>
                         </div>
                     </div>
                 </div>

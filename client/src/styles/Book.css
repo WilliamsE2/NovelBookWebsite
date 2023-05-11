@@ -11,7 +11,7 @@
 
 .column-left {
     display: flex;
-    flex: 1;
+    flex: 2;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -218,7 +218,7 @@
 }
 
 .column-right {
-    flex: 2;
+    flex: 1;
     padding-top: 1em;
     height: fit-content;
     background-color: white;
@@ -363,7 +363,7 @@
 
 .book-review-rating-differences-bar {
     padding: 0.3em;
-    width: 100%;
+    width: 90%;
 }
 
 .book-review-rating-differences-bar:hover {
@@ -373,4 +373,8 @@
 .book-review-rating-differences-amount-text {
     text-align: center;
     width: 2em;
+}
+
+.book-review-list {
+    margin-top: 2em;
 }

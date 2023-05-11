@@ -1,0 +1,69 @@
+
+.review {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 1em;
+    border-top: 1px lightgray solid;
+}
+
+.review-left {
+    display: inline-block;
+    flex: 1;
+    height: fit-content;
+}
+
+.review-user-image {
+    position: relative;
+    width: 4em;
+    border-radius: 50%;
+}
+
+.review-username-text {
+    width: 10em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.review-username-text:hover {
+    overflow: visible;
+}
+
+.review-right {
+    display: inline-block;
+    flex: 4;
+    height: fit-content;
+}
+
+.review-right-top {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+}
+
+.review-star-rating {
+
+}
+
+.review-date-text {
+    float: right;
+    margin-top: 0.2em;
+    font-family: 'Arial';
+    color: gray;
+}
+
+.review-content {
+    margin-top: 0.8em;
+}
+
+.review-content-description {
+    font-family: 'Arial';
+}
+
+.review-likes {
+    
+}
