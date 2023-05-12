@@ -17,6 +17,14 @@ const Book = () => {
     // eslint-disable-next-line no-unused-vars
     const [newListInput, changeNewListInput] = useState("");
     const [userRating, changeUserRating] = useState(null);
+    const [starFilter, changeStarFilter] = useState(0);
+    const [starFilterColor, changeStarFilterColor] = useState([
+        {rating: 1, color: 'blue'},
+        {rating: 2, color: 'blue'},
+        {rating: 3, color: 'blue'},
+        {rating: 4, color: 'blue'},
+        {rating: 5, color: 'blue'},
+    ]);
 
     const bookRecs = [
         {
@@ -35,7 +43,7 @@ const Book = () => {
             'title': 'Harry Potter and the Deathly Hallows',
             'author': 'J.K. Rowling'
         }
-    ] 
+    ];
 
     let lists = [
         {
@@ -54,7 +62,37 @@ const Book = () => {
             'title': 'Dummy',
             'added': inList
         }
-    ]
+    ];
+
+    const handleStarFilter = (rating) => {
+        if (rating === starFilter) {
+            changeStarFilter(0);
+        } else {
+            changeStarFilter(rating);
+        }
+
+        const nextStarFilterColors = starFilterColor.map(filter => {
+            if (filter.rating === rating && filter.color.includes('blue')) {
+                return {
+                    ...filter,
+                    color: 'orange'
+                };
+            } else if (filter.rating === rating && filter.color.includes('orange')) {
+                return {
+                    ...filter,
+                    color: 'blue'
+                };
+            } else if (filter.rating !== rating && filter.color.includes('orange')) {
+                return {
+                    ...filter,
+                    color: 'blue'
+                };
+            } else {
+                return filter;
+            }
+        });
+        changeStarFilterColor(nextStarFilterColors);
+    };
 
     return (
         <div className='book-container'>
@@ -164,34 +202,40 @@ const Book = () => {
                             </div>
                             <div className='book-review-rating-differences'>
                                 <div className='book-review-rating-differences-row'>
-                                    <p className='book-review-rating-differences-stars-text'>5 stars</p>
-                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={16} />
+                                    <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(5)}>5 stars</p>
+                                    <div style={{color: starFilterColor[4].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(5)} variant="determinate" value={16} /></div>
                                     <p className='book-review-rating-differences-amount-text'>4</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
-                                    <p className='book-review-rating-differences-stars-text'>4 stars</p>
-                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={38} />
+                                    <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(4)}>4 stars</p>
+                                    <div style={{color: starFilterColor[3].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(4)} variant="determinate" value={16} /></div>
                                     <p className='book-review-rating-differences-amount-text'>9</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
-                                    <p className='book-review-rating-differences-stars-text'>3 stars</p>
-                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={25} />
+                                    <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(3)}>3 stars</p>
+                                    <div style={{color: starFilterColor[2].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(3)} variant="determinate" value={16} /></div>
                                     <p className='book-review-rating-differences-amount-text'>6</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
-                                    <p className='book-review-rating-differences-stars-text'>2 stars</p>
-                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={13} />
+                                    <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(2)}>2 stars</p>
+                                    <div style={{color: starFilterColor[1].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(2)} variant="determinate" value={16} /></div>
                                     <p className='book-review-rating-differences-amount-text'>3</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
-                                    <p className='book-review-rating-differences-stars-text'>1 star</p>
-                                    <LinearProgress className='book-review-rating-differences-bar' variant="determinate" value={8} />
+                                    <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(1)}>1 star</p>
+                                    <div style={{color: starFilterColor[0].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(1)} variant="determinate" value={16} /></div>
                                     <p className='book-review-rating-differences-amount-text'>2</p>
                                 </div>
                             </div>
                             <div className='book-review-list'>
                                 {
-                                    reviewData.map((review, index) => (
+                                    reviewData.filter(review => {
+                                        if (review.rating === starFilter || starFilter === 0) {
+                                            return review;
+                                        } else {
+                                            return false;
+                                        }
+                                    }).map((review, index) => (
                                         <Review name={review.name} rating={review.rating} content={review.content} date={review.update_date} />
                                     ))
                                 }

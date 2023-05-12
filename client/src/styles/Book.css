@@ -363,7 +363,7 @@
 
 .book-review-rating-differences-bar {
     padding: 0.3em;
-    width: 90%;
+    width: 100%;
 }
 
 .book-review-rating-differences-bar:hover {
@@ -372,7 +372,7 @@
 
 .book-review-rating-differences-amount-text {
     text-align: center;
-    width: 2em;
+    width: 4em;
 }
 
 .book-review-list {
