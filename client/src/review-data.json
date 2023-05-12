@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Evan Williams",
+        "rating": 4,
+        "content": "It's hard for me to believe that I finished the Harry Potter series... I wish this series would go on forever! I don't know how I've gone through my life without these books. I regret not reading it when I was younger, but I am so happy that I finally did, better late than never, right? The world built in these books is so real and tangible, it is truly a masterpiece. The characters are engaging and brilliant, and I love how the plot is so interwoven and twisted within itself, especially in this last book.",
+        "creation_date": "February 13, 2023",
+        "update_date": "March, 6, 2023"
+    },
+    {
+        "id": 2,
+        "name": "Tyler Quinn",
+        "rating": 2,
+        "content": "Most seventeen-year olds don’t view the possibility of an early death as being, well, possible. But then again, most seventeen-year olds haven’t come face-to-face with death almost half a dozen times before their first kiss either. In Harry Potter and the Deathly Hallows, the seventh and final installment of the ridiculously popular Harry Potter series, J.K. Rowling brilliantly ties up every loose end that she has planted over the last ten years since the very first outing of the series was published in 1997. Truly, Rowling has learned exactly what her fans want and subsequently delivers a book that answers every Potterhead’s questions — and then some.",
+        "creation_date": "February 13, 2023",
+        "update_date": "August 14, 2021"
+    },
+    {
+        "id": 3,
+        "name": "Josh Gieske",
+        "rating": 1,
+        "content": "The six-year build-up is over. The final adventure, towards which we've been sailing for - through six amazing Hogwarts years - is here at last. And yet again, Rowling surpasses her own standards to bring us the most adventurous book of the entire series, to conclude everything is a most dramatic way. Twist after twist after twist is going to keep the reader immersed more than ever. Be warned: once started, you won't have a moment's rest till your finish this one!",
+        "creation_date": "February 13, 2023",
+        "update_date": "July 22, 2021"
+    },
+    {
+        "id": 4,
+        "name": "Jacob Plutz",
+        "rating": 4,
+        "content": "i know im not original when i say the harry potter books are what made me fall in love with reading. but they gave me a childhood far more magical and imaginative than i could have ever asked for. they opened my eyes to a world beyond the one in which i lived. the series taught me the value of empathy, that courage comes in many different forms, the importance of having and being a true friend, that love is the greatest power above all, and most importantly, it taught me to believe in magic. i would not be who i am today without these books and i love that stories have the power to do that, to change lives for the better.",
+        "creation_date": "February 13, 2023",
+        "update_date": "December 2, 2019"
+    },
+    {
+        "id": 5,
+        "name": "Animesh Shrouti",
+        "rating": 5,
+        "content": "I’m thrilled to say that I managed to follow through with at least one book related commitment this year, and that was to read the entire Harry Potter series for the first time. It’s tough to pick a favorite from the group, but the Deathly Hallows is a worthy contender for that coveted first spot. As the dark tension that began growing at the finish of the Goblet of Fire has come full circle, I felt this was the perfect finale to a (rightfully) highly acclaimed series. I’m so happy to have finally experienced first hand this beloved story arc that so many readers hold dear to their heart.",
+        "creation_date": "February 13, 2023",
+        "update_date": "April 18, 2017"
+    }
+]

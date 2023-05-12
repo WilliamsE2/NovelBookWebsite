@@ -58,8 +58,8 @@ const Layout = () => {
                 <Outlet />
             </div>
 
-            <div>
-                <p>Copyright @EvanWilliams</p>
+            <div className="copyright">
+                <p className="copyright-text">Copyright @EvanWilliams</p>
             </div>
         </>
     );

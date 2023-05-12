@@ -7,6 +7,8 @@ import '../styles/Book.css';
 import BookSelector from '../components/BookSelector.js';
 import Review from '../components/Review.js';
 
+import reviewData from '../review-data.json';
+
 const Book = () => {
 
     const [openList, changeOpenList] = useState(false);
@@ -51,18 +53,6 @@ const Book = () => {
         {
             'title': 'Dummy',
             'added': inList
-        }
-    ]
-
-    let reviews = [
-        {
-            'id': 1,
-            'name': 'Evan Williams',
-            'rating': 4,
-            'description': 'A book worth reading once a year.',
-            'likes': 7,
-            'creation_date': 'February 13, 2023',
-            'update_date': 'March, 6, 2023'
         }
     ]
 
@@ -200,7 +190,11 @@ const Book = () => {
                                 </div>
                             </div>
                             <div className='book-review-list'>
-                                <Review />
+                                {
+                                    reviewData.map((review, index) => (
+                                        <Review name={review.name} rating={review.rating} content={review.content} date={review.update_date} />
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>

@@ -128,3 +128,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.copyright {
+    margin-top: 10em;
+}
+
+.copyright-text {
+    padding-bottom: 1em;
+    padding-left: 1em;
+    font-family: 'Arial';
+}
