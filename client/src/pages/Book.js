@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { Rating, Pagination, LinearProgress } from '@mui/material';
 
 import '../styles/Book.css';
@@ -10,6 +10,8 @@ import Review from '../components/Review.js';
 import reviewData from '../review-data.json';
 
 const Book = () => {
+
+    const scrollToMyReview = useRef(null);
 
     const [openList, changeOpenList] = useState(false);
     const [inList, changeInList] = useState(false);
@@ -63,6 +65,17 @@ const Book = () => {
             'added': inList
         }
     ];
+
+    let userReview = {
+        'name': 'Mia Joy',
+        'rating': 0,
+        'content': '',
+        'date': 'May 11, 2023'
+    }
+
+    const handleScrollToReview = () => {
+        scrollToMyReview.current?.scrollIntoView({behavior: 'smooth'});
+    };
 
     const handleStarFilter = (rating) => {
         if (rating === starFilter) {
@@ -152,7 +165,7 @@ const Book = () => {
                             changeUserRating(newRating);
                         }}
                     />
-                    <p className='book-user-rating-write-review-button'>Write a Review</p>
+                    <p className='book-user-rating-write-review-button' onClick={() => handleScrollToReview()}>Write a Review</p>
                 </div>
             </div>
             <div className='column-right'>
@@ -180,9 +193,15 @@ const Book = () => {
                         </div>
                     </div>
                     <div className='book-review'>
-                        <div className='book-review-user'>
+                        <div ref={scrollToMyReview} className='book-review-user'>
                             <p className='book-review-user-title'>My Review</p>
-
+                            <Review 
+                                name={userReview.name} 
+                                rating={userRating} 
+                                content={userReview.content} 
+                                date={userReview.date} 
+                                readOnly={false} 
+                            />
                         </div>
                         <div className='book-review-community'>
                             <p className='book-review-community-title'>Community Rating & Reviews</p>
@@ -208,22 +227,22 @@ const Book = () => {
                                 </div>
                                 <div className='book-review-rating-differences-row'>
                                     <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(4)}>4 stars</p>
-                                    <div style={{color: starFilterColor[3].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(4)} variant="determinate" value={16} /></div>
+                                    <div style={{color: starFilterColor[3].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(4)} variant="determinate" value={34} /></div>
                                     <p className='book-review-rating-differences-amount-text'>9</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
                                     <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(3)}>3 stars</p>
-                                    <div style={{color: starFilterColor[2].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(3)} variant="determinate" value={16} /></div>
+                                    <div style={{color: starFilterColor[2].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(3)} variant="determinate" value={22} /></div>
                                     <p className='book-review-rating-differences-amount-text'>6</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
                                     <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(2)}>2 stars</p>
-                                    <div style={{color: starFilterColor[1].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(2)} variant="determinate" value={16} /></div>
+                                    <div style={{color: starFilterColor[1].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(2)} variant="determinate" value={12} /></div>
                                     <p className='book-review-rating-differences-amount-text'>3</p>
                                 </div>
                                 <div className='book-review-rating-differences-row'>
                                     <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(1)}>1 star</p>
-                                    <div style={{color: starFilterColor[0].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(1)} variant="determinate" value={16} /></div>
+                                    <div style={{color: starFilterColor[0].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(1)} variant="determinate" value={8} /></div>
                                     <p className='book-review-rating-differences-amount-text'>2</p>
                                 </div>
                             </div>
@@ -236,7 +255,15 @@ const Book = () => {
                                             return false;
                                         }
                                     }).map((review, index) => (
-                                        <Review name={review.name} rating={review.rating} content={review.content} date={review.update_date} />
+                                        <div className='book-review-list-element'>
+                                            <Review 
+                                                name={review.name} 
+                                                rating={review.rating} 
+                                                content={review.content} 
+                                                date={review.update_date} 
+                                                readOnly={true} 
+                                            />
+                                        </div>
                                     ))
                                 }
                             </div>

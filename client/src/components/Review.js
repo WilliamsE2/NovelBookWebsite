@@ -3,7 +3,7 @@ import { Rating } from '@mui/material';
 
 import '../styles/Review.css';
 
-const Review = ({name, rating, content, date}) => {
+const Review = ({name, rating, content, date, readOnly}) => {
 
     return (
         <div className="review">
@@ -13,17 +13,32 @@ const Review = ({name, rating, content, date}) => {
             </div>
             <div className="review-right">
                 <div className="review-right-top">
-                    <Rating
-                        className='review-star-rating'
-                        name="read-only"
-                        value={rating}
-                        defaultValue={0}
-                        readOnly
-                    />
+                    {
+                        readOnly ?
+                            <Rating
+                                className='review-star-rating'
+                                name="read-only"
+                                value={rating}
+                                defaultValue={0}
+                                readOnly
+                            />
+                        :
+                            <Rating
+                                className='review-star-rating'
+                                name="read-only"
+                                value={rating}
+                                defaultValue={0}
+                            />
+                    }
                     <p className="review-date-text">{date}</p>
                 </div>
                 <div className="review-content">
-                    <p className="review-content-description">{content}</p>
+                    {
+                        readOnly ?
+                            <p className="review-content-description">{content}</p>
+                        :
+                            <input className="review-content-input" contentEditable="true" />
+                    }
                 </div>
             </div>
         </div>

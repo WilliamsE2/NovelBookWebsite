@@ -301,7 +301,9 @@
 }
 
 .book-review-community {
-
+    padding-top: 1em;
+    margin-top: 3em;
+    border-top: 2px #ffedcc solid;
 }
 
 .book-review-community-title {
@@ -377,4 +379,8 @@
 
 .book-review-list {
     margin-top: 2em;
+}
+
+.book-review-list-element {
+    border-bottom: 1px lightgray solid;
 }

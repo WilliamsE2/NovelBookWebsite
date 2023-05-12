@@ -7,7 +7,6 @@
     text-align: left;
     padding-top: 1em;
     padding-bottom: 1.5em;
-    border-top: 1px lightgray solid;
 }
 
 .review-left {
@@ -64,4 +63,14 @@
 
 .review-content-description {
     font-family: 'Arial';
+}
+
+.review-content-input {
+    min-width: fit-content;
+    width: 100%;
+    max-height: none;
+    height: fit-content;
+    text-indent: 0.4em;
+    font-family: 'Arial';
+    font-size: 1.0em;
 }
