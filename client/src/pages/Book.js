@@ -73,6 +73,10 @@ const Book = () => {
         'date': 'May 11, 2023'
     }
 
+    const handleChildRating = (value) => {
+        changeUserRating(value);
+    };
+
     const handleScrollToReview = () => {
         scrollToMyReview.current?.scrollIntoView({behavior: 'smooth'});
     };
@@ -201,6 +205,8 @@ const Book = () => {
                                 content={userReview.content} 
                                 date={userReview.date} 
                                 readOnly={false} 
+                                editable={true}
+                                handler={handleChildRating}
                             />
                         </div>
                         <div className='book-review-community'>

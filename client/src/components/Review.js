@@ -1,9 +1,10 @@
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import { Rating } from '@mui/material';
 
 import '../styles/Review.css';
 
-const Review = ({name, rating, content, date, readOnly}) => {
+const Review = ({name, rating, content, date, readOnly, editable, handler}) => {
 
     return (
         <div className="review">
@@ -17,9 +18,13 @@ const Review = ({name, rating, content, date, readOnly}) => {
                         readOnly ?
                             <Rating
                                 className='review-star-rating'
-                                name="read-only"
+                                name="simple-controlled"
                                 value={rating}
                                 defaultValue={0}
+                                onChange={(event, newRating) => {
+                                    console.log(newRating);
+                                    handler(newRating);
+                                }}
                                 readOnly
                             />
                         :
@@ -38,6 +43,15 @@ const Review = ({name, rating, content, date, readOnly}) => {
                             <p className="review-content-description">{content}</p>
                         :
                             <input className="review-content-input" contentEditable="true" />
+                    }
+                </div>
+                <div>
+                    {
+                        editable ?
+                            <>
+                                <div onClick={() => handler(3)}>Post</div>
+                            </>
+                        : ''
                     }
                 </div>
             </div>
