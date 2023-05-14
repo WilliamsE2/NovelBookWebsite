@@ -113,7 +113,7 @@ const Book = () => {
 
     return (
         <div className='book-container'>
-            <div className='column-left'>
+            <div className='book-column-left'>
                 <img className='book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
                 <div className='book-add-list'>
                     <div className='book-button' onClick={() => changeOpenList(!openList)}>
@@ -172,7 +172,7 @@ const Book = () => {
                     <p className='book-user-rating-write-review-button' onClick={() => handleScrollToReview()}>Write a Review</p>
                 </div>
             </div>
-            <div className='column-right'>
+            <div className='book-column-right'>
                 <div className='book-top'>
                     <h1>Harry Potter and the Deathly Hallows</h1>
                     <p>J.K. Rowling</p>

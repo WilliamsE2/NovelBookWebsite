@@ -1,0 +1,32 @@
+
+.bookshelf-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 1em;
+    width: 80%;
+    height: 100%;
+}
+
+.bookshelf-column-left {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: fit-content;
+    background-color: lightblue;
+}
+
+.bookshelf-column-right {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: fit-content;
+    background-color: lightgreen;
+}
+
+

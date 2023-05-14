@@ -9,7 +9,7 @@
     height: 100%;
 }
 
-.column-left {
+.book-column-left {
     display: flex;
     flex: 2;
     flex-direction: column;
@@ -217,7 +217,7 @@
     text-decoration-color: orange;
 }
 
-.column-right {
+.book-column-right {
     flex: 1;
     padding-top: 1em;
     height: fit-content;
