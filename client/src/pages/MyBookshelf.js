@@ -13,35 +13,38 @@ const MyBookshelf = () => {
                 <p>Left</p>
             </div>
             <div className='bookshelf-column-right'>
-                <p>List Title</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Community Rating</th>
-                            <th>My Rating</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            listData.filter(book => {
-                                return book;
-                            }).map((book, index) => (
-                                <tr key={index}>
-                                    <td></td>
-                                    <td>{book.title}</td>
-                                    <td>{book.author}</td>
-                                    <td>{book.community_rating}</td>
-                                    <td>{book.my_rating}</td>
-                                    <td></td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                <p className='bookshelf-list-title'>List Title</p>
+                <div className='bookshelf-list'>
+                    {
+                        listData.filter(book => {
+                            return book;
+                        }).map((book, index) => (
+                            <div className='bookshelf-card'>
+                                <div className='bookshelf-card-margin'>
+                                    <img className='bookshelf-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                                    <div className='bookshelf-card-info-details'>
+                                        <p className='bookshelf-card-title-text'>{book.title}</p>
+                                        <p className='bookshelf-card-author-text'>{book.author}</p>
+                                    </div>
+                                    <div className='bookshelf-card-rating'>
+                                        <p>Community Rating: {book.community_rating}</p>
+                                        <p className='bookshelf-card-rating-text'>Your Rating</p>
+                                        <Rating
+                                            name="simple-controlled"
+                                            value={book.my_rating}
+                                            defaultValue={0}
+                                        />
+                                    </div>
+                                    <div className='bookshelf-card-extras'>
+                                        <div className='bookshelf-card-delete-button'>
+                                            <img className='bookshelf-card-delete-image' src={require('../assets/delete-icon.png')} alt='Delete'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </div>
     );

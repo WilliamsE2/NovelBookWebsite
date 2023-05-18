@@ -7,5 +7,14 @@
         "my_rating": 4,
         "publishing_date": "July 21, 2007",
         "added_date": "March, 6, 2023"
+    },
+    {
+        "id": 2,
+        "title": "Atomic Habits",
+        "author": "James Clear",
+        "community_rating": 4.56,
+        "my_rating": 5,
+        "publishing_date": "May 4, 2018",
+        "added_date": "April, 19, 2023"
     }
 ]
