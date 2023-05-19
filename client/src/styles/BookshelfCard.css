@@ -7,37 +7,33 @@
     margin: 1em;
     width: 90%;
     border-radius: 0.5em;
-    box-shadow: 1px 1px 15px 2px rgba(0, 24, 64, 0.12);
+    box-shadow: 1px 1px 13px 2px rgba(0, 24, 64, 0.12);
+}
+
+.bookshelf-card:hover {
+    transition: 0.2s;
+    box-shadow: 2px 2px 23px 5px rgba(0, 24, 64, 0.12);
 }
 
 .bookshelf-card-margin {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 1em;
     width: 100%;
-    height: 100%;
+    margin: 1em;
 }
 
 .bookshelf-cover-image {
+    float: left;
     width: 5em;
 }
 
 .bookshelf-card-info-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    float: left;
     margin: 1em;
-    width: 20em;
-    background-color: red;
 }
 
 .bookshelf-card-title-text {
     overflow: visible;
-    white-space:break-spaces;
-    width: 100%;
+    white-space: break-spaces;
+    width: 18em;
     font-size: 1.1em;
     font-family: 'Arial';
 }
@@ -53,8 +49,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    float: left;
     margin-top: 1em;
-    background-color: red;
 }
 
 .bookshelf-card-rating-text {
@@ -62,20 +58,28 @@
 }
 
 .bookshelf-card-extras {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-left: 7em;
-    background-color: yellow;
+    position: relative;
+    float: right;
+    min-width: 8em;
+    min-height: 7em;
+    height: 100%;
 }
 
 .bookshelf-card-delete-button {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
+    float: right;
+    top: 0;
+    right: 0;
     width: 2em;
     height: 2em;
+    border-radius: 20%;
+}
+
+.bookshelf-card-delete-button:hover {
+    transition: 0.1s;
     background-color: red;
 }
 
@@ -84,5 +88,9 @@
 }
 
 .bookshelf-card-add-date {
-
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 0.7em;
+    color: gray;
 }

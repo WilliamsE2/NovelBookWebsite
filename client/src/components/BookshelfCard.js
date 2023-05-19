@@ -13,22 +13,24 @@ const BookshelfCard = ({title, author, communityRating, userRating, addedDate}) 
                     <p className='bookshelf-card-title-text'>{title}</p>
                     <p className='bookshelf-card-author-text'>{author}</p>
                 </div>
-                <div className='bookshelf-card-rating'>
-                    <p>Community Rating: {communityRating}</p>
-                    <p className='bookshelf-card-rating-text'>Your Rating</p>
-                    <Rating
-                        name="list-book-rating"
-                        value={userRating}
-                        defaultValue={0}
-                        readOnly
-                    />
-                </div>
-                <div className='bookshelf-card-extras'>
-                    <div className='bookshelf-card-delete-button'>
-                        <img className='bookshelf-card-delete-image' src={require('../assets/delete-icon.png')} alt='Delete'/>
+                <div>
+                    <div className='bookshelf-card-rating'>
+                        <p>Community Rating: {communityRating}</p>
+                        <p className='bookshelf-card-rating-text'>Your Rating</p>
+                        <Rating
+                            name="list-book-rating"
+                            value={userRating}
+                            defaultValue={0}
+                            readOnly
+                        />
                     </div>
-                    <div>
-                        <p>Added: {addedDate}</p>
+                    <div className='bookshelf-card-extras'>
+                        <div className='bookshelf-card-delete-button'>
+                            <img className='bookshelf-card-delete-image' src={require('../assets/delete-icon.png')} alt='Delete'/>
+                        </div>
+                        <div className="bookshelf-card-add-date">
+                            <p className="bookshelf-card-add-date-text">Added: {addedDate}</p>
+                        </div>
                     </div>
                 </div>
             </div>
