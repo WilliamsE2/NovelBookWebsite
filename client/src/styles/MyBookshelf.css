@@ -54,6 +54,12 @@
     font-size: 1.6em;
 }
 
+.bookshelf-list-pagination {
+    margin-top: 1em;
+    margin-left: 1.3em;
+}
+
 .bookshelf-list {
+    margin-top: 0.8em;
     width: 100%;
 }

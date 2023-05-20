@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Pagination } from '@mui/material';
 
 import '../styles/MyBookshelf.css';
@@ -7,11 +7,15 @@ import '../styles/MyBookshelf.css';
 import BookshelfCard from '../components/BookshelfCard.js';
 
 import listData from '../lists-data.json';
-import { Link } from 'react-router-dom';
 
 const MyBookshelf = () => {
 
-    const [listTitle, changeListTitle] = useState('Read');
+    const pageItemCount = 10;
+    const [pageCount, changePageCount] = useState(0);
+    const [currentPage, changeCurrentPage] = useState(1);
+
+    const [currentList, changeCurrentList] = useState('Read');
+    const [bookSlice, changeBookSlice] = useState([{}]);
 
     const lists = [
         'Read',
@@ -20,8 +24,19 @@ const MyBookshelf = () => {
     ];
 
     const handleListChange = (value) => {
-        changeListTitle(value);
+        changeCurrentList(value);
     };
+
+    const handlePageChange = (i) => {
+        changeCurrentPage(i);
+        const startItem = ((i - 1) * pageItemCount) + 1;
+        changeBookSlice(listData.slice(startItem - 1, (pageItemCount * i)));
+    };
+
+    useEffect(() => {
+        changePageCount(Math.ceil(listData.length / pageItemCount));
+        handlePageChange(1);
+    }, []);
 
     return (
         <div className='bookshelf-container'>
@@ -38,10 +53,21 @@ const MyBookshelf = () => {
                 </div>
             </div>
             <div className='bookshelf-column-right'>
-                <p className='bookshelf-list-title'>{listTitle}</p>
+                <p className='bookshelf-list-title'>{currentList}</p>
+                <Pagination 
+                    className='bookshelf-list-pagination' 
+                    dir='ltr'
+                    page={currentPage} 
+                    count={pageCount} 
+                    onChange={(event, value) => handlePageChange(value)} 
+                    variant='outlined' 
+                    shape='rounded' 
+                    showFirstButton 
+                    showLastButton 
+                />
                 <div className='bookshelf-list'>
                     {
-                        listData.filter(book => {
+                        bookSlice.filter(book => {
                             return book;
                         }).map((book, index) => (
                             <BookshelfCard 
@@ -54,6 +80,17 @@ const MyBookshelf = () => {
                         ))
                     }
                 </div>
+                <Pagination 
+                    className='bookshelf-list-pagination' 
+                    dir='ltr'
+                    page={currentPage} 
+                    count={pageCount} 
+                    onChange={(event, value) => handlePageChange(value)} 
+                    variant='outlined' 
+                    shape='rounded' 
+                    showFirstButton 
+                    showLastButton 
+                />
             </div>
         </div>
     );
