@@ -23,14 +23,15 @@ const MyBookshelf = () => {
         'Favorites'
     ];
 
-    const handleListChange = (value) => {
-        changeCurrentList(value);
-    };
-
     const handlePageChange = (i) => {
         changeCurrentPage(i);
         const startItem = ((i - 1) * pageItemCount) + 1;
         changeBookSlice(listData.slice(startItem - 1, (pageItemCount * i)));
+    };
+
+    const handleListChange = (value) => {
+        changeCurrentList(value);
+        handlePageChange(1);
     };
 
     useEffect(() => {
