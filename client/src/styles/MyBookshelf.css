@@ -16,7 +16,29 @@
     justify-content: flex-start;
     align-items: flex-start;
     height: fit-content;
-    background-color: lightblue;
+}
+
+.bookshelf-my-lists {
+    width: 100%;
+    border-bottom: 1px black solid;
+}
+
+.bookshelf-my-lists-text {
+    margin-top: 1em;
+    font-size: 1.3em;
+}
+
+.bookshelf-my-lists-list {
+    margin-top: 0.5em;
+}
+
+.bookshelf-my-lists-list-text {
+    margin-top: 0.1em;
+    margin-left: 0.4em;
+}
+
+.bookshelf-my-lists-list-text:hover {
+    text-decoration: underline;
 }
 
 .bookshelf-column-right {
@@ -28,7 +50,7 @@
 }
 
 .bookshelf-list-title {
-    margin-left: 0.7em;
+    margin-left: 1em;
     font-size: 1.6em;
 }
 
