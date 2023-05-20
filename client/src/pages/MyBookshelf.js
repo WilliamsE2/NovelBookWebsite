@@ -25,8 +25,8 @@ const MyBookshelf = () => {
                             <BookshelfCard 
                                 title={book.title}
                                 author={book.author}
-                                communityRating={book.community_rating}
-                                userRating={book.user_rating}
+                                rating={book.user_rating}
+                                isCommunity={false}
                                 addedDate={book.added_date}
                             />
                         ))

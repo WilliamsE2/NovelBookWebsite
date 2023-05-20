@@ -30,12 +30,21 @@
     margin: 1em;
 }
 
+.bookshelf-card-title-link {
+    text-decoration: none;
+}
+
 .bookshelf-card-title-text {
     overflow: visible;
     white-space: break-spaces;
     width: 18em;
     font-size: 1.1em;
     font-family: 'Arial';
+    color: black;
+}
+
+.bookshelf-card-title-text:hover {
+    text-decoration: underline;
 }
 
 .bookshelf-card-author-text {
@@ -51,6 +60,11 @@
     align-items: center;
     float: left;
     margin-top: 1em;
+}
+
+.bookshelf-community-rating {
+    float: right;
+    margin-right: 2em;
 }
 
 .bookshelf-card-rating-text {
