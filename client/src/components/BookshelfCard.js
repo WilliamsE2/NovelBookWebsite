@@ -22,7 +22,7 @@ const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
                         isCommunity ? 
                             <>
                                 <div className='bookshelf-card-rating bookshelf-community-rating'>
-                                    <p className='bookshelf-card-rating-text'>Community Rating</p>
+                                    <p className='bookshelf-card-rating-text'>Community Avg. Rating</p>
                                     <Rating
                                         name="list-book-rating"
                                         value={rating}

@@ -53,6 +53,7 @@
 }
 
 .search-results-box-outer:has(.search-result) {
+    z-index: 1;
     border: 1px black solid;
     border-radius: 2px;
 }
@@ -80,6 +81,10 @@
     border-bottom: 1px black solid;
     color: black;
     background-color: white;
+}
+
+.search-result:hover {
+    background-color: #ffedcc;
 }
 
 .search-result-text {
