@@ -22,7 +22,7 @@ const Layout = () => {
                             <Link to="/mybookshelf" className="nav-link">
                                 <div className="nav-div">
                                     <img className='book-icon' src={require('../assets/book-icon.png')} alt='Book Icon'/>
-                                    <p className="nav-text">My BookShelf</p>
+                                    <p className="nav-text">My Bookshelf</p>
                                 </div>
                             </Link>
                         </li>

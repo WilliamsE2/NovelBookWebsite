@@ -15,6 +15,8 @@ const MyBookshelf = () => {
     const [currentPage, changeCurrentPage] = useState(1);
 
     const [currentList, changeCurrentList] = useState('Read');
+    const [openCreateList, changeOpenCreateList] = useState(false);
+
     const [bookSlice, changeBookSlice] = useState([{}]);
 
     const lists = [
@@ -52,6 +54,18 @@ const MyBookshelf = () => {
                         ))
                     }
                 </div>
+                {
+                    openCreateList ? 
+                        <div className='bookshelf-create-list-button'>
+                            <p className='bookshelf-create-list-text' onClick={() => changeOpenCreateList(!openCreateList)}>Create List</p>
+                        </div>
+                    : 
+                        <div className='bookshelf-create-list'>
+                            <input className='bookshelf-create-list-input' placeholder='List Name' />
+                            <img className='bookshelf-create-list-image bookshelf-create-list-image-rotate' onClick={() => changeOpenCreateList(!openCreateList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                            <img className='bookshelf-create-list-image' onClick={() => changeOpenCreateList(!openCreateList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
+                        </div>
+                }
             </div>
             <div className='bookshelf-column-right'>
                 <p className='bookshelf-list-title'>{currentList}</p>
