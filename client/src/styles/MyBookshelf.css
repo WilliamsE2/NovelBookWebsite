@@ -20,7 +20,7 @@
 
 .bookshelf-my-lists {
     width: 100%;
-    border-bottom: 1px black solid;
+    border-bottom: 2px #ffedcc solid;
 }
 
 .bookshelf-my-lists-text {
@@ -120,9 +120,50 @@
     align-items: flex-start;
 }
 
+.bookshelf-column-right-top {
+    position: relative;
+    width: 100%;
+}
+
 .bookshelf-list-title {
+    position: absolute;
+    float: left;
     margin-left: 1em;
     font-size: 1.6em;
+}
+
+.bookshelf-delete-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    margin-top: 0.5em;
+    padding-bottom: 0.25em;
+}
+
+.bookshelf-delete-list-text {
+    margin-right: 0.5em;
+}
+
+.bookshelf-delete-list-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    top: 0;
+    right: 0;
+    width: 2em;
+    height: 2em;
+    border-radius: 20%;
+}
+
+.bookshelf-delete-list-button:hover {
+    transition: 0.1s;
+    background-color: red;
+}
+
+.bookshelf-delete-list-image {
+    width: 1.3em;
 }
 
 .bookshelf-list-pagination {

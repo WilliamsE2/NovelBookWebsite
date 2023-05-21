@@ -20,7 +20,7 @@
 
 .discover-filter {
     width: 100%;
-    border-bottom: 1px black solid;
+    border-bottom: 2px #ffedcc solid;
 }
 
 .discover-filter-text {
