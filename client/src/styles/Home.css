@@ -1,14 +1,41 @@
 
 .home-container {
-    margin: auto;
-    width: 100%;
-    font-size: 100%;
-}
-
-.home {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 1em;
+    width: 50%;
+    height: 100%;
+}
+
+.home-section {
+    margin-top: 1em;
+}
+
+.home-section-title {
+    font-size: 1.6em;
+}
+
+.home-section-banner {
+    margin-top: 0.3em;
+    height: 11em;
+    width: 100%;
+}
+
+.home-section-banner-image {
+    max-width: 100%;
+    max-height: fit-content;
+    border-left: 5px orange solid;
+    
+}
+
+.home-section-recs {
+    display: flex;
+    flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
-    height: auto;
+    align-items: flex-start;
+    padding-bottom: 2em;
+    border-bottom: 2px #ffedcc solid;
+    gap: 1em;
 }
