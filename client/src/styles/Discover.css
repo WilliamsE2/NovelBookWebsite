@@ -39,6 +39,7 @@
 
 .discover-filter-options-text:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .discover-filter-blocks-space {

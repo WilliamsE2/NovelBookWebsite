@@ -15,6 +15,8 @@ const Discover = () => {
 
     const [bookSlice, changeBookSlice] = useState([{}]);
 
+    const [filtersOn, changeFiltersOn] = useState(false);
+
     const fictionGenres = [
         'Children\'s',
         'Graphic Novel',
@@ -44,7 +46,7 @@ const Discover = () => {
         'True Crime'
     ]
 
-    const filters = [
+    let filters = [
         {
             'filter': 'Children\'s',
             'active': false
@@ -59,11 +61,11 @@ const Discover = () => {
         },
         {
             'filter': 'Fantasy',
-            'active': true
+            'active': false
         },
         {
             'filter': 'Science Fiction',
-            'active': true
+            'active': false
         },
         {
             'filter': 'Horror',
@@ -135,6 +137,30 @@ const Discover = () => {
         }
     ]
 
+    const handleFilter = (filter) => {
+        let noFilter = true;
+
+        for (let i = 0; i < filters.length; i++) {
+            if (filters[i].filter === filter) {
+                filters[i].active = !filters[i].active;
+                console.log(filters[i].active);
+            }
+            
+            if (filters[i].active) {
+                noFilter = false;
+            }
+        }
+
+        console.log(filters);
+        console.log(noFilter);
+
+        /*if (noFilter && filtersOn) {
+            changeFiltersOn(false);
+        } else if (!noFilter && !filtersOn) {
+            changeFiltersOn(true);
+        }*/
+    }
+
     const handlePageChange = (i) => {
         changeCurrentPage(i);
         const startItem = ((i - 1) * pageItemCount) + 1;
@@ -155,7 +181,7 @@ const Discover = () => {
                 <div className='discover-filter-options'>
                     {
                         fictionGenres.map((genre) => (
-                            <p className='discover-filter-options-text'>{genre}</p>
+                            <p className='discover-filter-options-text' onClick={() => handleFilter(genre)}>{genre}</p>
                         ))
                     }
                 </div>
@@ -165,7 +191,7 @@ const Discover = () => {
                 <div className='discover-filter-options'>
                     {
                         nonfictionGenres.map((genre) => (
-                            <p className='discover-filter-options-text'>{genre}</p>
+                            <p className='discover-filter-options-text' onClick={() => handleFilter(genre)}>{genre}</p>
                         ))
                     }
                 </div>
@@ -202,9 +228,13 @@ const Discover = () => {
                 <div className='discover-results'>
                     {
                         bookSlice.filter(book => {
-                            for (let i = 0; i < filters.length; i++) {
-                                if (book.genre === filters[i].filter && filters[i].active === true) {
-                                    return book;
+                            if (!filtersOn) {
+                                return book;
+                            } else {
+                                for (let i = 0; i < filters.length; i++) {
+                                    if (book.genre === filters[i].filter && filters[i].active === true) {
+                                        return book;
+                                    }
                                 }
                             }
                             return false;
