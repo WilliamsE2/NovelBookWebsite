@@ -64,6 +64,7 @@
 }
 
 .discover-filter-block-image {
+    cursor: pointer;
     transform: rotate(45deg);
     float: left;
     margin-right: 0.2em;

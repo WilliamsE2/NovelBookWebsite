@@ -16,6 +16,7 @@ const Discover = () => {
     const [bookSlice, changeBookSlice] = useState([{}]);
 
     const [filtersOn, changeFiltersOn] = useState(false);
+    const [activeFilters, changeActiveFilters] = useState([]);
 
     const fictionGenres = [
         'Children\'s',
@@ -46,119 +47,31 @@ const Discover = () => {
         'True Crime'
     ]
 
-    let filters = [
-        {
-            'filter': 'Children\'s',
-            'active': false
-        },
-        {
-            'filter': 'Graphic Novel',
-            'active': false
-        },
-        {
-            'filter': 'Action & Adventure',
-            'active': false
-        },
-        {
-            'filter': 'Fantasy',
-            'active': false
-        },
-        {
-            'filter': 'Science Fiction',
-            'active': false
-        },
-        {
-            'filter': 'Horror',
-            'active': false
-        },
-        {
-            'filter': 'Mystery',
-            'active': false
-        },
-        {
-            'filter': 'Thriller & Suspense',
-            'active': false
-        },
-        {
-            'filter': 'Romance',
-            'active': false
-        },
-        {
-            'filter': 'Historical Fiction',
-            'active': false
-        },
-        {
-            'filter': 'Contemporary Fiction',
-            'active': false
-        },
-        {
-            'filter': 'Literary Fiction',
-            'active': false
-        },
-        {
-            'filter': 'Memoir/Autobiography',
-            'active': false
-        },
-        {
-            'filter': 'Biography',
-            'active': false
-        },
-        {
-            'filter': 'History',
-            'active': false
-        },
-        {
-            'filter': 'Politics',
-            'active': false
-        },
-        {
-            'filter': 'Economics',
-            'active': false
-        },
-        {
-            'filter': 'Humanities',
-            'active': false
-        },
-        {
-            'filter': 'Religion',
-            'active': false
-        },
-        {
-            'filter': 'Science',
-            'active': false
-        },
-        {
-            'filter': 'Self-help',
-            'active': false
-        },
-        {
-            'filter': 'True Crime',
-            'active': false
-        }
-    ]
+    const removeFilter = (filter) => {
+        const removeFilter = activeFilters.filter((item) => 
+            item !== filter
+        )
+        changeActiveFilters(removeFilter);
+    }
+
+    const addFilter = (filter) => {
+        const addFilter = activeFilters.concat(filter);
+        changeActiveFilters(addFilter);
+    }
 
     const handleFilter = (filter) => {
-        let noFilter = true;
+        let removed = false;
 
-        for (let i = 0; i < filters.length; i++) {
-            if (filters[i].filter === filter) {
-                filters[i].active = !filters[i].active;
-                console.log(filters[i].active);
-            }
-            
-            if (filters[i].active) {
-                noFilter = false;
+        for (let i = 0; i < activeFilters.length; i++) {
+            if (activeFilters[i] === filter) {
+                removeFilter(filter);
+                removed = true;
             }
         }
 
-        console.log(filters);
-        console.log(noFilter);
-
-        /*if (noFilter && filtersOn) {
-            changeFiltersOn(false);
-        } else if (!noFilter && !filtersOn) {
-            changeFiltersOn(true);
-        }*/
+        if (!removed) {
+            addFilter(filter);
+        }
     }
 
     const handlePageChange = (i) => {
@@ -197,16 +110,10 @@ const Discover = () => {
                 </div>
                 <div className='discover-filter-blocks-space'>
                     {
-                        filters.filter(filter => {
-                            if (filter.active) {
-                                return filter;
-                            } else {
-                                return false;
-                            }
-                        }).map((filter, index) => (
+                        activeFilters.map((filter) => (
                             <div className='discover-filter-block'>
-                                <img className='discover-filter-block-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
-                                <p className='discover-filter-block-text'>{filter.filter}</p>
+                                <img className='discover-filter-block-image' onClick={() => removeFilter(filter)} src={require('../assets/plus-icon.png')} alt='Delete'/>
+                                <p className='discover-filter-block-text'>{filter}</p>
                             </div>
                         ))
                     }
@@ -228,16 +135,16 @@ const Discover = () => {
                 <div className='discover-results'>
                     {
                         bookSlice.filter(book => {
-                            if (!filtersOn) {
+                            if (activeFilters.length === 0) {
                                 return book;
                             } else {
-                                for (let i = 0; i < filters.length; i++) {
-                                    if (book.genre === filters[i].filter && filters[i].active === true) {
+                                for (let i = 0; i < activeFilters.length; i++) {
+                                    if (book.genre === activeFilters[i]) {
                                         return book;
                                     }
                                 }
+                                return false;
                             }
-                            return false;
                         }).map((book, index) => (
                             <BookshelfCard 
                                 title={book.title}
