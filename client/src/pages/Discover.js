@@ -37,15 +37,102 @@ const Discover = () => {
         'Politics',
         'Economics',
         'Humanities',
+        'Philosophy',
         'Religion',
         'Science',
         'Self-help',
         'True Crime'
     ]
 
-    const format = [
-        'Short Story',
-        'Novel'
+    const filters = [
+        {
+            'filter': 'Children\'s',
+            'active': false
+        },
+        {
+            'filter': 'Graphic Novel',
+            'active': false
+        },
+        {
+            'filter': 'Action & Adventure',
+            'active': false
+        },
+        {
+            'filter': 'Fantasy',
+            'active': true
+        },
+        {
+            'filter': 'Science Fiction',
+            'active': true
+        },
+        {
+            'filter': 'Horror',
+            'active': false
+        },
+        {
+            'filter': 'Mystery',
+            'active': false
+        },
+        {
+            'filter': 'Thriller & Suspense',
+            'active': false
+        },
+        {
+            'filter': 'Romance',
+            'active': false
+        },
+        {
+            'filter': 'Historical Fiction',
+            'active': false
+        },
+        {
+            'filter': 'Contemporary Fiction',
+            'active': false
+        },
+        {
+            'filter': 'Literary Fiction',
+            'active': false
+        },
+        {
+            'filter': 'Memoir/Autobiography',
+            'active': false
+        },
+        {
+            'filter': 'Biography',
+            'active': false
+        },
+        {
+            'filter': 'History',
+            'active': false
+        },
+        {
+            'filter': 'Politics',
+            'active': false
+        },
+        {
+            'filter': 'Economics',
+            'active': false
+        },
+        {
+            'filter': 'Humanities',
+            'active': false
+        },
+        {
+            'filter': 'Religion',
+            'active': false
+        },
+        {
+            'filter': 'Science',
+            'active': false
+        },
+        {
+            'filter': 'Self-help',
+            'active': false
+        },
+        {
+            'filter': 'True Crime',
+            'active': false
+        }
     ]
 
     const handlePageChange = (i) => {
@@ -82,6 +169,22 @@ const Discover = () => {
                         ))
                     }
                 </div>
+                <div className='discover-filter-blocks-space'>
+                    {
+                        filters.filter(filter => {
+                            if (filter.active) {
+                                return filter;
+                            } else {
+                                return false;
+                            }
+                        }).map((filter, index) => (
+                            <div className='discover-filter-block'>
+                                <img className='discover-filter-block-image' src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                <p className='discover-filter-block-text'>{filter.filter}</p>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
             <div className='discover-column-right'>
                 <p className='discover-title'>Discover</p>
@@ -99,7 +202,12 @@ const Discover = () => {
                 <div className='discover-results'>
                     {
                         bookSlice.filter(book => {
-                            return book;
+                            for (let i = 0; i < filters.length; i++) {
+                                if (book.genre === filters[i].filter && filters[i].active === true) {
+                                    return book;
+                                }
+                            }
+                            return false;
                         }).map((book, index) => (
                             <BookshelfCard 
                                 title={book.title}

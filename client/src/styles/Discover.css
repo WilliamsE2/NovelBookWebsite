@@ -41,6 +41,38 @@
     text-decoration: underline;
 }
 
+.discover-filter-blocks-space {
+    display: inline-block;
+    overflow: visible;
+    white-space: break-spaces;
+    margin-top: 2em;
+}
+
+.discover-filter-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    padding: 0.3em;
+    margin: 0.3em;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    background-color: #ffd280;
+}
+
+.discover-filter-block-image {
+    transform: rotate(45deg);
+    float: left;
+    margin-right: 0.2em;
+    width: 1em;
+}
+
+.discover-filter-block-text {
+    font-size: 0.9em;
+}
+
 .discover-column-right {
     display: flex;
     flex: 3;

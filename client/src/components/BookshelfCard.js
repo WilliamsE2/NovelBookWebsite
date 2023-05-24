@@ -24,7 +24,7 @@ const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
                                 <div className='bookshelf-card-rating bookshelf-community-rating'>
                                     <p className='bookshelf-card-rating-text'>Community Avg. Rating</p>
                                     <Rating
-                                        name="list-book-rating"
+                                        name="simple-controlled"
                                         value={rating}
                                         defaultValue={0}
                                         readOnly
@@ -36,7 +36,7 @@ const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
                                 <div className='bookshelf-card-rating'>
                                     <p className='bookshelf-card-rating-text'>Your Rating</p>
                                     <Rating
-                                        name="list-book-rating"
+                                        name="simple-controlled"
                                         value={rating}
                                         defaultValue={0}
                                         readOnly

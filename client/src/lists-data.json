@@ -5,6 +5,7 @@
         "author": "J.K. Rowling",
         "community_rating": 4.85,
         "user_rating": 4,
+        "genre": "Fantasy",
         "publishing_date": "July 21, 2007",
         "added_date": "March, 6, 2023"
     },
@@ -14,6 +15,7 @@
         "author": "James Clear",
         "community_rating": 4.56,
         "user_rating": 5,
+        "genre": "Self-help",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
@@ -23,6 +25,7 @@
         "author": "Stieg Larsson",
         "community_rating": 3.81,
         "user_rating": 3,
+        "genre": "Mystery",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
@@ -32,6 +35,7 @@
         "author": "Kal Penn",
         "community_rating": 3.44,
         "user_rating": 2,
+        "genre": "Memoir/Autobiography",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
@@ -41,6 +45,7 @@
         "author": "Thomas Sowell",
         "community_rating": 4.83,
         "user_rating": 5,
+        "genre": "Economics",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
@@ -50,60 +55,67 @@
         "author": "George R.R. Martin",
         "community_rating": 4.29,
         "user_rating": 4,
+        "genre": "Fantasy",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
     {
         "id": 7,
-        "title": "Harry Potter and the Deathly Hallows",
-        "author": "J.K. Rowling",
+        "title": "The Road",
+        "author": "Cormac McCarthy",
         "community_rating": 4.85,
         "user_rating": 4,
+        "genre": "Science Fiction",
         "publishing_date": "July 21, 2007",
         "added_date": "March, 6, 2023"
     },
     {
         "id": 8,
-        "title": "Atomic Habits",
-        "author": "James Clear",
+        "title": "Caste",
+        "author": "Isabel Wilkerson",
         "community_rating": 4.56,
         "user_rating": 5,
+        "genre": "History",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
     {
         "id": 9,
-        "title": "The Girl with the Dragon Tattoo",
-        "author": "Stieg Larsson",
+        "title": "The War on the West",
+        "author": "Douglas Murray",
         "community_rating": 3.81,
         "user_rating": 3,
+        "genre": "Politics",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
     {
         "id": 10,
-        "title": "You Can't Be Serious",
-        "author": "Kal Penn",
+        "title": "12 Rules for Life",
+        "author": "Jordan B. Peterson",
         "community_rating": 3.44,
         "user_rating": 2,
+        "genre": "Self-help",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
     {
         "id": 11,
-        "title": "Basic Economics",
-        "author": "Thomas Sowell",
+        "title": "The Lord of the Rings",
+        "author": "J.R.R. Tolkien",
         "community_rating": 4.83,
         "user_rating": 5,
+        "genre": "Fantasy",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     },
     {
         "id": 12,
-        "title": "A Game of Thrones",
-        "author": "George R.R. Martin",
+        "title": "Thinking Fast and Slow",
+        "author": "Daniel Kahneman",
         "community_rating": 4.29,
         "user_rating": 4,
+        "genre": "Philosophy",
         "publishing_date": "May 4, 2018",
         "added_date": "December, 19, 2023"
     }
