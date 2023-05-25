@@ -4,13 +4,27 @@ import { Rating } from '@mui/material';
 
 import '../styles/Review.css';
 
-const Review = ({name, rating, content, date, readOnly, editable, handler}) => {
+const Review = ({name, rating, content, date, readOnly, editable, handler, showUser, bookTitle}) => {
 
     return (
         <div className="review">
             <div className="review-left">
-                <img className='review-user-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
-                <p className="review-username-text">{name}</p>
+                {
+                    showUser ? 
+                        <div>
+                            <img className='review-user-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
+                            <p className="review-username-text">{name}</p>
+                        </div>
+                    :
+                        <div>
+                            <Link to="/book" className="review-book-link">
+                                <img className='review-book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                            </Link>
+                            <Link to="/book" className="review-book-link">
+                                <p className='review-book-title'>{bookTitle}</p>
+                            </Link>
+                        </div>
+                }
             </div>
             <div className="review-right">
                 <div className="review-right-top">

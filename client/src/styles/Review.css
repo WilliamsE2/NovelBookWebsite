@@ -32,6 +32,23 @@
     overflow: visible;
 }
 
+.review-book-link {
+    text-decoration: none;
+}
+
+.review-book-cover-image {
+    width: 4em;
+}
+
+.review-book-title {
+    font-size: 0.9em;
+    color: black;
+}
+
+.review-book-title:hover {
+    text-decoration: underline;
+}
+
 .review-right {
     display: inline-block;
     flex: 4;

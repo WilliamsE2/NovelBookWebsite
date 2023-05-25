@@ -207,6 +207,7 @@ const Book = () => {
                                 readOnly={false} 
                                 editable={true}
                                 handler={handleChildRating}
+                                showBook={true}
                             />
                         </div>
                         <div className='book-review-community'>
@@ -268,6 +269,7 @@ const Book = () => {
                                                 content={review.content} 
                                                 date={review.update_date} 
                                                 readOnly={true} 
+                                                showBook={true}
                                             />
                                         </div>
                                     ))

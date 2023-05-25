@@ -15,7 +15,6 @@ const Discover = () => {
 
     const [bookSlice, changeBookSlice] = useState([{}]);
 
-    const [filtersOn, changeFiltersOn] = useState(false);
     const [activeFilters, changeActiveFilters] = useState([]);
 
     const fictionGenres = [

@@ -17,7 +17,6 @@
     align-items: center;
     margin-top: 0.5em;
     height: fit-content;
-    background-color: white;
 }
 
 .book-cover-image {
@@ -221,7 +220,6 @@
     flex: 1;
     padding-top: 1em;
     height: fit-content;
-    background-color: white;
 }
 
 .book-top h1 {
