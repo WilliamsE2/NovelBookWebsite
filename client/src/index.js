@@ -11,6 +11,7 @@ import MyBookshelf from './pages/MyBookshelf';
 import Discover from './pages/Discover';
 import Book from './pages/Book';
 import Account from './pages/Account';
+import EditAccount from './pages/EditAccount';
 import NoPage404 from './pages/NoPage404';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="discover" element={<Discover />} />
           <Route path="book" element={<Book />} />
           <Route path="account" element={<Account />} />
+          <Route path="editaccount" element={<EditAccount />} />
           <Route path="*" element={<NoPage404 />} />
         </Route>
       </Routes>

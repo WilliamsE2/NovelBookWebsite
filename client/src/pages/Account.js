@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import '../styles/Account.css';
 
 // Components
@@ -11,9 +13,11 @@ const Account = () => {
             <div className='account-columns'>
                 <div className='account-column-left'>
                     <img className='account-profile-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
-                    <div className='account-edit-button'>
-                        <p className='account-edit-button-text'>Edit Profile</p>
-                    </div>
+                    <Link to="/editaccount" className="account-edit-link">
+                        <div className='account-edit-button'>    
+                                <p className='account-edit-button-text'>Edit Profile</p>
+                        </div>
+                    </Link>
                 </div>
                 <div className='account-column-right'>
                     <div className='account-name'>

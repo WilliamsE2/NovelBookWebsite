@@ -51,8 +51,13 @@
     background-color: #ffedcc;
 }
 
+.account-edit-link {
+    text-decoration: none;
+}
+
 .account-edit-button-text {
     font-size: 0.9em;
+    color: black;
 }
 
 .account-column-right {
