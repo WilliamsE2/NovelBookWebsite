@@ -18,13 +18,13 @@ const EditAccount = () => {
                         <div className="edit-content">
                             <p className='edit-content-text'>Evan Williams</p>
                             <div className="edit-content-button">
-                                <p className="edit-content-button-text">Update</p>
+                                <p className="edit-content-button-text">Update Name</p>
                             </div>
                         </div>
                         <div className="edit-content">
                             <p className='edit-content-text'>erwilliams331@gmail.com</p>
                             <div className="edit-content-button">
-                                <p className="edit-content-button-text">Update</p>
+                                <p className="edit-content-button-text">Update Email</p>
                             </div>
                         </div>
                         <div className="edit-content">
@@ -37,12 +37,16 @@ const EditAccount = () => {
                 </div>
             </div>
             <div className="edit-logic">
-                <div className="edit-logic-button edit-close-button">
-                    <p className="edit-logic-text">Close</p>
-                </div>
-                <div className="edit-logic-button edit-save-button">
-                    <p className="edit-logic-text">Save</p>
-                </div>
+                <Link to="/account" className="edit-logic-link">
+                    <div className="edit-logic-button edit-close-button">
+                        <p className="edit-logic-text">Close</p>
+                    </div>
+                </Link>
+                <Link to="/account" className="edit-logic-link">
+                    <div className="edit-logic-button edit-save-button">
+                        <p className="edit-logic-text">Save</p>
+                    </div>
+                </Link>
             </div>
         </div>
     );
