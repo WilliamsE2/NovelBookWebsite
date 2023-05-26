@@ -1,8 +1,23 @@
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
+import { Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
 import '../styles/EditAccount.css';
 
 const EditAccount = () => {
+
+    const [openName, changeOpenName] = useState(false);
+    const [openEmail, changeOpenEmail] = useState(false);
+    const [openPass, changeOpenPass] = useState(false);
+
+    const handleOpen = (changeFunc) => {
+        changeFunc(true);
+      };
+    
+      const handleClose = (changeFunc) => {
+        changeFunc(false)
+      };
+
     return (
         <div className='edit-container'>
             <div className='edit-columns'>
@@ -18,19 +33,86 @@ const EditAccount = () => {
                         <div className="edit-content">
                             <p className='edit-content-text'>Evan Williams</p>
                             <div className="edit-content-button">
-                                <p className="edit-content-button-text">Update Name</p>
+                                <p className="edit-content-button-text" onClick={() => handleOpen(changeOpenName)}>Update Name</p>
+                                <Dialog open={openName} onClose={() => handleClose(changeOpenName)}>
+                                    <DialogContent>
+                                        <TextField 
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="First Name"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                        <TextField 
+                                            margin="dense"
+                                            id="name"
+                                            label="Last Name"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenName)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenName)}>Update</div>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                         <div className="edit-content">
                             <p className='edit-content-text'>erwilliams331@gmail.com</p>
                             <div className="edit-content-button">
-                                <p className="edit-content-button-text">Update Email</p>
+                                <p className="edit-content-button-text" onClick={() => handleOpen(changeOpenEmail)}>Update Email</p>
+                                <Dialog open={openEmail} onClose={() => handleClose(changeOpenEmail)}>
+                                    <DialogContent>
+                                        <TextField 
+                                            autoFocus
+                                            margin="dense"
+                                            id="email"
+                                            label="Email Address"
+                                            type="email"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenEmail)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenEmail)}>Update</div>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                         <div className="edit-content">
                             <p className='edit-content-text'>*******</p>
                             <div className="edit-content-button">
-                                <p className="edit-content-button-text">Change Password</p>
+                                <p className="edit-content-button-text" onClick={() => handleOpen(changeOpenPass)}>Change Password</p>
+                                <Dialog open={openPass} onClose={() => handleClose(changeOpenPass)}>
+                                    <DialogContent>
+                                        <TextField 
+                                            autoFocus
+                                            margin="dense"
+                                            id="password"
+                                            label="Password"
+                                            type="password"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                        <TextField 
+                                            margin="dense"
+                                            id="password-again"
+                                            label="Password Again"
+                                            type="password"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPass)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPass)}>Update</div>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                     </div>
@@ -38,8 +120,8 @@ const EditAccount = () => {
             </div>
             <div className="edit-logic">
                 <Link to="/account" className="edit-logic-link">
-                    <div className="edit-logic-button edit-close-button">
-                        <p className="edit-logic-text">Close</p>
+                    <div className="edit-logic-button edit-cancel-button">
+                        <p className="edit-logic-text">Cancel</p>
                     </div>
                 </Link>
                 <Link to="/account" className="edit-logic-link">

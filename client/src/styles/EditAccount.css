@@ -32,30 +32,8 @@
     border-radius: 50%;
 }
 
-.edit-edit-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 0.5em;
-    width: 6em;
-    height: 1.8em;
-    font-size: 1.2em;
-    border: 2px orange solid;
-    border-radius: 30px;
-}
-
-.edit-edit-button:hover {
-    transition: 0.2s;
-    background-color: #ffedcc;
-}
-
-.edit-edit-link {
-    text-decoration: none;
-}
-
 .edit-profile-button-text {
+    cursor: pointer;
     margin-top: 0.5em;
 }
 
@@ -98,6 +76,7 @@
 }
 
 .edit-content-button {
+    cursor: pointer;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -125,11 +104,37 @@
     
 }
 
+.edit-dialog-button {
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 0.2em;
+    padding-bottom: 0.3em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    width: fit-content;
+    height: fit-content;
+    font-size: 0.9em;
+    border: 2px orange solid;
+    border-radius: 6px;
+}
+
+.edit-dialog-button:hover {
+    transition: 0.2s;
+    background-color: #ffedcc;
+}
+
 .edit-logic {
     position: relative;
     display: inline-block;
     margin-top: 1em;
     width: 100%;
+}
+
+.edit-logic-link {
+    color: black;
 }
 
 .edit-logic-button {
@@ -149,14 +154,13 @@
     border: 2px orange solid;
     border-radius: 6px;
 }
-
-.edit-close-button {
+.edit-cancel-button {
     margin-right: 4.3em;
     border: 2px gray solid;
     color: black;
 }
 
-.edit-close-button:hover {
+.edit-cancel-button:hover {
     border: 2px red solid;
     background-color: lightsalmon;
 }
