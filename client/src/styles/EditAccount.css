@@ -42,6 +42,19 @@
     color: orange;
 }
 
+.edit-dialog-profile-photo-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-dialog-profile-photo {
+    padding: 1em;
+    width: 10em;
+    border-radius: 50%;
+}
+
 .edit-column-right {
     flex: 3;
     padding-top: 1em;

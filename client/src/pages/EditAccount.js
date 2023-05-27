@@ -6,24 +6,66 @@ import '../styles/EditAccount.css';
 
 const EditAccount = () => {
 
+    const [selectStyle, changeSelectStyle] = useState('');
+
+    const [openPhoto, changeOpenPhoto] = useState(false);
     const [openName, changeOpenName] = useState(false);
     const [openEmail, changeOpenEmail] = useState(false);
     const [openPass, changeOpenPass] = useState(false);
 
+    const photoOptions = [
+        {
+            'id': 'p1',
+            'path': require('../assets/profile-photo.png'),
+            'title': 'test-photo',
+            'alt': 'Test'
+        },
+        {
+            'id': 'p2',
+            'path': require('../assets/profile-photo.png'),
+            'title': 'test-photo',
+            'alt': 'Test'
+        }
+    ]
+
+    const handlePhotoSelect = (imageId) => {
+        changeSelectStyle(imageId);
+    }
+
     const handleOpen = (changeFunc) => {
         changeFunc(true);
-      };
-    
-      const handleClose = (changeFunc) => {
+    };
+
+    const handleClose = (changeFunc) => {
         changeFunc(false)
-      };
+    };
 
     return (
         <div className='edit-container'>
             <div className='edit-columns'>
                 <div className='edit-column-left'>
                     <img className='edit-profile-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
-                    <p className='edit-profile-button-text'>Change Photo</p>
+                    <p className='edit-profile-button-text' onClick={() => handleOpen(changeOpenPhoto)}>Change Photo</p>
+                    <Dialog open={openPhoto} onClose={() => handleClose(changeOpenPhoto)}>
+                        <DialogContent>
+                            <div className='edit-dialog-profile-photo-content'>
+                                {
+                                    photoOptions.map((image) => (
+                                        <img 
+                                            className={image.id}
+                                            onClick={() => handlePhotoSelect()}
+                                            src={image.path} 
+                                            alt={image.alt} 
+                                        /> 
+                                    ))
+                                }
+                            </div>
+                        </DialogContent>
+                        <DialogActions>
+                            <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPhoto)}><p>Cancel</p></div>
+                            <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPhoto)}>Update</div>
+                        </DialogActions>
+                    </Dialog>
                 </div>
                 <div className='edit-column-right'>
                     <div className='edit-title'>
