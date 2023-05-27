@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 
 // Pages
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
 import MyBookshelf from './pages/MyBookshelf';
@@ -18,7 +20,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="layout" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="mybookshelf" element={<MyBookshelf />} />
           <Route path="discover" element={<Discover />} />
