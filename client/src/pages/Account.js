@@ -13,7 +13,7 @@ const Account = () => {
             <div className='account-columns'>
                 <div className='account-column-left'>
                     <img className='account-profile-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
-                    <Link to="/editaccount" className="account-edit-link">
+                    <Link to="editaccount" className="account-edit-link">
                         <div className='account-edit-button'>    
                                 <p className='account-edit-button-text'>Edit Profile</p>
                         </div>

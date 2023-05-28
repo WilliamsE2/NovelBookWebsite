@@ -8,11 +8,11 @@ const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
     return (
         <div className='bookshelf-card'>
             <div className='bookshelf-card-margin'>
-                <Link to="/book">
+                <Link to="/layout/book">
                     <img className='bookshelf-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
                 </Link>
                 <div className='bookshelf-card-info-details'>
-                    <Link to="/book" className="bookshelf-card-title-link">
+                    <Link to="/layout/book" className="bookshelf-card-title-link">
                         <p className='bookshelf-card-title-text'>{title}</p>
                     </Link>
                     <p className='bookshelf-card-author-text'>{author}</p>

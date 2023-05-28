@@ -161,12 +161,12 @@ const EditAccount = () => {
                 </div>
             </div>
             <div className="edit-logic">
-                <Link to="/account" className="edit-logic-link">
+                <Link to="/layout/account" className="edit-logic-link">
                     <div className="edit-logic-button edit-cancel-button">
                         <p className="edit-logic-text">Cancel</p>
                     </div>
                 </Link>
-                <Link to="/account" className="edit-logic-link">
+                <Link to="/layout/account" className="edit-logic-link">
                     <div className="edit-logic-button edit-save-button">
                         <p className="edit-logic-text">Save</p>
                     </div>

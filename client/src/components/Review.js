@@ -17,10 +17,10 @@ const Review = ({name, rating, content, date, readOnly, editable, handler, showU
                         </div>
                     :
                         <div>
-                            <Link to="/book" className="review-book-link">
+                            <Link to="/layout/book" className="review-book-link">
                                 <img className='review-book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
                             </Link>
-                            <Link to="/book" className="review-book-link">
+                            <Link to="/layout/book" className="review-book-link">
                                 <p className='review-book-title'>{bookTitle}</p>
                             </Link>
                         </div>

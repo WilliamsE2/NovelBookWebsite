@@ -1,0 +1,101 @@
+
+.register-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: orange;
+}
+
+.register-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-box {
+    padding: 3em;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.register-text {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.5em;
+}
+
+.register-email {
+    margin-top: 2em;
+}
+
+.register-div {
+    margin-top: 0.8em;
+}
+
+.register-password {
+    padding-top: 1em;
+    margin-top: 1.5em;
+    border-top: 2px #ffedcc solid;
+}
+
+.register-label {
+    font-size: 0.9em;
+}
+
+.register-input {
+    margin-top: 0.3em;
+    width: 15em;
+    height: 1.7em;
+    text-indent: 0.2em;
+    font-family: 'Arial';
+    font-size: 0.9em;
+}
+
+.register-input:hover {
+    padding: 1px;
+    outline: none;
+    border: 1px orange solid;
+    border-radius: 2px;
+    box-shadow: 0 0 2px  rgba(0,0,0,.5);
+}
+
+.register-input:focus {
+    padding: 1px;
+    outline: none;
+    border: 1px orange solid;
+    border-radius: 2px;
+    box-shadow: 0 0 2px  rgba(0,0,0,.5);
+}
+
+.register-incorrect-text {
+    margin-top: 0.3em;
+    font-family: 'Arial';
+    font-size: 0.8em;
+    color: red;
+}
+
+.register-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 1.5em;
+    width: 6em;
+    height: 2em;
+    font-size: 1em;
+    border: 2px orange solid;
+    border-radius: 6px;
+    background-color: orange;
+}
+
+.register-button:hover {
+    cursor: pointer;
+}

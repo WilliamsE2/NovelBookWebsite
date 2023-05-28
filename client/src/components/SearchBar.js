@@ -31,7 +31,7 @@ const SearchBar = () => {
         <div className='search-div'>
             <input className='search-box' placeholder='Search books' onChange={event => setSearchInput(event.target.value)} />
             <div className='search-button'></div>
-            <Link to="/book" onClick={handleCollapse} className="search-results-link">
+            <Link to="/layout/book" onClick={handleCollapse} className="search-results-link">
                 <div className='search-results-box-outer'>
                     <div className='search-results-box-inner'>
                     {

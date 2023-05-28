@@ -28,7 +28,7 @@ export default function App() {
           <Route path="discover" element={<Discover />} />
           <Route path="book" element={<Book />} />
           <Route path="account" element={<Account />} />
-          <Route path="editaccount" element={<EditAccount />} />
+          <Route path="account/editaccount" element={<EditAccount />} />
           <Route path="*" element={<NoPage404 />} />
         </Route>
       </Routes>
