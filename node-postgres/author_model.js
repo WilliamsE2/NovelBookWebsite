@@ -1,3 +1,4 @@
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'evan',
@@ -16,7 +17,7 @@ const getAuthor = () => {
             resolve(results.rows);
         })
     }) 
-}
+};
 
 const createAuthor = (body) => {
     return new Promise(function(resolve, reject) {
@@ -28,7 +29,7 @@ const createAuthor = (body) => {
             resolve(`A new author has been added added: ${results.rows[0]}`)
         })
     })
-}
+};
   
 const deleteAuthor = () => {
     return new Promise(function(resolve, reject) {
@@ -40,10 +41,10 @@ const deleteAuthor = () => {
             resolve(`Author deleted with ID: ${id}`)
         })
     })
-}
+};
   
 module.exports = {
     getAuthor,
     createAuthor,
     deleteAuthor,
-}
+};

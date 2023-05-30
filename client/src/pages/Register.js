@@ -15,6 +15,7 @@ const Register = () => {
 
     const [fieldsMissing, changeFieldsMissing] = useState(false);
     const [incorrectPass, changeIncorrectPass] = useState(false);
+    const [duplicateEmail, changeDuplicateEmail] = useState(false);
 
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
@@ -30,6 +31,37 @@ const Register = () => {
         changeIncorrectPass(false);
         await timeout(500);
         changeIncorrectPass(true);
+    }
+
+    async function duplicateDelay() {
+        console.log('delay');
+        await timeout(1000);
+    }
+
+    function checkDuplicateEmail() {
+        let dup = false;
+
+        fetch('http://localhost:3001/duplicate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+        .then(response => {
+            return response.text();
+        })
+        .then(data => {
+            if (data?.length > 2) {
+                changeDuplicateEmail(true);
+                dup = true;
+            } else {
+                changeDuplicateEmail(false);
+            }
+        });
+
+        duplicateDelay();
+        return dup;
     }
 
     const handleRegister = () => {
@@ -57,7 +89,14 @@ const Register = () => {
             changeIncorrectPass(false);
         }
 
+        let dup = false;
         if (navTo) {
+            dup = checkDuplicateEmail();
+        } else if (duplicateEmail) {
+            changeDuplicateEmail(false);
+        }
+
+        if (navTo && !dup) {
             navigate('/layout');
         }
     };
@@ -94,6 +133,11 @@ const Register = () => {
                         {
                             incorrectPass ? 
                                 <p className='register-incorrect-text'>Passwords don't match.</p>
+                            : ''
+                        }
+                        {
+                            duplicateEmail ? 
+                                <p className='register-incorrect-text'>Email is taken. Choose another.</p>
                             : ''
                         }
                     </div>

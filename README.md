@@ -9,6 +9,10 @@ cd node-postgres
 node index.js
 ```
 
+```bash
+npm install cors
+```
+
 [API Tutorial](https://blog.logrocket.com/getting-started-with-postgres-in-your-react-app/)
 
 ## React
