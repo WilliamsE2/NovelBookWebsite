@@ -21,24 +21,24 @@ const Register = () => {
 
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
-    }
+    };
 
     async function fieldsDelay() {
         changeFieldsMissing(false);
         await timeout(500);
         changeFieldsMissing(true);
-    }
+    };
 
     async function passDelay() {
         changeIncorrectPass(false);
         await timeout(500);
         changeIncorrectPass(true);
-    }
+    };
 
     async function duplicateDelay() {
         console.log('delay');
         await timeout(10000);
-    }
+    };
 
     const checkDuplicateEmail = () => {
         fetch('http://localhost:3001/duplicate', {
@@ -49,7 +49,11 @@ const Register = () => {
             body: JSON.stringify({email}),
         })
         .then(response => {
-            return response.text();
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
         })
         .then(data => {
             /*if (data?.length > 2) {
@@ -70,7 +74,7 @@ const Register = () => {
         }
 
         duplicateDelay();
-    }
+    };
 
     const handleRegister = () => {
         let navTo = true;

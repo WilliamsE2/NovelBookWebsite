@@ -13,53 +13,61 @@ const Login = () => {
     const [fieldsMissing, changeFieldsMissing] = useState(false);
     const [incorrectPass, changeIncorrectPass] = useState(false);
 
-    const passCheck = 'e';
-
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
-    }
+    };
 
     async function fieldsDelay() {
         changeFieldsMissing(false);
         await timeout(500);
         changeFieldsMissing(true);
-    }
+    };
 
     async function passDelay() {
         changeIncorrectPass(false);
         await timeout(500);
         changeIncorrectPass(true);
-    }
+    };
+
+    const validatePassword = () => {
+        fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            let pass = '';
+            if (data.length > 2) {
+                pass = JSON.parse(data)[0].password;   
+            }
+
+            if (pass.length > 0 && password === pass) {
+                navigate('/layout');
+            } else {
+                passDelay();
+            }
+        });
+    };
 
     const handleLogin = () => {
-        let navTo = true;
-
         if (email === '' || password === '') {
-            if (fieldsMissing) {
-                fieldsDelay();
-                navTo = false;
-            } else {
-                changeFieldsMissing(true);
-                navTo = false;
-            }
+            fieldsDelay();
+            changeIncorrectPass(false);
             return;
         } else {
             changeFieldsMissing(false);
         }
 
-        if (incorrectPass && password !== passCheck) {
-            passDelay();
-            navTo = false;
-        } else if (password !== passCheck) {
-            changeIncorrectPass(true);
-            navTo = false;
-        } else {
-            changeIncorrectPass(false);
-        }
-
-        if (navTo) {
-            navigate('/layout');
-        }
+        validatePassword();
     };
     
     return (

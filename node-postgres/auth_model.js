@@ -10,7 +10,7 @@ const pool = new Pool({
   port: config.port,
 });
 
-const getUserLogin = (body) => {
+const getUserPassword = (body) => {
     const { email } = body;
     return new Promise(function(resolve, reject) {
         pool.query('select u."password" from "user" u where u.email = $1;', [email], (error, results) => {
@@ -50,7 +50,7 @@ const createUser = (body) => {
 };
   
 module.exports = {
-    getUserLogin, 
+    getUserPassword, 
     getDuplicateEmail, 
     createUser
 };

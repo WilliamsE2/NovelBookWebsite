@@ -20,8 +20,8 @@ app.use(function (req, res, next) {
 // Models
 const auth_model = require('./auth_model');
 
-app.get('/login', (req, res) => {
-  auth_model.getUserLogin(req.body)
+app.post('/login', (req, res) => {
+  auth_model.getUserPassword(req.body)
   .then(response => {
     res.status(200).send(response);
   })
