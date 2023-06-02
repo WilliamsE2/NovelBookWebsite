@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { useNavigate } from "react-router-dom";
 
 import '../styles/Register.css';
@@ -16,6 +16,8 @@ const Register = () => {
     const [fieldsMissing, changeFieldsMissing] = useState(false);
     const [incorrectPass, changeIncorrectPass] = useState(false);
     const [duplicateEmail, changeDuplicateEmail] = useState(false);
+
+    const [dup, changeDup] = useState([{}]);
 
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
@@ -35,12 +37,10 @@ const Register = () => {
 
     async function duplicateDelay() {
         console.log('delay');
-        await timeout(1000);
+        await timeout(10000);
     }
 
-    function checkDuplicateEmail() {
-        let dup = false;
-
+    const checkDuplicateEmail = () => {
         fetch('http://localhost:3001/duplicate', {
             method: 'POST',
             headers: {
@@ -52,16 +52,24 @@ const Register = () => {
             return response.text();
         })
         .then(data => {
-            if (data?.length > 2) {
+            /*if (data?.length > 2) {
                 changeDuplicateEmail(true);
-                dup = true;
             } else {
+                console.log('no dup');
                 changeDuplicateEmail(false);
-            }
+            }*/
+            changeDup(data);
         });
 
+        console.log(JSON.stringify(JSON.parse(dup)));
+        if (dup.length > 2) {
+            changeDuplicateEmail(true);
+        } else {
+            console.log('no dup');
+            changeDuplicateEmail(false);
+        }
+
         duplicateDelay();
-        return dup;
     }
 
     const handleRegister = () => {
@@ -89,15 +97,16 @@ const Register = () => {
             changeIncorrectPass(false);
         }
 
-        let dup = false;
+        /*
+        Currently disabled, not working as of now
         if (navTo) {
-            dup = checkDuplicateEmail();
+            checkDuplicateEmail();
         } else if (duplicateEmail) {
             changeDuplicateEmail(false);
-        }
+        }*/
 
-        if (navTo && !dup) {
-            navigate('/layout');
+        if (navTo && !duplicateDelay) {
+            /*navigate('/layout');*/
         }
     };
 
