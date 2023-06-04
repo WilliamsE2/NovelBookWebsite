@@ -76,6 +76,27 @@ const Register = () => {
         duplicateDelay();
     };
 
+    const createUser = () => {
+        fetch('http://localhost:3001/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email, password, firstName, lastName}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            console.log(data);
+            navigate('/layout');
+        });
+    };
+
     const handleRegister = () => {
         let navTo = true;
 
@@ -101,17 +122,19 @@ const Register = () => {
             changeIncorrectPass(false);
         }
 
+        createUser();
+
         /*
         Currently disabled, not working as of now
         if (navTo) {
             checkDuplicateEmail();
         } else if (duplicateEmail) {
             changeDuplicateEmail(false);
-        }*/
+        }
 
         if (navTo && !duplicateDelay) {
-            /*navigate('/layout');*/
-        }
+            navigate('/layout');
+        }*/
     };
 
     return (

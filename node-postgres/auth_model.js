@@ -36,9 +36,9 @@ const getDuplicateEmail = (body) => {
 
 const createUser = (body) => {
     return new Promise(function(resolve, reject) {
-        const { email, password, firstName, lastName, creationDate } = body;
-        pool.query('insert into "user" (email, password, first_name, last_name, profile_pic_id, is_active, creation_date) values ($1, $2, $3, $4, 1, true, $5) returning *;', 
-            [email, password, firstName, lastName, creationDate], 
+        const { email, password, firstName, lastName } = body;
+        pool.query('insert into "user" (email, password, first_name, last_name, profile_pic_id, is_active, creation_date) values ($1, $2, $3, $4, 1, true, current_timestamp) returning *;', 
+            [email, password, firstName, lastName], 
             (error, results) => 
         {
             if (error) {
