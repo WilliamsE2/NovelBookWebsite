@@ -13,19 +13,8 @@ const pool = new Pool({
 const getUserPassword = (body) => {
     const { email } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select u."password" from "user" u where u.email = $1;', [email], (error, results) => {
-            if (error) {
-                reject(error);
-            }
-            resolve(results.rows);
-        });
-    }) 
-};
-
-const getDuplicateEmail = (body) => {
-    const { email } = body;
-    return new Promise(function(resolve, reject) {
-        pool.query('select u.email from "user" u where u.email = $1 and u.is_active = true;', [email], (error, results) => {
+        pool.query('select u."password" from "user" u where u.email = $1;', [email], (error, results) => 
+        {
             if (error) {
                 reject(error);
             }
@@ -48,9 +37,35 @@ const createUser = (body) => {
         });
     })
 };
+
+const getDuplicateEmail = (body) => {
+    const { email } = body;
+    return new Promise(function(resolve, reject) {
+        pool.query('select u.email from "user" u where u.email = $1 and u.is_active = true;', [email], (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    }) 
+};
+
+const getHomeBooks = () => {
+    return new Promise(function(resolve, reject) {
+        pool.query('select b.book_id, b.book_title, b.author_name from book b order by b.book_id asc limit 4;', (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
   
 module.exports = {
     getUserPassword, 
+    createUser, 
     getDuplicateEmail, 
-    createUser
+    getHomeBooks
 };

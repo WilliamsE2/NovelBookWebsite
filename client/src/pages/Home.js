@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
+
 import '../styles/Home.css';
 
 // Components
 import BookSelector from '../components/BookSelector.js';
+import LoadingSpinner from '../components/LoadingSpinner.js';
 
 const Home = () => {
 
-    const bookRecs = [
+    /*const bookRecs = [
         {
             'title': 'Harry Potter and the Deathly Hallows',
             'author': 'J.K. Rowling'
@@ -22,7 +25,23 @@ const Home = () => {
             'title': 'Harry Potter and the Deathly Hallows',
             'author': 'J.K. Rowling'
         }
-    ];
+    ];*/
+
+    const [bookRecs, changeBookRecs] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/home-books')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeBookRecs(JSON.parse(data));
+        }); 
+    });
 
     return (
         <div className='home-container'>
@@ -33,9 +52,12 @@ const Home = () => {
                 </div>
                 <div className='home-section-recs'>
                     {
-                        bookRecs.map(rec => (
-                            <BookSelector title={rec.title} author={rec.author} />
-                        ))
+                        bookRecs.length < 1 ? 
+                            <LoadingSpinner />
+                        :
+                            bookRecs.map(rec => (
+                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                            ))
                     }
                 </div>
             </div>
@@ -47,9 +69,12 @@ const Home = () => {
                 </div>
                 <div className='home-section-recs'>
                     {
-                        bookRecs.map(rec => (
-                            <BookSelector title={rec.title} author={rec.author} />
-                        ))
+                        bookRecs.length < 1 ? 
+                            <LoadingSpinner />
+                        :
+                            bookRecs.map(rec => (
+                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                            ))
                     }
                 </div>
             </div>
@@ -61,9 +86,12 @@ const Home = () => {
                 </div>
                 <div className='home-section-recs'>
                     {
-                        bookRecs.map(rec => (
-                            <BookSelector title={rec.title} author={rec.author} />
-                        ))
+                        bookRecs.length < 1 ? 
+                            <LoadingSpinner />
+                        :
+                            bookRecs.map(rec => (
+                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                            ))
                     }
                 </div>
             </div>
@@ -75,9 +103,12 @@ const Home = () => {
                 </div>
                 <div className='home-section-recs'>
                     {
-                        bookRecs.map(rec => (
-                            <BookSelector title={rec.title} author={rec.author} />
-                        ))
+                        bookRecs.length < 1 ? 
+                            <LoadingSpinner />
+                        :
+                            bookRecs.map(rec => (
+                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                            ))
                     }
                 </div>
             </div>
