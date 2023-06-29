@@ -16,9 +16,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 // Models
 const auth_model = require('./auth_model');
+
 
 app.post('/login', (req, res) => {
   auth_model.getUserPassword(req.body)
@@ -52,6 +52,16 @@ app.post('/duplicate', (req, res) => {
 
 app.get('/home-books', (req, res) => {
   auth_model.getHomeBooks()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
+app.post('/book', (req, res) => {
+  auth_model.getBook(req.body)
   .then(response => {
     res.status(200).send(response);
   })

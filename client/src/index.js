@@ -26,7 +26,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="mybookshelf" element={<MyBookshelf />} />
           <Route path="discover" element={<Discover />} />
-          <Route path="book" element={<Book />} />
+          <Route path="book/:id" element={<Book />} />
           <Route path="account" element={<Account />} />
           <Route path="account/editaccount" element={<EditAccount />} />
           <Route path="*" element={<NoPage404 />} />

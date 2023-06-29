@@ -41,7 +41,7 @@ const Home = () => {
         .then(data => {
             changeBookRecs(JSON.parse(data));
         }); 
-    });
+    }, []);
 
     return (
         <div className='home-container'>
@@ -56,7 +56,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -73,7 +73,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -90,7 +90,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -107,7 +107,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>

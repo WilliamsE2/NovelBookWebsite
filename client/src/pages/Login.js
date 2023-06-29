@@ -67,8 +67,8 @@ const Login = () => {
             changeFieldsMissing(false);
         }
 
-        //validatePassword();
-        navigate('/layout');
+        validatePassword();
+        //navigate('/layout');
     };
     
     return (
