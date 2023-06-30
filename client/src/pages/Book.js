@@ -14,6 +14,7 @@ import reviewData from '../review-data.json';
 const Book = () => {
 
     const bookId = useParams().id;
+    
     const [bookData, changeBookData] = useState([]);
 
     /*const bookData = {
@@ -154,7 +155,7 @@ const Book = () => {
     return (
         <div className='book-container'>
             {
-                bookData.length < 3 ? 
+                bookData.length < 1 ? 
                     <LoadingSpinner />
                 :
                 <>

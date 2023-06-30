@@ -6,6 +6,10 @@ import '../styles/EditAccount.css';
 
 const EditAccount = () => {
 
+    const userId = sessionStorage.getItem('userId');
+
+    const [editData, changeEditData] = useState([]);
+
     const [selectStyle, changeSelectStyle] = useState('');
 
     const [openPhoto, changeOpenPhoto] = useState(false);
@@ -27,6 +31,8 @@ const EditAccount = () => {
             'alt': 'Test'
         }
     ]
+
+
 
     const handlePhotoSelect = (imageId) => {
         changeSelectStyle(imageId);

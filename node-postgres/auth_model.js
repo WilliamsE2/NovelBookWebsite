@@ -13,7 +13,7 @@ const pool = new Pool({
 const getUserPassword = (body) => {
     const { email } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select u."password" from "user" u where u.email = $1;', 
+        pool.query('select u.user_id, u."password" from "user" u where u.email = $1;', 
             [email], 
             (error, results) => 
         {
@@ -69,16 +69,31 @@ const getHomeBooks = () => {
 };
 
 const getBook = (body) => {
-    const { id } = body;
+    const { bookId } = body;
     return new Promise(function(resolve, reject) {
         pool.query('select b.book_title, b.author_name, b.publishing_date_display, b.page_count, g.genre_title, b.description from book b inner join genres g on g.genre_id = b.genre_id where b.book_id = $1;', 
-            [id], 
+            [bookId], 
             (error, results) => 
         {
             if (error) {
                 reject(error);
             }
-            resolve(results.rows);
+            resolve(results.rows[0]);
+        });
+    }) 
+};
+
+const getAccount = (body) => {
+    const { userId } = body;
+    return new Promise(function(resolve, reject) {
+        pool.query('select u.first_name, u.last_name, u.profile_pic_id, u.creation_date, ur.number_of_reviews, ur.books_read from "user" u inner join user_review ur on ur.user_id = u.user_id where u.user_id = $1;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
         });
     }) 
 };
@@ -88,5 +103,6 @@ module.exports = {
     createUser, 
     getDuplicateEmail, 
     getHomeBooks, 
-    getBook
+    getBook, 
+    getAccount
 };

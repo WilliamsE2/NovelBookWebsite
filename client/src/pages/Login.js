@@ -51,6 +51,7 @@ const Login = () => {
             }
 
             if (pass.length > 0 && password === pass) {
+                sessionStorage.setItem('userId', JSON.parse(data)[0].user_id);
                 navigate('/layout');
             } else {
                 passDelay();
@@ -68,7 +69,6 @@ const Login = () => {
         }
 
         validatePassword();
-        //navigate('/layout');
     };
     
     return (

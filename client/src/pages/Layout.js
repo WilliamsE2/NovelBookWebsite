@@ -6,6 +6,7 @@ import '../styles/Layout.css';
 import SearchBar from '../components/SearchBar.js';
 
 const Layout = () => {
+
     return (
         <>
             <div className="layout-container">
@@ -40,7 +41,7 @@ const Layout = () => {
                             <SearchBar />
                         </div>
                         <li className="nav-item">
-                            <Link to="account" className="nav-link">
+                            <Link to='account' className="nav-link">
                                 <div className="nav-div">
                                     <img className='account-icon' src={require('../assets/profile-icon.png')} alt='Account Icon'/>
                                     <p className="nav-text">Account</p>
