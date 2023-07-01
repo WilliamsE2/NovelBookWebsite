@@ -168,26 +168,18 @@
 .edit-back-button {
     position: absolute;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     text-align: center;
     float: right;
     right: 0;
     padding-left: 0.8em;
     padding-right: 0.8em;
-    width: fit-content;
+    margin-top: 1em;
     height: 2em;
-    font-size: 0.9em;
-    border: 2px gray solid;
-    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1.1em;
 }
 
 .edit-back-button:hover {
-    border: 2px orange solid;
-    background-color: #ffedcc;
-}
-
-.edit-back-text {
-    font-size: 1.2em;
+    text-decoration: underline;
+    color: orange;
 }

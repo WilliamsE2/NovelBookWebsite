@@ -133,8 +133,8 @@ const EditAccount = () => {
                                         />
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenName)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenName)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenName)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenName)}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -159,8 +159,8 @@ const EditAccount = () => {
                                         />
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenEmail)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenEmail)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenEmail)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenEmail)}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -212,9 +212,7 @@ const EditAccount = () => {
             </div>
             <div className="edit-back">
                 <Link to="/layout/account" className="edit-back-link">
-                    <div className="edit-back-button">
-                        <p className="edit-back-text">Back</p>
-                    </div>
+                    <p className="edit-back-button">Back</p>
                 </Link>
             </div>
         </div>
