@@ -112,6 +112,22 @@ const getEditAccount = (body) => {
         });
     }) 
 };
+
+const updateName = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { newFirstName, newLastName, userId } = body;
+        pool.query('update "user" set first_name = $1, last_name = $2 where user_id = $3;', 
+            [newFirstName, newLastName, userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+            //resolve(`Name was updated: ${results.rows[0]}`);
+        });
+    })
+};
   
 module.exports = {
     getUserPassword, 
@@ -120,5 +136,6 @@ module.exports = {
     getHomeBooks, 
     getBook, 
     getAccount, 
-    getEditAccount
+    getEditAccount, 
+    updateName
 };

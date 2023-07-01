@@ -9,8 +9,7 @@ const EditAccount = () => {
     const userId = sessionStorage.getItem('userId');
 
     const [editData, changeEditData] = useState([]);
-
-    const [selectStyle, changeSelectStyle] = useState('');
+    const [passwordCheck, changePasswordCheck] = useState('');
 
     const photoOptions = [
         {
@@ -25,7 +24,9 @@ const EditAccount = () => {
             'title': 'test-photo',
             'alt': 'Test'
         }
-    ]
+    ];
+
+    const [selectStyle, changeSelectStyle] = useState('');
 
     const [openPhoto, changeOpenPhoto] = useState(false);
     const [openName, changeOpenName] = useState(false);
@@ -35,8 +36,16 @@ const EditAccount = () => {
     const [newFirstName, changeNewFirstName] = useState(editData.first_name);
     const [newLastName, changeNewLastName] = useState(editData.last_name);
     const [newEmail, changeNewEmail] = useState(editData.email);
+    const [oldPassword, changeOldPassword] = useState('');
     const [newPassword, changeNewPassword] = useState('');
     const [newPasswordRepeat, changeNewPasswordRepeat] = useState('');
+
+    const [invalidName, changeInvalidName] = useState(false);
+    const [invalidEmail, changeEmail] = useState(false);
+    const [invalidPassword, changeInvalidPassword] = useState(false);
+    const [passwordMismatch, changePasswordMismatch] = useState(false);
+
+    const [updateTrigger, changeUpdateTrigger] = useState(false);
 
     useEffect(() => {
         fetch('http://localhost:3001/editaccount', {
@@ -54,21 +63,64 @@ const EditAccount = () => {
             }
         })
         .then(data => {
-            changeEditData(JSON.parse(data));
+            const jsonData = JSON.parse(data);
+            changeEditData(jsonData);
+            changeNewFirstName(jsonData.first_name);
+            changeNewLastName(jsonData.last_name);
+            changeNewEmail(jsonData.email);
+            changeOldPassword(jsonData.password);
         }); 
-    }, [userId]);
+    }, [userId, updateTrigger]);
 
-    const handlePhotoSelect = (imageId) => {
-        changeSelectStyle(imageId);
+    const updateName = () => {
+        fetch('http://localhost:3001/editaccount/name', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({newFirstName, newLastName, userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            console.log(data);
+            changeUpdateTrigger(!updateTrigger);
+        });
+    };
+
+    const handleNameUpdate = () => {
+        if (newFirstName?.length > 0 && newLastName?.length > 0 && newFirstName?.length < 200 && newLastName?.length < 200) {
+            changeInvalidName(false);
+            updateName();
+            handleClose(changeOpenName);
+        } else {
+            changeInvalidName(true);
+        }
+    };
+
+    const handleNameCancel = () => {
+        handleClose(changeOpenName);
+        changeInvalidName(false);
+        changeNewFirstName(editData.first_name);
+        changeNewLastName(editData.last_name);
     }
+
+    const handleClose = (changeFunc) => {
+        changeFunc(false)
+    };
 
     const handleOpen = (changeFunc) => {
         changeFunc(true);
     };
 
-    const handleClose = (changeFunc) => {
-        changeFunc(false)
-    };
+    const handlePhotoSelect = (imageId) => {
+        changeSelectStyle(imageId);
+    }
 
     return (
         <div className='edit-container'>
@@ -131,10 +183,15 @@ const EditAccount = () => {
                                             fullWidth
                                             variant="standard"
                                         />
+                                        {
+                                            invalidName ? 
+                                                <p className='register-incorrect-text'>Invalid name.</p>
+                                            : ''
+                                        }
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenName)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenName)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleNameCancel()}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleNameUpdate()}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -176,6 +233,8 @@ const EditAccount = () => {
                                             id="password"
                                             label="Old Password"
                                             type="password"
+                                            value={oldPassword}
+                                            onChange={(event) => {changeOldPassword(event.target.value)}}
                                             fullWidth
                                             variant="standard"
                                         />
