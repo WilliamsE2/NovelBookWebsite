@@ -139,18 +139,33 @@
     background-color: #ffedcc;
 }
 
-.edit-logic {
+.edit-dialog-cancel-button {
+    border: 2px gray solid;
+    color: black;
+}
+
+.edit-dialog-cancel-button:hover {
+    border: 2px red solid;
+    background-color: lightsalmon;
+}
+
+.edit-dialog-update-button:hover {
+    border: 2px green solid;
+    background-color: lightgreen;
+}
+
+.edit-back {
     position: relative;
     display: inline-block;
     margin-top: 1em;
     width: 100%;
 }
 
-.edit-logic-link {
+.edit-back-link {
     color: black;
 }
 
-.edit-logic-button {
+.edit-back-button {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -164,33 +179,15 @@
     width: fit-content;
     height: 2em;
     font-size: 0.9em;
-    border: 2px orange solid;
+    border: 2px gray solid;
     border-radius: 6px;
 }
-.edit-cancel-button {
-    margin-right: 4.3em;
-    border: 2px gray solid;
-    color: black;
+
+.edit-back-button:hover {
+    border: 2px orange solid;
+    background-color: #ffedcc;
 }
 
-.edit-cancel-button:hover {
-    border: 2px red solid;
-    background-color: lightsalmon;
-}
-
-.edit-logic-text {
+.edit-back-text {
     font-size: 1.2em;
-}
-
-.edit-save-button {
-
-}
-
-.edit-save-button:hover {
-    border: 2px green solid;
-    background-color: lightgreen;
-}
-
-.edit-save-text {
-
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
@@ -11,11 +11,6 @@ const EditAccount = () => {
     const [editData, changeEditData] = useState([]);
 
     const [selectStyle, changeSelectStyle] = useState('');
-
-    const [openPhoto, changeOpenPhoto] = useState(false);
-    const [openName, changeOpenName] = useState(false);
-    const [openEmail, changeOpenEmail] = useState(false);
-    const [openPass, changeOpenPass] = useState(false);
 
     const photoOptions = [
         {
@@ -32,7 +27,36 @@ const EditAccount = () => {
         }
     ]
 
+    const [openPhoto, changeOpenPhoto] = useState(false);
+    const [openName, changeOpenName] = useState(false);
+    const [openEmail, changeOpenEmail] = useState(false);
+    const [openPass, changeOpenPass] = useState(false);
 
+    const [newFirstName, changeNewFirstName] = useState(editData.first_name);
+    const [newLastName, changeNewLastName] = useState(editData.last_name);
+    const [newEmail, changeNewEmail] = useState(editData.email);
+    const [newPassword, changeNewPassword] = useState('');
+    const [newPasswordRepeat, changeNewPasswordRepeat] = useState('');
+
+    useEffect(() => {
+        fetch('http://localhost:3001/editaccount', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeEditData(JSON.parse(data));
+        }); 
+    }, [userId]);
 
     const handlePhotoSelect = (imageId) => {
         changeSelectStyle(imageId);
@@ -79,7 +103,7 @@ const EditAccount = () => {
                     </div>
                     <div className='edit-content-section'>
                         <div className="edit-content">
-                            <p className='edit-content-text'>Evan Williams</p>
+                            <p className='edit-content-text'>{editData.first_name} {editData.last_name}</p>
                             <div className="edit-content-button">
                                 <p className="edit-content-button-text" onClick={() => handleOpen(changeOpenName)}>Update Name</p>
                                 <Dialog open={openName} onClose={() => handleClose(changeOpenName)}>
@@ -90,6 +114,9 @@ const EditAccount = () => {
                                             id="name"
                                             label="First Name"
                                             type="text"
+                                            defaultValue={editData.first_name}
+                                            value={newFirstName}
+                                            onChange={(event) => {changeNewFirstName(event.target.value)}}
                                             fullWidth
                                             variant="standard"
                                         />
@@ -98,6 +125,9 @@ const EditAccount = () => {
                                             id="name"
                                             label="Last Name"
                                             type="text"
+                                            defaultValue={editData.last_name}
+                                            value={newLastName}
+                                            onChange={(event) => {changeNewLastName(event.target.value)}}
                                             fullWidth
                                             variant="standard"
                                         />
@@ -110,7 +140,7 @@ const EditAccount = () => {
                             </div>
                         </div>
                         <div className="edit-content">
-                            <p className='edit-content-text'>erwilliams331@gmail.com</p>
+                            <p className='edit-content-text'>{editData.email}</p>
                             <div className="edit-content-button">
                                 <p className="edit-content-button-text" onClick={() => handleOpen(changeOpenEmail)}>Update Email</p>
                                 <Dialog open={openEmail} onClose={() => handleClose(changeOpenEmail)}>
@@ -121,7 +151,10 @@ const EditAccount = () => {
                                             id="email"
                                             label="Email Address"
                                             type="email"
-                                            fullWidth
+                                            defaultValue={editData.email}
+                                            value={newEmail}
+                                            onChange={(event) => {changeNewEmail(event.target.value)}}
+                                            style = {{width: 300}}
                                             variant="standard"
                                         />
                                     </DialogContent>
@@ -139,26 +172,37 @@ const EditAccount = () => {
                                 <Dialog open={openPass} onClose={() => handleClose(changeOpenPass)}>
                                     <DialogContent>
                                         <TextField 
-                                            autoFocus
                                             margin="dense"
                                             id="password"
-                                            label="Password"
+                                            label="Old Password"
                                             type="password"
                                             fullWidth
                                             variant="standard"
                                         />
                                         <TextField 
                                             margin="dense"
-                                            id="password-again"
-                                            label="Password Again"
+                                            id="password"
+                                            label="New Password"
                                             type="password"
+                                            value={newPassword}
+                                            onChange={(event) => {changeNewPassword(event.target.value)}}
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                        <TextField 
+                                            margin="dense"
+                                            id="password-again"
+                                            label="New Password Again"
+                                            type="password"
+                                            value={newPasswordRepeat}
+                                            onChange={(event) => {changeNewPasswordRepeat(event.target.value)}}
                                             fullWidth
                                             variant="standard"
                                         />
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPass)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPass)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenPass)}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenPass)}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -166,15 +210,10 @@ const EditAccount = () => {
                     </div>
                 </div>
             </div>
-            <div className="edit-logic">
-                <Link to="/layout/account" className="edit-logic-link">
-                    <div className="edit-logic-button edit-cancel-button">
-                        <p className="edit-logic-text">Cancel</p>
-                    </div>
-                </Link>
-                <Link to="/layout/account" className="edit-logic-link">
-                    <div className="edit-logic-button edit-save-button">
-                        <p className="edit-logic-text">Save</p>
+            <div className="edit-back">
+                <Link to="/layout/account" className="edit-back-link">
+                    <div className="edit-back-button">
+                        <p className="edit-back-text">Back</p>
                     </div>
                 </Link>
             </div>

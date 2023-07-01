@@ -97,6 +97,21 @@ const getAccount = (body) => {
         });
     }) 
 };
+
+const getEditAccount = (body) => {
+    const { userId } = body;
+    return new Promise(function(resolve, reject) {
+        pool.query('select u.email, u."password", u.first_name, u.last_name, u.profile_pic_id from "user" u where u.user_id = $1;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    }) 
+};
   
 module.exports = {
     getUserPassword, 
@@ -104,5 +119,6 @@ module.exports = {
     getDuplicateEmail, 
     getHomeBooks, 
     getBook, 
-    getAccount
+    getAccount, 
+    getEditAccount
 };

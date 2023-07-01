@@ -30,7 +30,6 @@ const Account = () => {
             }
         })
         .then(data => {
-            console.log(JSON.parse(data));
             changeAccountData(JSON.parse(data));
         }); 
     }, [userId]);
