@@ -5,6 +5,7 @@ import '../styles/Account.css';
 
 // Components
 import Review from '../components/Review.js';
+import LoadingSpinner from '../components/LoadingSpinner.js';
 
 import reviewData from '../review-data.json';
 
@@ -38,7 +39,12 @@ const Account = () => {
         <div className='account-container'>
             <div className='account-columns'>
                 <div className='account-column-left'>
-                    <img className='account-profile-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
+                    {
+                        accountData.length < 1 ? 
+                            <LoadingSpinner />
+                        : 
+                            <img className='account-profile-image' src={require(`../assets/profile-pics/${accountData.profile_pic_id}.jpeg`)} alt='Profile'/>
+                    }
                     <Link to="editaccount" className="account-edit-link">
                         <div className='account-edit-button'>    
                                 <p className='account-edit-button-text'>Edit Profile</p>
