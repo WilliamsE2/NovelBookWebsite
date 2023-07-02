@@ -117,6 +117,13 @@
     
 }
 
+.edit-incorrect-text {
+    margin-top: 0.3em;
+    font-family: 'Arial';
+    font-size: 0.8em;
+    color: red;
+}
+
 .edit-dialog-button {
     cursor: pointer;
     flex-direction: column;

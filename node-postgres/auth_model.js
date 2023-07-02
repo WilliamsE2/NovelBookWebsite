@@ -20,7 +20,7 @@ const getUserPassword = (body) => {
             if (error) {
                 reject(error);
             }
-            resolve(results.rows);
+            resolve(results.rows); // needs update to [0]
         });
     }) 
 };
@@ -43,14 +43,14 @@ const createUser = (body) => {
 const getDuplicateEmail = (body) => {
     const { email } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select u.email from "user" u where u.email = $1 and u.is_active = true;', 
+        pool.query('select count(*) from "user" u where u.email = $1 and u.is_active = true;', 
             [email], 
             (error, results) => 
         {
             if (error) {
                 reject(error);
             }
-            resolve(results.rows);
+            resolve(results.rows[0]);
         });
     }) 
 };
@@ -124,7 +124,21 @@ const updateName = (body) => {
                 reject(error);
             }
             resolve(results.rows[0]);
-            //resolve(`Name was updated: ${results.rows[0]}`);
+        });
+    })
+};
+
+const updateEmail = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { newEmail, userId } = body;
+        pool.query('update "user" set email = $1 where user_id = $2;', 
+            [newEmail, userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
         });
     })
 };
@@ -137,5 +151,6 @@ module.exports = {
     getBook, 
     getAccount, 
     getEditAccount, 
-    updateName
+    updateName, 
+    updateEmail
 };

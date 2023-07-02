@@ -41,7 +41,8 @@ const EditAccount = () => {
     const [newPasswordRepeat, changeNewPasswordRepeat] = useState('');
 
     const [invalidName, changeInvalidName] = useState(false);
-    const [invalidEmail, changeEmail] = useState(false);
+    const [invalidEmail, changeInvalidEmail] = useState(false);
+    const [duplicateEmail, changeDuplicateEmail] = useState(false);
     const [invalidPassword, changeInvalidPassword] = useState(false);
     const [passwordMismatch, changePasswordMismatch] = useState(false);
 
@@ -110,6 +111,73 @@ const EditAccount = () => {
         changeInvalidName(false);
         changeNewFirstName(editData.first_name);
         changeNewLastName(editData.last_name);
+    }
+
+    const updateEmail = () => {
+        fetch('http://localhost:3001/editaccount/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({newEmail, userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+            handleClose(changeOpenEmail);
+        });
+    };
+
+    const checkDuplicateEmail = () => {
+        const email = newEmail;
+
+        fetch('http://localhost:3001/duplicate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            if (JSON.parse(data).count < 1) {
+                changeDuplicateEmail(false);
+                updateEmail();
+            } else {
+                changeDuplicateEmail(true);
+            }
+        });
+    };
+
+    const handleEmailUpdate = () => {
+        if (newEmail === editData.email) {
+            handleClose(changeOpenEmail);
+            changeInvalidEmail(false);
+            changeDuplicateEmail(false);
+        } else if (newEmail?.length > 0 && newEmail?.length < 200) {
+            changeInvalidEmail(false);
+            checkDuplicateEmail();
+        } else {
+            changeInvalidEmail(true);
+        }
+    };
+
+    const handleEmailCancel = () => {
+        handleClose(changeOpenEmail);
+        changeInvalidEmail(false);
+        changeNewEmail(editData.email);
     }
 
     const handleClose = (changeFunc) => {
@@ -216,10 +284,20 @@ const EditAccount = () => {
                                             style = {{width: 300}}
                                             variant="standard"
                                         />
+                                        {
+                                            invalidEmail ? 
+                                                <p className='edit-incorrect-text'>Invalid email.</p>
+                                            : ''
+                                        }
+                                        {
+                                            duplicateEmail ? 
+                                                <p className='edit-incorrect-text'>Email already in use.</p>
+                                            : ''
+                                        }
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenEmail)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenEmail)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleEmailCancel()}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleEmailUpdate()}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
