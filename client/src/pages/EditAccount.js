@@ -88,16 +88,18 @@ const EditAccount = () => {
             }
         })
         .then(data => {
-            console.log(data);
             changeUpdateTrigger(!updateTrigger);
         });
     };
 
     const handleNameUpdate = () => {
-        if (newFirstName?.length > 0 && newLastName?.length > 0 && newFirstName?.length < 200 && newLastName?.length < 200) {
+        if (newFirstName === editData.first_name && newLastName === editData.last_name) {
+            handleClose(changeOpenName);
             changeInvalidName(false);
+        } else if (newFirstName?.length > 0 && newLastName?.length > 0 && newFirstName?.length < 200 && newLastName?.length < 200) {
             updateName();
             handleClose(changeOpenName);
+            changeInvalidName(false);
         } else {
             changeInvalidName(true);
         }
