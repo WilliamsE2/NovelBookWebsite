@@ -90,6 +90,16 @@ app.post('/editaccount', (req, res) => {
   })
 });
 
+app.post('/editaccount/pic', (req, res) => {
+  auth_model.updateProfilePic(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/editaccount/name', (req, res) => {
   auth_model.updateName(req.body)
   .then(response => {

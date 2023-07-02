@@ -4,34 +4,21 @@ import { Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
 import '../styles/EditAccount.css';
 
+// Components
+import LoadingSpinner from '../components/LoadingSpinner.js';
+
 const EditAccount = () => {
 
     const userId = sessionStorage.getItem('userId');
 
     const [editData, changeEditData] = useState([]);
 
-    const photoOptions = [
-        {
-            'id': 'p1',
-            'path': require('../assets/profile-photo.png'),
-            'title': 'test-photo',
-            'alt': 'Test'
-        },
-        {
-            'id': 'p2',
-            'path': require('../assets/profile-photo.png'),
-            'title': 'test-photo',
-            'alt': 'Test'
-        }
-    ];
-
-    const [selectStyle, changeSelectStyle] = useState('');
-
-    const [openPhoto, changeOpenPhoto] = useState(false);
+    const [openPic, changeOpenPic] = useState(false);
     const [openName, changeOpenName] = useState(false);
     const [openEmail, changeOpenEmail] = useState(false);
     const [openPass, changeOpenPass] = useState(false);
 
+    const [newProfilePic, changeNewProfilePic] = useState(editData.profile_pic_id);
     const [newFirstName, changeNewFirstName] = useState(editData.first_name);
     const [newLastName, changeNewLastName] = useState(editData.last_name);
     const [newEmail, changeNewEmail] = useState(editData.email);
@@ -47,6 +34,10 @@ const EditAccount = () => {
     const [passwordMismatch, changePasswordMismatch] = useState(false);
 
     const [updateTrigger, changeUpdateTrigger] = useState(false);
+
+    const picLimit = 3;
+    const leftArrow = '<';
+    const rightArrow = '>';
 
     useEffect(() => {
         fetch('http://localhost:3001/editaccount', {
@@ -66,11 +57,43 @@ const EditAccount = () => {
         .then(data => {
             const jsonData = JSON.parse(data);
             changeEditData(jsonData);
+            changeNewProfilePic(jsonData.profile_pic_id);
             changeNewFirstName(jsonData.first_name);
             changeNewLastName(jsonData.last_name);
             changeNewEmail(jsonData.email);
         }); 
     }, [userId, updateTrigger]);
+
+    // Profile Pic
+    const updateProfilePic = () => {
+        fetch('http://localhost:3001/editaccount/pic', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({newProfilePic, userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+        });
+    };
+
+    const handleProfilePicUpdate = () => {
+        handleClose(changeOpenPic);
+        updateProfilePic();
+    };
+
+    const handleProfilePicCancel = () => {
+        handleClose(changeOpenPic);
+        changeNewProfilePic(editData.profile_pic_id);
+    };
 
     // Name
     const updateName = () => {
@@ -245,36 +268,48 @@ const EditAccount = () => {
         changeFunc(true);
     };
 
-    const handlePhotoSelect = (imageId) => {
-        changeSelectStyle(imageId);
+    // Change Profile Pic
+    const swapPhoto = (direction) => {
+        if (direction === 1) {
+            if (newProfilePic <= 1) {
+                changeNewProfilePic(picLimit);
+            } else {
+                changeNewProfilePic(newProfilePic - 1);
+            }
+        } else {
+            if (newProfilePic >= picLimit) {
+                changeNewProfilePic(1);
+            } else {
+                changeNewProfilePic(newProfilePic + 1);
+            }
+        }
     }
 
     return (
         <div className='edit-container'>
             <div className='edit-columns'>
                 <div className='edit-column-left'>
-                    <img className='edit-profile-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
-                    <p className='edit-profile-button-text' onClick={() => handleOpen(changeOpenPhoto)}>Change Photo</p>
-                    <Dialog open={openPhoto} onClose={() => handleClose(changeOpenPhoto)}>
-                        <DialogContent>
-                            <div className='edit-dialog-profile-photo-content'>
-                                {
-                                    photoOptions.map((image) => (
-                                        <img 
-                                            className={image.id}
-                                            onClick={() => handlePhotoSelect()}
-                                            src={image.path} 
-                                            alt={image.alt} 
-                                        /> 
-                                    ))
-                                }
+                    {
+                        editData.length < 1 ? 
+                            <LoadingSpinner />
+                        : 
+                            <img className='edit-profile-pic-image' src={require(`../assets/profile-pics/${newProfilePic}.jpeg`)} alt='Profile'/>
+                    }
+                    {
+                        openPic ?
+                            <div className='edit-profile-pic'>
+                                <div className='edit-profile-pic-selection'>
+                                    <p className='edit-profile-change-text' onClick={() => swapPhoto(1)}>{leftArrow}</p>
+                                    <p className='edit-profile-change-text' onClick={() => swapPhoto(2)}>{rightArrow}</p>
+                                </div>
+                                <div className='edit-profile-pic-selection'>
+                                    <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleProfilePicCancel()}><p>Cancel</p></div>
+                                    <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleProfilePicUpdate()}>Update</div>
+                                </div>
                             </div>
-                        </DialogContent>
-                        <DialogActions>
-                            <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPhoto)}><p>Cancel</p></div>
-                            <div className='edit-dialog-button' onClick={() => handleClose(changeOpenPhoto)}>Update</div>
-                        </DialogActions>
-                    </Dialog>
+                        :
+                            <p className='edit-profile-open-text' onClick={() => handleOpen(changeOpenPic)}>Change Photo</p>
+                    }
                 </div>
                 <div className='edit-column-right'>
                     <div className='edit-title'>
@@ -418,13 +453,13 @@ const EditAccount = () => {
                                 </Dialog>
                             </div>
                         </div>
+                        <div className="edit-back">
+                            <Link to="/layout/account" className="edit-back-link">
+                                <p className="edit-back-button">Back</p>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="edit-back">
-                <Link to="/layout/account" className="edit-back-link">
-                    <p className="edit-back-button">Back</p>
-                </Link>
             </div>
         </div>
     );
