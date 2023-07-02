@@ -142,6 +142,21 @@ const updateEmail = (body) => {
         });
     })
 };
+
+const updatePassword = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { newPassword, userId } = body;
+        pool.query('update "user" set "password" = $1 where user_id = $2;', 
+            [newPassword, userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
   
 module.exports = {
     getUserPassword, 
@@ -152,5 +167,6 @@ module.exports = {
     getAccount, 
     getEditAccount, 
     updateName, 
-    updateEmail
+    updateEmail, 
+    updatePassword
 };

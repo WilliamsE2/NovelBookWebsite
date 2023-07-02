@@ -9,7 +9,6 @@ const EditAccount = () => {
     const userId = sessionStorage.getItem('userId');
 
     const [editData, changeEditData] = useState([]);
-    const [passwordCheck, changePasswordCheck] = useState('');
 
     const photoOptions = [
         {
@@ -44,6 +43,7 @@ const EditAccount = () => {
     const [invalidEmail, changeInvalidEmail] = useState(false);
     const [duplicateEmail, changeDuplicateEmail] = useState(false);
     const [invalidPassword, changeInvalidPassword] = useState(false);
+    const [incorrectOldPassword, changeIncorrectOldPassword] = useState(false);
     const [passwordMismatch, changePasswordMismatch] = useState(false);
 
     const [updateTrigger, changeUpdateTrigger] = useState(false);
@@ -69,10 +69,10 @@ const EditAccount = () => {
             changeNewFirstName(jsonData.first_name);
             changeNewLastName(jsonData.last_name);
             changeNewEmail(jsonData.email);
-            changeOldPassword(jsonData.password);
         }); 
     }, [userId, updateTrigger]);
 
+    // Name
     const updateName = () => {
         fetch('http://localhost:3001/editaccount/name', {
             method: 'POST',
@@ -113,6 +113,7 @@ const EditAccount = () => {
         changeNewLastName(editData.last_name);
     }
 
+    // Email
     const updateEmail = () => {
         fetch('http://localhost:3001/editaccount/email', {
             method: 'POST',
@@ -180,6 +181,62 @@ const EditAccount = () => {
         changeNewEmail(editData.email);
     }
 
+    // Password
+    const updatePassword = () => {
+        fetch('http://localhost:3001/editaccount/password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({newPassword, userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+            changeOldPassword('');
+            changeNewPassword('');
+            changeNewPasswordRepeat('');
+        });
+    };
+
+    const handlePasswordUpdate = () => {
+        if (oldPassword?.length < 1 || oldPassword?.length > 200 
+            || newPassword?.length < 1 || newPassword?.length > 200 
+            || newPasswordRepeat?.length < 1 || newPasswordRepeat?.length > 200) {
+            changeInvalidPassword(true);
+            changeIncorrectOldPassword(false);
+            changePasswordMismatch(false);
+        } else if (oldPassword !== editData.password) {
+            changeInvalidPassword(false);
+            changeIncorrectOldPassword(true);
+            changePasswordMismatch(false);
+        } else if (newPassword !== newPasswordRepeat) {
+            changeInvalidPassword(false);
+            changeIncorrectOldPassword(false);
+            changePasswordMismatch(true);
+        } else {
+            updatePassword();
+            handleClose(changeOpenPass);
+            changeInvalidPassword(false);
+            changeIncorrectOldPassword(false);
+            changePasswordMismatch(false);
+        }
+    };
+
+    const handlePasswordCancel = () => {
+        handleClose(changeOpenPass);
+        changeInvalidPassword(false);
+        changeIncorrectOldPassword(false);
+        changePasswordMismatch(false);
+    }
+
+    // Open and Close
     const handleClose = (changeFunc) => {
         changeFunc(false)
     };
@@ -318,6 +375,11 @@ const EditAccount = () => {
                                             fullWidth
                                             variant="standard"
                                         />
+                                        {
+                                            incorrectOldPassword ? 
+                                                <p className='register-incorrect-text'>Password is incorrect.</p>
+                                            : ''
+                                        }
                                         <TextField 
                                             margin="dense"
                                             id="password"
@@ -338,10 +400,20 @@ const EditAccount = () => {
                                             fullWidth
                                             variant="standard"
                                         />
+                                        {
+                                            invalidPassword ? 
+                                                <p className='register-incorrect-text'>Invalid passwords.</p>
+                                            : ''
+                                        }
+                                        {
+                                            passwordMismatch ? 
+                                                <p className='register-incorrect-text'>New password does not match.</p>
+                                            : ''
+                                        }
                                     </DialogContent>
                                     <DialogActions>
-                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handleClose(changeOpenPass)}><p>Cancel</p></div>
-                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handleClose(changeOpenPass)}>Update</div>
+                                        <div className='edit-dialog-button edit-dialog-cancel-button' onClick={() => handlePasswordCancel()}><p>Cancel</p></div>
+                                        <div className='edit-dialog-button edit-dialog-update-button' onClick={() => handlePasswordUpdate()}>Update</div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
