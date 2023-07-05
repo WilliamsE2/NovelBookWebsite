@@ -3,16 +3,16 @@ import { Rating } from '@mui/material';
 
 import '../styles/BookshelfCard.css';
 
-const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
+const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate}) => {
 
     return (
         <div className='bookshelf-card'>
             <div className='bookshelf-card-margin'>
-                <Link to="/layout/book">
+                <Link to={`/layout/book/${bookId}`}>
                     <img className='bookshelf-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
                 </Link>
                 <div className='bookshelf-card-info-details'>
-                    <Link to="/layout/book" className="bookshelf-card-title-link">
+                    <Link to={`/layout/book/${bookId}`} className="bookshelf-card-title-link">
                         <p className='bookshelf-card-title-text'>{title}</p>
                     </Link>
                     <p className='bookshelf-card-author-text'>{author}</p>
@@ -47,7 +47,7 @@ const BookshelfCard = ({title, author, rating, isCommunity, addedDate}) => {
                                         <img className='bookshelf-card-delete-image' src={require('../assets/delete-icon.png')} alt='Delete'/>
                                     </div>
                                     <div className="bookshelf-card-add-date">
-                                        <p className="bookshelf-card-add-date-text">Added: {addedDate}</p>
+                                        <p className="bookshelf-card-add-date-text"></p>
                                     </div>
                                 </div>
                             </>

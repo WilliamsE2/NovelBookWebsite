@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "bookId": 1,
         "title": "Harry Potter and the Deathly Hallows",
         "author": "J.K. Rowling",
         "community_rating": 4.85,
@@ -11,6 +12,7 @@
     },
     {
         "id": 2,
+        "bookId": 1,
         "title": "Atomic Habits",
         "author": "James Clear",
         "community_rating": 4.56,
@@ -21,6 +23,7 @@
     },
     {
         "id": 3,
+        "bookId": 1,
         "title": "The Girl with the Dragon Tattoo",
         "author": "Stieg Larsson",
         "community_rating": 3.81,
@@ -31,6 +34,7 @@
     },
     {
         "id": 4,
+        "bookId": 1,
         "title": "You Can't Be Serious",
         "author": "Kal Penn",
         "community_rating": 3.44,
@@ -41,6 +45,7 @@
     },
     {
         "id": 5,
+        "bookId": 1,
         "title": "Basic Economics",
         "author": "Thomas Sowell",
         "community_rating": 4.83,
@@ -51,6 +56,7 @@
     },
     {
         "id": 6,
+        "bookId": 1,
         "title": "A Game of Thrones",
         "author": "George R.R. Martin",
         "community_rating": 4.29,
@@ -61,6 +67,7 @@
     },
     {
         "id": 7,
+        "bookId": 1,
         "title": "The Road",
         "author": "Cormac McCarthy",
         "community_rating": 4.85,
@@ -71,6 +78,7 @@
     },
     {
         "id": 8,
+        "bookId": 1,
         "title": "Caste",
         "author": "Isabel Wilkerson",
         "community_rating": 4.56,
@@ -81,6 +89,7 @@
     },
     {
         "id": 9,
+        "bookId": 1,
         "title": "The War on the West",
         "author": "Douglas Murray",
         "community_rating": 3.81,
@@ -91,6 +100,7 @@
     },
     {
         "id": 10,
+        "bookId": 1,
         "title": "12 Rules for Life",
         "author": "Jordan B. Peterson",
         "community_rating": 3.44,
@@ -101,6 +111,7 @@
     },
     {
         "id": 11,
+        "bookId": 1,
         "title": "The Lord of the Rings",
         "author": "J.R.R. Tolkien",
         "community_rating": 4.83,
@@ -111,6 +122,7 @@
     },
     {
         "id": 12,
+        "bookId": 1,
         "title": "Thinking Fast and Slow",
         "author": "Daniel Kahneman",
         "community_rating": 4.29,

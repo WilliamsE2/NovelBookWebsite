@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 
 import '../styles/MyBookshelf.css';
 
 // Components
 import BookshelfCard from '../components/BookshelfCard.js';
+import LoadingSpinner from '../components/LoadingSpinner.js';
 
-import listData from '../lists-data.json';
+import testData from '../lists-data.json';
 
 const MyBookshelf = () => {
+
+    const userId = sessionStorage.getItem('userId');
+
+    const [listData, changeListData] = useState([]);
+    const [bookData, changeBookData] = useState([]);
 
     const pageItemCount = 10;
     const [pageCount, changePageCount] = useState(0);
@@ -20,27 +26,75 @@ const MyBookshelf = () => {
 
     const [bookSlice, changeBookSlice] = useState([{}]);
 
-    const lists = [
-        'Read',
-        'My Reading List',
-        'Favorites'
-    ];
+    useEffect(() => {
+        fetch('http://localhost:3001/lists', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            console.log(data);
+            const jsonData = JSON.parse(data);
+            console.log(jsonData);
+            changeListData(jsonData);
+            /*for (let i = 0; i < jsonData.length; i++) {
+                if (jsonData[i].list_name === 'Read') {
+                    return getListBooks(jsonData, jsonData[i].row_number, jsonData[i].list_name);
+                }
+            }*/
+        });
+    }, [userId]);
+
+    const getListBooks = (data, listNum, listName) => {
+        const bookIds = JSON.stringify(data[listNum - 1].list);
+
+        fetch('http://localhost:3001/lists/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, bookIds}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            const jsonData = JSON.parse(data);
+            console.log(jsonData);
+            changeBookData(jsonData);
+            setPagination(jsonData.length);
+            changeCurrentList(listName);
+        });
+    };
+
+    const setPagination = (bookAmount) => {
+        changePageCount(Math.ceil(bookAmount / pageItemCount));
+        handlePageChange(1);
+    };
 
     const handlePageChange = (i) => {
         changeCurrentPage(i);
         const startItem = ((i - 1) * pageItemCount) + 1;
-        changeBookSlice(listData.slice(startItem - 1, (pageItemCount * i)));
+        changeBookSlice(bookData.slice(startItem - 1, (pageItemCount * i)));
     };
 
-    const handleListChange = (value) => {
-        changeCurrentList(value);
-        handlePageChange(1);
+    const handleListChange = (listNum, listName) => {
+        const data = listData;
+        //getListBooks(data, listNum, listName);
     };
-
-    useEffect(() => {
-        changePageCount(Math.ceil(listData.length / pageItemCount));
-        handlePageChange(1);
-    }, []);
 
     return (
         <div className='bookshelf-container'>
@@ -50,9 +104,12 @@ const MyBookshelf = () => {
                 </div>
                 <div className='bookshelf-my-lists-list'>
                     {
-                        lists.map((list) => (
-                            <p className='bookshelf-my-lists-list-text' onClick={() => handleListChange(list)}>{list}</p>
-                        ))
+                        listData.length < 1 ? 
+                            <LoadingSpinner />
+                        : 
+                            listData.map((list) => (
+                                <p className='bookshelf-my-lists-list-text' onClick={() => handleListChange(list.row_number, list.list_name)}>{list.list_name}</p>
+                            ))
                     }
                 </div>
                 {
@@ -84,43 +141,49 @@ const MyBookshelf = () => {
                             </div>
                     }
                 </div>
-                <Pagination 
-                    className='bookshelf-list-pagination' 
-                    dir='ltr'
-                    page={currentPage} 
-                    count={pageCount} 
-                    onChange={(event, value) => handlePageChange(value)} 
-                    variant='outlined' 
-                    shape='rounded' 
-                    showFirstButton 
-                    showLastButton 
-                />
-                <div className='bookshelf-list'>
-                    {
-                        bookSlice.filter(book => {
-                            return book;
-                        }).map((book, index) => (
-                            <BookshelfCard 
-                                title={book.title}
-                                author={book.author}
-                                rating={book.user_rating}
-                                isCommunity={false}
-                                addedDate={book.added_date}
-                            />
-                        ))
-                    }
-                </div>
-                <Pagination 
-                    className='bookshelf-list-pagination' 
-                    dir='ltr'
-                    page={currentPage} 
-                    count={pageCount} 
-                    onChange={(event, value) => handlePageChange(value)} 
-                    variant='outlined' 
-                    shape='rounded' 
-                    showFirstButton 
-                    showLastButton 
-                />
+                {
+                    bookData.length < 1 ? '' : 
+                        <>
+                        <Pagination 
+                            className='bookshelf-list-pagination' 
+                            dir='ltr'
+                            page={currentPage} 
+                            count={pageCount} 
+                            onChange={(event, value) => handlePageChange(value)} 
+                            variant='outlined' 
+                            shape='rounded' 
+                            showFirstButton 
+                            showLastButton 
+                        />
+                        <div className='bookshelf-list'>
+                            {
+                                bookSlice.filter(book => {
+                                    return book;
+                                }).map((book, index) => (
+                                    <BookshelfCard 
+                                        bookId={book.bookId}
+                                        title={book.title}
+                                        author={book.author}
+                                        rating={book.user_rating}
+                                        isCommunity={false}
+                                        addedDate={book.added_date}
+                                    />
+                                ))
+                            }
+                        </div>
+                        <Pagination 
+                            className='bookshelf-list-pagination' 
+                            dir='ltr'
+                            page={currentPage} 
+                            count={pageCount} 
+                            onChange={(event, value) => handlePageChange(value)} 
+                            variant='outlined' 
+                            shape='rounded' 
+                            showFirstButton 
+                            showLastButton 
+                        />
+                        </>
+                }
             </div>
         </div>
     );
