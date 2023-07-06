@@ -98,28 +98,26 @@ const getLists = (body) => {
     })
 };
 
-/*
-const getLists = (body) => {
-    return new Promise(function(resolve, reject) {
-        const { userId } = body;
-        pool.query('select row_number () over (order by l.list_id), l.list_id, l.list_name, json_agg(json_build_object(\'book_id\', b.book_id, \'book_title\', b.book_title, \'author_name\', b.author_name)) as book_list, l.deletable from list l cross join unnest(l.list) as listId inner join book b on b.book_id = listId where l.user_id = $1 and l.is_active = true group by l.list_id;', 
-            [userId], 
-            (error, results) => 
-        {
-            if (error) {
-                reject(error);
-            }
-            resolve(results.rows);
-        });
-    })
-};
-*/
-
 const createList = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId, newListName } = body;
         pool.query('insert into list(user_id, list_name, list, deletable, is_active, update_date, creation_date)values($1, $2, \'{}\', true, true, current_timestamp, current_timestamp);', 
             [userId, newListName], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const deleteList = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, deleteListId } = body;
+        pool.query('update list set is_active = false where user_id = $1 and list_id = $2;', 
+            [userId, deleteListId], 
             (error, results) => 
         {
             if (error) {
@@ -227,7 +225,8 @@ module.exports = {
     getHomeBooks, 
     getBook, 
     getLists, 
-    createList,  
+    createList, 
+    deleteList, 
     getAccount, 
     getEditAccount, 
     updateProfilePic, 

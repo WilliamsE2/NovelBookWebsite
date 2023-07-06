@@ -61,7 +61,7 @@ const MyBookshelf = () => {
     }, [userId, updateTrigger]);
 
     const createList = () => {
-        changeOpenCreateList(!openCreateList)
+        changeOpenCreateList(!openCreateList);
 
         fetch('http://localhost:3001/lists/create', {
             method: 'POST',
@@ -69,6 +69,31 @@ const MyBookshelf = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({userId, newListName}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+        });
+    };
+
+    const deleteList = () => {
+        changeOpenDeleteList(!openDeleteList);
+
+        const deleteListId = listData[currentList].list_id;
+        console.log(deleteListId);
+
+        fetch('http://localhost:3001/lists/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, deleteListId}),
         })
         .then(response => {
             if (!response.ok) {
@@ -140,7 +165,7 @@ const MyBookshelf = () => {
                                             <div className='bookshelf-delete-list'>
                                                 <p className='bookshelf-delete-list-text'>Delete this list?</p>
                                                 <img className='bookshelf-create-list-image bookshelf-create-list-image-rotate' onClick={() => changeOpenDeleteList(!openDeleteList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
-                                                <img className='bookshelf-create-list-image' onClick={() => changeOpenDeleteList(!openDeleteList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
+                                                <img className='bookshelf-create-list-image' onClick={() => deleteList()} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
                                             </div> 
                                         : 
                                             <div className='bookshelf-delete-list-button' onClick={() => changeOpenDeleteList(!openDeleteList)}>
