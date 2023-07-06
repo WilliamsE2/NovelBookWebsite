@@ -63,7 +63,7 @@ const Review = ({name, rating, content, date, readOnly, editable, handler, showU
                     {
                         editable ?
                             <>
-                                <div onClick={() => handler(3)}>Post</div>
+                            <div onClick={() => handler(3)}>Post</div>
                             </>
                         : ''
                     }
