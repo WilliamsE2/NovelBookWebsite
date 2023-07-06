@@ -3,7 +3,7 @@ import { Rating } from '@mui/material';
 
 import '../styles/BookshelfCard.css';
 
-const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate}) => {
+const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate, removeBookFunc}) => {
 
     return (
         <div className='bookshelf-card'>
@@ -43,7 +43,7 @@ const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate}) 
                                 />
                             </div>
                             <div className='bookshelf-card-extras'>
-                                <div className='bookshelf-card-delete-button'>
+                                <div className='bookshelf-card-delete-button' onClick={() => removeBookFunc(bookId)}>
                                     <img className='bookshelf-card-delete-image' src={require('../assets/delete-icon.png')} alt='Delete'/>
                                 </div>
                                 <div className="bookshelf-card-add-date">

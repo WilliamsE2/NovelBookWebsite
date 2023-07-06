@@ -53,8 +53,6 @@ const MyBookshelf = () => {
                     changePageCount(Math.ceil(jsonData[i].book_list.length / pageItemCount));
                     changeCurrentPage(1);
                     changeBookSlice(jsonData[i].book_list.slice(0, pageItemCount));
-
-                    console.log(jsonData);
                 }
             }
         });
@@ -86,7 +84,6 @@ const MyBookshelf = () => {
         changeOpenDeleteList(!openDeleteList);
 
         const deleteListId = listData[currentList].list_id;
-        console.log(deleteListId);
 
         fetch('http://localhost:3001/lists/delete', {
             method: 'POST',
@@ -94,6 +91,28 @@ const MyBookshelf = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({userId, deleteListId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+        });
+    };
+
+    const removeBookFromList = (bookId) => {
+        const listId = listData[currentList].list_id;
+
+        fetch('http://localhost:3001/lists/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, listId, bookId}),
         })
         .then(response => {
             if (!response.ok) {
@@ -212,6 +231,7 @@ const MyBookshelf = () => {
                                                     rating={0}
                                                     isCommunity={false}
                                                     addedDate={'Dummy Date'}
+                                                    removeBookFunc={removeBookFromList}
                                                 />
                                             ))
                                         }

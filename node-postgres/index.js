@@ -100,6 +100,16 @@ app.post('/lists/delete', (req, res) => {
   })
 });
 
+app.post('/lists/remove', (req, res) => {
+  auth_model.removeBookFromList(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/account', (req, res) => {
   auth_model.getAccount(req.body)
   .then(response => {

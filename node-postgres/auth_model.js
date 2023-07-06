@@ -128,6 +128,21 @@ const deleteList = (body) => {
     })
 };
 
+const removeBookFromList = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, listId, bookId } = body;
+        pool.query('update list set list = array_remove(list, $3) where user_id = $1 and list_id = $2;', 
+            [userId, listId, bookId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
 const getAccount = (body) => {
     const { userId } = body;
     return new Promise(function(resolve, reject) {
@@ -227,6 +242,7 @@ module.exports = {
     getLists, 
     createList, 
     deleteList, 
+    removeBookFromList, 
     getAccount, 
     getEditAccount, 
     updateProfilePic, 
