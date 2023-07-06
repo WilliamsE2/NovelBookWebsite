@@ -19,7 +19,7 @@ const MyBookshelf = () => {
     const [pageCount, changePageCount] = useState(0);
     const [currentPage, changeCurrentPage] = useState(1);
 
-    const [currentList, changeCurrentList] = useState(0);
+    const [currentList, changeCurrentList] = useState(-1);
     const [openCreateList, changeOpenCreateList] = useState(false);
     const [openDeleteList, changeOpenDeleteList] = useState(false);
     const [newListName, changeNewListName] = useState('');
@@ -45,17 +45,24 @@ const MyBookshelf = () => {
             const jsonData = JSON.parse(data);
             changeListData(jsonData);
 
-            for (let i = 0; i < jsonData.length; i++) {
-                if (jsonData[i].list_name === 'Read' && jsonData[i].deletable === false) {
-                    changeCurrentList(i);
-                    changeBookData(jsonData[i].book_list);
-                    
-                    changePageCount(Math.ceil(jsonData[i].book_list.length / pageItemCount));
-                    changeCurrentPage(1);
-                    changeBookSlice(jsonData[i].book_list.slice(0, pageItemCount));
+            if (currentList < 0) {
+                for (let i = 0; i < jsonData.length; i++) {
+                    if (jsonData[i].list_name === 'Read' && jsonData[i].deletable === false) {
+                        changeCurrentList(i);
+                        changeBookData(jsonData[i].book_list);
+                        
+                        changePageCount(Math.ceil(jsonData[i].book_list.length / pageItemCount));
+                        changeCurrentPage(1);
+                        changeBookSlice(jsonData[i].book_list.slice(0, pageItemCount));
+                    }
                 }
+            } else {
+                changeBookData(jsonData[currentList].book_list);
+                changePageCount(Math.ceil(jsonData[currentList].book_list.length / pageItemCount));
+                changeBookSlice(jsonData[currentList].book_list.slice(0, pageItemCount));
             }
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, updateTrigger]);
 
     const createList = () => {
@@ -228,9 +235,8 @@ const MyBookshelf = () => {
                                                     bookId={book.book_id}
                                                     title={book.book_title}
                                                     author={book.author_name}
-                                                    rating={0}
+                                                    rating={book.rating}
                                                     isCommunity={false}
-                                                    addedDate={'Dummy Date'}
                                                     removeBookFunc={removeBookFromList}
                                                 />
                                             ))
