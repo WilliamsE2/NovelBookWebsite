@@ -172,6 +172,12 @@
     margin-left: 1.3em;
 }
 
+.bookshelf-empty-text {
+    margin-top: 1.5em;
+    margin-left: 1.5em;
+    color: gray;
+}
+
 .bookshelf-list {
     margin-top: 0.8em;
     width: 100%;

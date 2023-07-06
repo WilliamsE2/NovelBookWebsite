@@ -7,8 +7,6 @@ import '../styles/MyBookshelf.css';
 import BookshelfCard from '../components/BookshelfCard.js';
 import LoadingSpinner from '../components/LoadingSpinner.js';
 
-import testData from '../lists-data.json';
-
 const MyBookshelf = () => {
 
     const userId = sessionStorage.getItem('userId');
@@ -24,6 +22,9 @@ const MyBookshelf = () => {
     const [currentList, changeCurrentList] = useState(0);
     const [openCreateList, changeOpenCreateList] = useState(false);
     const [openDeleteList, changeOpenDeleteList] = useState(false);
+    const [newListName, changeNewListName] = useState('');
+
+    const [updateTrigger, changeUpdateTrigger] = useState(false);
 
     useEffect(() => {
         fetch('http://localhost:3001/lists', {
@@ -52,10 +53,34 @@ const MyBookshelf = () => {
                     changePageCount(Math.ceil(jsonData[i].book_list.length / pageItemCount));
                     changeCurrentPage(1);
                     changeBookSlice(jsonData[i].book_list.slice(0, pageItemCount));
+
+                    console.log(jsonData);
                 }
             }
         });
-    }, [userId]);
+    }, [userId, updateTrigger]);
+
+    const createList = () => {
+        changeOpenCreateList(!openCreateList)
+
+        fetch('http://localhost:3001/lists/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, newListName}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUpdateTrigger(!updateTrigger);
+        });
+    };
 
     const handlePageChange = (i) => {
         changeCurrentPage(i);
@@ -92,9 +117,9 @@ const MyBookshelf = () => {
                 {
                     openCreateList ? 
                         <div className='bookshelf-create-list'>
-                            <input className='bookshelf-create-list-input' placeholder='List Name' />
+                            <input className='bookshelf-create-list-input' placeholder='List Name' value={newListName} onChange={(e) => changeNewListName(e.target.value)} />
                             <img className='bookshelf-create-list-image bookshelf-create-list-image-rotate' onClick={() => changeOpenCreateList(!openCreateList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
-                            <img className='bookshelf-create-list-image' onClick={() => changeOpenCreateList(!openCreateList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
+                            <img className='bookshelf-create-list-image' onClick={() => createList()} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
                         </div> 
                     : 
                         <div className='bookshelf-create-list-button'>
@@ -141,33 +166,44 @@ const MyBookshelf = () => {
                                 showFirstButton 
                                 showLastButton 
                             />
-                            <div className='bookshelf-list'>
-                                {
-                                    bookSlice.filter(book => {
-                                        return book;
-                                    }).map((book, index) => (
-                                        <BookshelfCard 
-                                            bookId={book.book_id}
-                                            title={book.book_title}
-                                            author={book.author_name}
-                                            rating={0}
-                                            isCommunity={false}
-                                            addedDate={'Dummy Date'}
-                                        />
-                                    ))
-                                }
-                            </div>
-                            <Pagination 
-                                className='bookshelf-list-pagination' 
-                                dir='ltr'
-                                page={currentPage} 
-                                count={pageCount} 
-                                onChange={(event, value) => handlePageChange(value)} 
-                                variant='outlined' 
-                                shape='rounded' 
-                                showFirstButton 
-                                showLastButton 
-                            />
+                            {
+                                bookData[0].book_id < 0 ? 
+                                    <p className='bookshelf-empty-text'>List is empty.</p>
+                                :
+                                    <>
+                                    <div className='bookshelf-list'>
+                                        {
+                                            bookSlice.filter(book => {
+                                                if (book.book_id < 0) {
+                                                    return '';
+                                                } else {
+                                                    return book;
+                                                }
+                                            }).map((book, index) => (
+                                                <BookshelfCard 
+                                                    bookId={book.book_id}
+                                                    title={book.book_title}
+                                                    author={book.author_name}
+                                                    rating={0}
+                                                    isCommunity={false}
+                                                    addedDate={'Dummy Date'}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                    <Pagination 
+                                        className='bookshelf-list-pagination' 
+                                        dir='ltr'
+                                        page={currentPage} 
+                                        count={pageCount} 
+                                        onChange={(event, value) => handlePageChange(value)} 
+                                        variant='outlined' 
+                                        shape='rounded' 
+                                        showFirstButton 
+                                        showLastButton 
+                                    />
+                                    </>
+                            }
                             </>
                 }
             </div>

@@ -80,8 +80,8 @@ app.post('/lists', (req, res) => {
   })
 });
 
-app.post('/lists/books', (req, res) => {
-  auth_model.getListBooks(req.body)
+app.post('/lists/create', (req, res) => {
+  auth_model.createList(req.body)
   .then(response => {
     res.status(200).send(response);
   })
