@@ -50,6 +50,16 @@ app.post('/duplicate', (req, res) => {
   })
 });
 
+app.get('/all-books', (req, res) => {
+  auth_model.getAllBooks()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.get('/home-books', (req, res) => {
   auth_model.getHomeBooks()
   .then(response => {
@@ -102,6 +112,16 @@ app.post('/lists/delete', (req, res) => {
 
 app.post('/lists/remove', (req, res) => {
   auth_model.removeBookFromList(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
+app.get('/genres', (req, res) => {
+  auth_model.getGenres()
   .then(response => {
     res.status(200).send(response);
   })

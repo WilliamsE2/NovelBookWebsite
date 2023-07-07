@@ -55,6 +55,19 @@ const getDuplicateEmail = (body) => {
     }) 
 };
 
+const getAllBooks = () => {
+    return new Promise(function(resolve, reject) {
+        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id, coalesce(br.overall_rating, 0) from book b left join book_rating br on br.book_id = b.book_id and br.is_active = true where b.is_active = true order by book_id;', 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
+
 const getHomeBooks = () => {
     return new Promise(function(resolve, reject) {
         pool.query('select b.book_id, b.book_title, b.author_name from book b order by b.book_id asc limit 4;', 
@@ -139,6 +152,19 @@ const removeBookFromList = (body) => {
                 reject(error);
             }
             resolve(results.rows[0]);
+        });
+    })
+};
+
+const getGenres = () => {
+    return new Promise(function(resolve, reject) {
+        pool.query('select g.genre_id, g.genre_title, g.is_fiction from genres g where g.is_active = true order by g.display_order;', 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
         });
     })
 };
@@ -237,12 +263,14 @@ module.exports = {
     getUserPassword, 
     createUser, 
     getDuplicateEmail, 
+    getAllBooks, 
     getHomeBooks, 
     getBook, 
     getLists, 
     createList, 
     deleteList, 
     removeBookFromList, 
+    getGenres, 
     getAccount, 
     getEditAccount, 
     updateProfilePic, 
