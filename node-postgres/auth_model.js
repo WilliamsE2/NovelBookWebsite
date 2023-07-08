@@ -96,6 +96,21 @@ const getBook = (body) => {
     }) 
 };
 
+const getListsBookDropdown = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, bookId } = body;
+        pool.query('select l.list_id, l.list_name, l.list, (select $2 = any(l.list)) as in_list from list l where l.user_id = $1;', 
+            [userId, bookId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
+
 const getLists = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId } = body;
@@ -266,6 +281,7 @@ module.exports = {
     getAllBooks, 
     getHomeBooks, 
     getBook, 
+    getListsBookDropdown, 
     getLists, 
     createList, 
     deleteList, 

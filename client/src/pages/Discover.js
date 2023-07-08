@@ -164,6 +164,7 @@ const Discover = () => {
                                         }
                                     }).map((book, index) => (
                                         <BookshelfCard 
+                                            bookId={book.book_id}
                                             title={book.book_title}
                                             author={book.author_name}
                                             rating={book.overall_rating}

@@ -13,28 +13,16 @@ import reviewData from '../review-data.json';
 
 const Book = () => {
 
+    const userId = sessionStorage.getItem('userId');
     const bookId = useParams().id;
     
     const [bookData, changeBookData] = useState([]);
+    const [listData, changeListData] = useState([]);
 
-    /*const bookData = {
-        "id": 1,
-        "book_title": "Harry Potter and the Deathly Hallows",
-        "author_name": "J.K. Rowling",
-        "publishing_date_display": "July 21, 2007",
-        "page_count": 607,
-        "genre_title": "Fantasy",
-        "description": "Readers beware. The brilliant, breathtaking conclusion to J.K. Rowling's spellbinding series is not for the faint of heart -- such revelations, battles, and betrayals await in Harry Potter and the Deathly Hallows that no fan will make it to the end unscathed. Luckily, Rowling has prepped loyal readers for the end of her series by doling out increasingly dark and dangerous tales of magic and mystery, shot through with lessons about honor and contempt, love and loss, and right and wrong. Fear not, you will find no spoilers in our review -- to tell the plot would ruin the journey, and Harry Potter and the Deathly Hallows is an odyssey the likes of which Rowling's fans have not yet seen, and are not likely to forget. But we would be remiss if we did not offer one small suggestion before you embark on your final adventure with Harry -- bring plenty of tissues. The heart of Book 7 is a hero's mission -- not just in Harry's quest for the Horcruxes, but in his journey from boy to man -- and Harry faces more danger than that found in all six books combined, from the direct threat of the Death Eaters and you-know-who, to the subtle perils of losing faith in himself. Attentive readers would do well to remember Dumbledore's warning about making the choice between 'what is right and what is easy,' and know that Rowling applies the same difficult principle to the conclusion of her series. While fans will find the answers to hotly speculated questions about Dumbledore, Snape, and you-know-who, it is a testament to Rowling's skill as a storyteller that even the most astute and careful reader will be taken by surprise.",
-        "creation_date": "February 13, 2023",
-        "update_date": "March, 6, 2023"
-    }*/
-
-    const scrollToMyReview = useRef(null);
 
     const [openList, changeOpenList] = useState(false);
     const [inList, changeInList] = useState(false);
     const [createList, changeCreateList] = useState(false);
-    // eslint-disable-next-line no-unused-vars
     const [newListInput, changeNewListInput] = useState("");
     const [userRating, changeUserRating] = useState(null);
     const [starFilter, changeStarFilter] = useState(0);
@@ -45,6 +33,8 @@ const Book = () => {
         {rating: 4, color: 'blue'},
         {rating: 5, color: 'blue'},
     ]);
+
+    const scrollToMyReview = useRef(null);
 
     const bookRecs = [
         {
@@ -92,7 +82,6 @@ const Book = () => {
     }
 
     useEffect(() => {
-        console.log(bookId);
         fetch('http://localhost:3001/book', {
             method: 'POST',
             headers: {
@@ -108,11 +97,30 @@ const Book = () => {
             }
         })
         .then(data => {
-            console.log(data);
-            console.log(JSON.parse(data));
             changeBookData(JSON.parse(data));
         });
     }, [bookId]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/book/lists-dropdown', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeListData(JSON.parse(data));
+            console.log(JSON.parse(data));
+        });
+    }, [userId, bookId]);
 
     const handleChildRating = (value) => {
         changeUserRating(value);
@@ -168,7 +176,7 @@ const Book = () => {
                         <div className='book-list-results-box-outer'>
                             <div className='book-list-results-box-inner'>
                                 {
-                                    lists.filter(list => {
+                                    listData.filter(list => {
                                         if (openList === false) {
                                             return false;
                                         } else {
@@ -176,9 +184,9 @@ const Book = () => {
                                         }
                                     }).map((list, index) => (
                                         <div className='book-list-result' key={index}>
-                                            <p className='book-list-result-text'>{list.title}</p>
+                                            <p className='book-list-result-text'>{list.list_name}</p>
                                             {
-                                                list.added ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                                list.in_list ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
                                             }
                                         </div>
                                     ))
