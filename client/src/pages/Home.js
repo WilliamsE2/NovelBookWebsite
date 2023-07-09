@@ -8,25 +8,6 @@ import LoadingSpinner from '../components/LoadingSpinner.js';
 
 const Home = () => {
 
-    /*const bookRecs = [
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        }
-    ];*/
-
     const [bookRecs, changeBookRecs] = useState([]);
 
     useEffect(() => {

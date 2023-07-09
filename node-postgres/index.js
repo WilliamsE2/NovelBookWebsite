@@ -70,6 +70,16 @@ app.get('/home-books', (req, res) => {
   })
 });
 
+app.post('/book/recommended', (req, res) => {
+  auth_model.getRecommendedBooks(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/book', (req, res) => {
   auth_model.getBook(req.body)
   .then(response => {

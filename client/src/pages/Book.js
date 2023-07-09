@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Rating, Pagination, LinearProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 
 import '../styles/Book.css';
 
@@ -15,9 +15,11 @@ const Book = () => {
 
     const userId = sessionStorage.getItem('userId');
     const bookId = useParams().id;
+    const [genreId, changeGenreId] = useState(1);
     
     const [bookData, changeBookData] = useState([]);
     const [listData, changeListData] = useState([]);
+    const [bookRecData, changeBookRecData] = useState([]);
 
 
     const [openList, changeOpenList] = useState(false);
@@ -35,44 +37,6 @@ const Book = () => {
     ]);
 
     const scrollToMyReview = useRef(null);
-
-    const bookRecs = [
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        },
-        {
-            'title': 'Harry Potter and the Deathly Hallows',
-            'author': 'J.K. Rowling'
-        }
-    ];
-
-    let lists = [
-        {
-            'title': 'My Reading List',
-            'added': inList
-        },
-        {
-            'title': 'Read',
-            'added': inList
-        },
-        {
-            'title': 'Favorites',
-            'added': inList
-        },
-        {
-            'title': 'Dummy',
-            'added': inList
-        }
-    ];
 
     let userReview = {
         'name': 'Mia Joy',
@@ -97,7 +61,9 @@ const Book = () => {
             }
         })
         .then(data => {
-            changeBookData(JSON.parse(data));
+            const jsonData = JSON.parse(data);
+            changeBookData(jsonData);
+            changeGenreId(jsonData.genre_id);
         });
     }, [bookId]);
 
@@ -118,9 +84,28 @@ const Book = () => {
         })
         .then(data => {
             changeListData(JSON.parse(data));
-            console.log(JSON.parse(data));
         });
     }, [userId, bookId]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/book/recommended', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({bookId, genreId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeBookRecData(JSON.parse(data));
+        });
+    }, [bookId, genreId]);
 
     const handleChildRating = (value) => {
         changeUserRating(value);
@@ -207,9 +192,9 @@ const Book = () => {
                                     : ''
                                 }
                             </div>
+                        </div>
                     </div>
-                    </div>
-                    <a className='book-button amazon-button' target='_blank' rel="noopener noreferrer" href='https://www.amazon.com/Harry-Potter-Deathly-Hallows-Book/dp/0545139708'>
+                    <a className='book-button amazon-button' target='_blank' rel="noopener noreferrer" href={`${bookData.link}`}>
                         <img className='amazon-image' src={require('../assets/amazon-logo.png')} alt='Amazon Logo'/>
                     </a>
                     <div className='book-user-rating-button'>
@@ -244,9 +229,12 @@ const Book = () => {
                             <p className='book-recommend-text'>Books like this one...</p>
                             <div className='book-recommend-row'>
                                 {
-                                    bookRecs.map(rec => (
-                                        <BookSelector title={rec.title} author={rec.author} />
-                                    ))
+                                    bookRecData.length < 1 ? 
+                                        <LoadingSpinner /> 
+                                    : 
+                                        bookRecData.map(rec => (
+                                            <BookSelector title={rec.book_title} author={rec.author_name} />
+                                        ))
                                 }
                             </div>
                         </div>

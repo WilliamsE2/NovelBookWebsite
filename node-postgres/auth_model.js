@@ -81,10 +81,25 @@ const getHomeBooks = () => {
     })
 };
 
+const getRecommendedBooks = (body) => {
+    const { bookId, genreId } = body;
+    return new Promise(function(resolve, reject) {
+        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id from book b where b.book_id != $1 order by case b.genre_id when $2 then 1 else 2 end, random() limit 4;', 
+            [bookId, genreId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
+
 const getBook = (body) => {
     const { bookId } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_title, b.author_name, b.publishing_date_display, b.page_count, g.genre_title, b.description from book b inner join genres g on g.genre_id = b.genre_id where b.book_id = $1;', 
+        pool.query('select b.book_title, b.author_name, b.publishing_date_display, b.page_count, b.genre_id, g.genre_title, b.description, b.link from book b inner join genres g on g.genre_id = b.genre_id where b.book_id = $1;', 
             [bookId], 
             (error, results) => 
         {
@@ -280,6 +295,7 @@ module.exports = {
     getDuplicateEmail, 
     getAllBooks, 
     getHomeBooks, 
+    getRecommendedBooks, 
     getBook, 
     getListsBookDropdown, 
     getLists, 
