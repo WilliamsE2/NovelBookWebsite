@@ -114,7 +114,7 @@ const getBook = (body) => {
 const getListsBookDropdown = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId, bookId } = body;
-        pool.query('select l.list_id, l.list_name, l.list, (select $2 = any(l.list)) as in_list from list l where l.user_id = $1;', 
+        pool.query('select l.list_id, l.list_name, l.list, (select $2 = any(l.list)) as in_list from list l where l.user_id = $1 order by l.list_id;', 
             [userId, bookId], 
             (error, results) => 
         {
@@ -161,6 +161,21 @@ const deleteList = (body) => {
         const { userId, deleteListId } = body;
         pool.query('update list set is_active = false where user_id = $1 and list_id = $2;', 
             [userId, deleteListId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const addBookToList = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, listId, bookId } = body;
+        pool.query('update list set list = array_append(list, $3) where user_id = $1 and list_id = $2;', 
+            [userId, listId, bookId], 
             (error, results) => 
         {
             if (error) {
@@ -301,6 +316,7 @@ module.exports = {
     getLists, 
     createList, 
     deleteList, 
+    addBookToList, 
     removeBookFromList, 
     getGenres, 
     getAccount, 

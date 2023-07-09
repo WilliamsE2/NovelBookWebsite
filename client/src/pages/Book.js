@@ -23,7 +23,6 @@ const Book = () => {
 
 
     const [openList, changeOpenList] = useState(false);
-    const [inList, changeInList] = useState(false);
     const [createList, changeCreateList] = useState(false);
     const [newListInput, changeNewListInput] = useState("");
     const [userRating, changeUserRating] = useState(null);
@@ -35,6 +34,8 @@ const Book = () => {
         {rating: 4, color: 'blue'},
         {rating: 5, color: 'blue'},
     ]);
+
+    const [listTrigger, changeListTrigger] = useState(false);
 
     const scrollToMyReview = useRef(null);
 
@@ -85,7 +86,7 @@ const Book = () => {
         .then(data => {
             changeListData(JSON.parse(data));
         });
-    }, [userId, bookId]);
+    }, [userId, bookId, listTrigger]);
 
     useEffect(() => {
         fetch('http://localhost:3001/book/recommended', {
@@ -106,6 +107,46 @@ const Book = () => {
             changeBookRecData(JSON.parse(data));
         });
     }, [bookId, genreId]);
+
+    const addBookToList = (listId) => {
+        fetch('http://localhost:3001/lists/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, listId, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeListTrigger(!listTrigger);
+        });
+    };
+
+    const removeBookFromList = (listId) => {
+        fetch('http://localhost:3001/lists/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, listId, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeListTrigger(!listTrigger);
+        });
+    };
 
     const handleChildRating = (value) => {
         changeUserRating(value);
@@ -171,7 +212,7 @@ const Book = () => {
                                         <div className='book-list-result' key={index}>
                                             <p className='book-list-result-text'>{list.list_name}</p>
                                             {
-                                                list.in_list ? <img className='checkmark-image' onClick={() => changeInList(!inList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => changeInList(!inList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                                list.in_list ? <img className='checkmark-image' onClick={() => removeBookFromList(list.list_id)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/> : <img className='plus-image' onClick={() => addBookToList(list.list_id)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
                                             }
                                         </div>
                                     ))
