@@ -114,7 +114,7 @@ const getBook = (body) => {
 const getListsBookDropdown = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId, bookId } = body;
-        pool.query('select l.list_id, l.list_name, l.list, (select $2 = any(l.list)) as in_list from list l where l.user_id = $1 order by l.list_id;', 
+        pool.query('select l.list_id, l.list_name, l.list, (select $2 = any(l.list)) as in_list from list l where l.user_id = $1 and l.is_active = true order by l.list_id;', 
             [userId, bookId], 
             (error, results) => 
         {
@@ -144,8 +144,24 @@ const getLists = (body) => {
 const createList = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId, newListName } = body;
-        pool.query('insert into list(user_id, list_name, list, deletable, is_active, update_date, creation_date)values($1, $2, \'{}\', true, true, current_timestamp, current_timestamp);', 
+        pool.query('insert into list(user_id, list_name, list, deletable, is_active, update_date, creation_date) values($1, $2, \'{}\', true, true, current_timestamp, current_timestamp);', 
             [userId, newListName], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const createListWithBook = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, newListName, bookId } = body;
+        const bookArray = '{'.concat('', bookId).concat('','}');
+        pool.query('insert into list(user_id, list_name, list, deletable, is_active, update_date, creation_date) values($1, $2, $3, true, true, current_timestamp, current_timestamp);', 
+            [userId, newListName, bookArray], 
             (error, results) => 
         {
             if (error) {
@@ -315,6 +331,7 @@ module.exports = {
     getListsBookDropdown, 
     getLists, 
     createList, 
+    createListWithBook, 
     deleteList, 
     addBookToList, 
     removeBookFromList, 

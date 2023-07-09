@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Rating, Pagination, LinearProgress } from '@mui/material';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import '../styles/Book.css';
 
@@ -24,7 +24,8 @@ const Book = () => {
 
     const [openList, changeOpenList] = useState(false);
     const [createList, changeCreateList] = useState(false);
-    const [newListInput, changeNewListInput] = useState("");
+    const [newListName, changeNewListName] = useState('');
+
     const [userRating, changeUserRating] = useState(null);
     const [starFilter, changeStarFilter] = useState(0);
     const [starFilterColor, changeStarFilterColor] = useState([
@@ -148,6 +149,34 @@ const Book = () => {
         });
     };
 
+    const createListWithBook = () => {
+        changeCreateList(!createList);
+
+        fetch('http://localhost:3001/lists/create/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, newListName, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeNewListName('');
+            changeListTrigger(!listTrigger);
+        });
+    };
+
+    const cancelNewList = () => {
+        changeCreateList(!createList);
+        changeNewListName('');
+    };
+
     const handleChildRating = (value) => {
         changeUserRating(value);
     };
@@ -221,9 +250,9 @@ const Book = () => {
                                     openList ?
                                             createList ?
                                                 <div className='book-create-new-list-edit'>
-                                                    <input className='book-create-new-list-text book-create-new-list-input' placeholder='List Name' onChange={event => changeNewListInput(event.target.value)} />
-                                                    <img className='plus-image plus-image-rotate' onClick={() => changeCreateList(!createList)} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
-                                                    <img className='checkmark-image' onClick={() => changeCreateList(!createList)} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
+                                                    <input className='book-create-new-list-text book-create-new-list-input' placeholder='List Name' value={newListName} onChange={(e) => changeNewListName(e.target.value)} />
+                                                    <img className='plus-image plus-image-rotate' onClick={() => cancelNewList()} src={require('../assets/plus-icon.png')} alt='Plus Sign'/>
+                                                    <img className='checkmark-image' onClick={() => createListWithBook()} src={require('../assets/checkmark-icon.png')} alt='Checkmark'/>
                                                 </div>
                                             :
                                                 <div className='book-list-result book-create-new-list'>
