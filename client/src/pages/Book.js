@@ -21,6 +21,7 @@ const Book = () => {
     const [bookRecData, changeBookRecData] = useState([]);
     const [bookRatingData, changeBookRatingData] = useState([]);
     const [bookReviewData, changeBookReviewData] = useState([]);
+    const [userBookReviewData, changeUserBookReviewData] = useState([]);
 
     const [openList, changeOpenList] = useState(false);
     const [createList, changeCreateList] = useState(false);
@@ -42,8 +43,6 @@ const Book = () => {
     const [reviewTrigger, changeReviewTrigger] = useState(false);
 
     const scrollToMyReview = useRef(null);
-
-    const editReview = true;
 
     let userReview = {
         'name': 'Mia Joy',
@@ -154,6 +153,26 @@ const Book = () => {
         });
     }, [bookId]);
 
+    useEffect(() => {
+        fetch('http://localhost:3001/book/user-review', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeUserBookReviewData(JSON.parse(data));
+        });
+    }, [userId, bookId]);
+
     const addBookToList = (listId) => {
         fetch('http://localhost:3001/lists/add', {
             method: 'POST',
@@ -240,10 +259,6 @@ const Book = () => {
     const cancelNewList = () => {
         changeCreateList(!createList);
         changeNewListName('');
-    };
-
-    const handleChildRating = (value) => {
-        changeUserRating(value);
     };
 
     const handleScrollToReview = () => {
@@ -377,7 +392,7 @@ const Book = () => {
                             <div ref={scrollToMyReview} className='book-review-user'>
                                 <p className='book-review-user-title'>My Review</p>
                                 {
-                                    editReview ? 
+                                    userBookReviewData.length < 1 ? 
                                         <ReviewEdit
                                             rating={userRating} 
                                             ratingFunc={changeUserRating} 
@@ -387,13 +402,10 @@ const Book = () => {
                                         /> 
                                     : 
                                         <Review 
-                                            name={userReview.name} 
-                                            rating={userRating} 
-                                            content={userReview.content} 
-                                            date={userReview.date} 
-                                            readOnly={false} 
-                                            editable={true} 
-                                            handler={handleChildRating} 
+                                            bookId={bookId}
+                                            rating={userBookReviewData[0].rating} 
+                                            content={userBookReviewData[0].review_description} 
+                                            date={userBookReviewData[0].update_date} 
                                             showUser={false} 
                                         />
                                 }

@@ -111,6 +111,21 @@ const getBook = (body) => {
     }) 
 };
 
+const getUserBookReview = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId, bookId } = body;
+        pool.query('select br.rating, br.review_description, br.update_date from book_review br inner join book b on b.book_id = br.book_id and b.is_active = true where br.user_id = $1 and br.book_id = $2 and br.is_active = true;', 
+            [userId, bookId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
+
 const getAllBookReviews = (body) => {
     return new Promise(function(resolve, reject) {
         const { bookId } = body;
@@ -358,6 +373,7 @@ module.exports = {
     getHomeBooks, 
     getRecommendedBooks, 
     getBook, 
+    getUserBookReview, 
     getAllBookReviews, 
     getBookRatings, 
     getListsBookDropdown, 

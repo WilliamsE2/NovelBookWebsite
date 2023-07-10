@@ -90,6 +90,26 @@ app.post('/book', (req, res) => {
   })
 });
 
+app.post('/book/user-review', (req, res) => {
+  auth_model.getUserBookReview(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
+app.post('/book/review/post', (req, res) => {
+  auth_model.getUserBookReview(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/book/reviews', (req, res) => {
   auth_model.getAllBookReviews(req.body)
   .then(response => {
