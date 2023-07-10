@@ -9,8 +9,6 @@ import BookSelector from '../components/BookSelector.js';
 import Review from '../components/Review.js';
 import LoadingSpinner from '../components/LoadingSpinner.js';
 
-import reviewData from '../review-data.json';
-
 const Book = () => {
 
     const userId = sessionStorage.getItem('userId');
@@ -21,6 +19,7 @@ const Book = () => {
     const [listData, changeListData] = useState([]);
     const [bookRecData, changeBookRecData] = useState([]);
     const [bookRatingData, changeBookRatingData] = useState([]);
+    const [bookReviewData, changeBookReviewData] = useState([]);
 
 
     const [openList, changeOpenList] = useState(false);
@@ -127,6 +126,27 @@ const Book = () => {
         })
         .then(data => {
             changeBookRatingData(JSON.parse(data));
+        });
+    }, [bookId]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/book/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            console.log(JSON.parse(data));
+            changeBookReviewData(JSON.parse(data));
         });
     }, [bookId]);
 
@@ -394,7 +414,7 @@ const Book = () => {
                                 </div>
                                 <div className='book-review-list'>
                                     {
-                                        reviewData.filter(review => {
+                                        bookReviewData.filter(review => {
                                             if (review.rating === starFilter || starFilter === 0) {
                                                 return review;
                                             } else {
@@ -403,9 +423,9 @@ const Book = () => {
                                         }).map((review, index) => (
                                             <div className='book-review-list-element'>
                                                 <Review 
-                                                    name={review.name} 
+                                                    name={review.first_name.concat(' ', review.last_name)} 
                                                     rating={review.rating} 
-                                                    content={review.content} 
+                                                    content={review.review_description} 
                                                     date={review.update_date} 
                                                     readOnly={true} 
                                                     editable={false} 
