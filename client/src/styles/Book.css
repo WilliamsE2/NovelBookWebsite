@@ -327,15 +327,9 @@
     font-size: 1.8em;
 }
 
-.book-review-community-rating-amount-text {
-    padding-top: 0.2em;
-    margin-left: 1.5em;
-    color: gray;
-}
-
 .book-review-community-review-amount-text {
     padding-top: 0.2em;
-    margin-left: 0.5em;
+    margin-left: 1em;
     color: gray;
 }
 

@@ -109,6 +109,26 @@ const Book = () => {
         });
     }, [bookId, genreId]);
 
+    useEffect(() => {
+        fetch('http://localhost:3001/book/recommended', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({bookId, genreId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeBookRecData(JSON.parse(data));
+        });
+    }, [bookId]);
+
     const addBookToList = (listId) => {
         fetch('http://localhost:3001/lists/add', {
             method: 'POST',
@@ -335,7 +355,6 @@ const Book = () => {
                                         readOnly
                                     />
                                     <p className='book-review-community-rating-text'>3.64</p>
-                                    <p className='book-review-community-rating-amount-text'>24 ratings</p>
                                     <p className='book-review-community-review-amount-text'>11 reviews</p>
                                 </div>
                                 <div className='book-review-rating-differences'>
