@@ -1,0 +1,46 @@
+
+.review-content-input {
+    resize: none;
+    padding: 0.5em;
+    width: 97%;
+    font-family: 'Arial';
+    font-size: 1.0em;
+}
+
+.review-content-input:hover {
+    outline: none;
+    border: 1px orange solid;
+    border-radius: 2px;
+    box-shadow: 0 0 2px  rgba(0,0,0,.5);
+}
+
+.review-content-input:focus {
+    outline: none;
+    border: 1px orange solid;
+    border-radius: 2px;
+    box-shadow: 0 0 2px  rgba(0,0,0,.5);
+}
+
+.review-content-post-button {
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    float: right;
+    padding-top: 0.2em;
+    padding-bottom: 0.3em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-top: 1em;
+    width: fit-content;
+    height: fit-content;
+    font-size: 0.9em;
+    border: 2px orange solid;
+    border-radius: 6px;
+}
+
+.review-content-post-button:hover {
+    transition: 0.2s;
+    background-color: #ffedcc;
+}

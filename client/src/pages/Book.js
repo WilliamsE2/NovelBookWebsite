@@ -7,6 +7,7 @@ import '../styles/Book.css';
 // Components
 import BookSelector from '../components/BookSelector.js';
 import Review from '../components/Review.js';
+import ReviewEdit from '../components/ReviewEdit.js';
 import LoadingSpinner from '../components/LoadingSpinner.js';
 
 const Book = () => {
@@ -21,12 +22,10 @@ const Book = () => {
     const [bookRatingData, changeBookRatingData] = useState([]);
     const [bookReviewData, changeBookReviewData] = useState([]);
 
-
     const [openList, changeOpenList] = useState(false);
     const [createList, changeCreateList] = useState(false);
     const [newListName, changeNewListName] = useState('');
 
-    const [userRating, changeUserRating] = useState(null);
     const [starFilter, changeStarFilter] = useState(0);
     const [starFilterColor, changeStarFilterColor] = useState([
         {rating: 1, color: 'blue'},
@@ -36,9 +35,15 @@ const Book = () => {
         {rating: 5, color: 'blue'},
     ]);
 
+    const [userRating, changeUserRating] = useState(0);
+    const [userReviewContent, changeUserReviewContent] = useState('');
+    
     const [listTrigger, changeListTrigger] = useState(false);
+    const [reviewTrigger, changeReviewTrigger] = useState(false);
 
     const scrollToMyReview = useRef(null);
+
+    const editReview = true;
 
     let userReview = {
         'name': 'Mia Joy',
@@ -145,7 +150,6 @@ const Book = () => {
             }
         })
         .then(data => {
-            console.log(JSON.parse(data));
             changeBookReviewData(JSON.parse(data));
         });
     }, [bookId]);
@@ -210,6 +214,26 @@ const Book = () => {
         .then(data => {
             changeNewListName('');
             changeListTrigger(!listTrigger);
+        });
+    };
+
+    const postReview = () => {
+        fetch('http://localhost:3001/book/reviews/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId, newListName, bookId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeReviewTrigger(!reviewTrigger);
         });
     };
 
@@ -352,16 +376,27 @@ const Book = () => {
                         <div className='book-review'>
                             <div ref={scrollToMyReview} className='book-review-user'>
                                 <p className='book-review-user-title'>My Review</p>
-                                <Review 
-                                    name={userReview.name} 
-                                    rating={userRating} 
-                                    content={userReview.content} 
-                                    date={userReview.date} 
-                                    readOnly={false} 
-                                    editable={true}
-                                    handler={handleChildRating}
-                                    showUser={false}
-                                />
+                                {
+                                    editReview ? 
+                                        <ReviewEdit
+                                            rating={userRating} 
+                                            ratingFunc={changeUserRating} 
+                                            content={userReviewContent} 
+                                            contentFunc={changeUserReviewContent} 
+                                            postFunc={postReview} 
+                                        /> 
+                                    : 
+                                        <Review 
+                                            name={userReview.name} 
+                                            rating={userRating} 
+                                            content={userReview.content} 
+                                            date={userReview.date} 
+                                            readOnly={false} 
+                                            editable={true} 
+                                            handler={handleChildRating} 
+                                            showUser={false} 
+                                        />
+                                }
                             </div>
                             <div className='book-review-community'>
                                 <p className='book-review-community-title'>Community Rating & Reviews</p>
@@ -427,8 +462,6 @@ const Book = () => {
                                                     rating={review.rating} 
                                                     content={review.review_description} 
                                                     date={review.update_date} 
-                                                    readOnly={true} 
-                                                    editable={false} 
                                                     showUser={true}
                                                 />
                                             </div>
