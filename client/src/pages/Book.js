@@ -20,6 +20,7 @@ const Book = () => {
     const [bookData, changeBookData] = useState([]);
     const [listData, changeListData] = useState([]);
     const [bookRecData, changeBookRecData] = useState([]);
+    const [bookRatingData, changeBookRatingData] = useState([]);
 
 
     const [openList, changeOpenList] = useState(false);
@@ -110,12 +111,12 @@ const Book = () => {
     }, [bookId, genreId]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/book/recommended', {
+        fetch('http://localhost:3001/book/ratings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({bookId, genreId}),
+            body: JSON.stringify({bookId}),
         })
         .then(response => {
             if (!response.ok) {
@@ -125,7 +126,7 @@ const Book = () => {
             }
         })
         .then(data => {
-            changeBookRecData(JSON.parse(data));
+            changeBookRatingData(JSON.parse(data));
         });
     }, [bookId]);
 
@@ -345,17 +346,24 @@ const Book = () => {
                             <div className='book-review-community'>
                                 <p className='book-review-community-title'>Community Rating & Reviews</p>
                                 <div className='book-review-community-rating'>
-                                    <Rating
-                                        className='book-review-community-rating-stars'
-                                        name="read-only"
-                                        value={3.64}
-                                        defaultValue={2.5}
-                                        precision={0.1}
-                                        size='large'
-                                        readOnly
-                                    />
-                                    <p className='book-review-community-rating-text'>3.64</p>
-                                    <p className='book-review-community-review-amount-text'>11 reviews</p>
+                                    {
+                                        bookRatingData.length < 1 ? 
+                                            <LoadingSpinner /> 
+                                        : 
+                                            <>
+                                            <Rating
+                                                className='book-review-community-rating-stars'
+                                                name="read-only"
+                                                value={bookRatingData.overall_rating}
+                                                defaultValue={2.5}
+                                                precision={0.1}
+                                                size='large'
+                                                readOnly
+                                            />
+                                            <p className='book-review-community-rating-text'>{bookRatingData.overall_rating}</p>
+                                            <p className='book-review-community-review-amount-text'>{bookRatingData.number_of_reviews} reviews</p>
+                                            </>
+                                    }
                                 </div>
                                 <div className='book-review-rating-differences'>
                                     <div className='book-review-rating-differences-row'>

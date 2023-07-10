@@ -90,6 +90,16 @@ app.post('/book', (req, res) => {
   })
 });
 
+app.post('/book/ratings', (req, res) => {
+  auth_model.getBookRatings(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/book/lists-dropdown', (req, res) => {
   auth_model.getListsBookDropdown(req.body)
   .then(response => {
