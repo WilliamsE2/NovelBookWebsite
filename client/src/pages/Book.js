@@ -35,6 +35,7 @@ const Book = () => {
         {rating: 4, color: 'blue'},
         {rating: 5, color: 'blue'},
     ]);
+    const [ratingData, changeRatingData] = useState([]);
 
     const [userRating, changeUserRating] = useState(0);
     const [userReviewContent, changeUserReviewContent] = useState('');
@@ -135,6 +136,14 @@ const Book = () => {
             changeBookRatingData(jsonData);
             changeOverallRating(jsonData.overall_rating);
             changeNumberOfReviews(jsonData.number_of_reviews);
+
+            changeRatingData([
+                {numberOfReviews: jsonData.one_count, percentage: Math.floor((jsonData.one_count / jsonData.number_of_reviews) * 100)},
+                {numberOfReviews: jsonData.two_count, percentage: Math.floor((jsonData.two_count / jsonData.number_of_reviews) * 100)},
+                {numberOfReviews: jsonData.three_count, percentage: Math.floor((jsonData.three_count / jsonData.number_of_reviews) * 100)},
+                {numberOfReviews: jsonData.four_count, percentage: Math.floor((jsonData.four_count / jsonData.number_of_reviews) * 100)},
+                {numberOfReviews: jsonData.five_count, percentage: Math.floor((jsonData.five_count / jsonData.number_of_reviews) * 100)}
+            ]);
         });
     }, [bookId, reviewTrigger]);
 
@@ -388,7 +397,7 @@ const Book = () => {
                                         <LoadingSpinner /> 
                                     : 
                                         bookRecData.map(rec => (
-                                            <BookSelector title={rec.book_title} author={rec.author_name} />
+                                            <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                                         ))
                                 }
                             </div>
@@ -438,31 +447,38 @@ const Book = () => {
                                     }
                                 </div>
                                 <div className='book-review-rating-differences'>
-                                    <div className='book-review-rating-differences-row'>
-                                        <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(5)}>5 stars</p>
-                                        <div style={{color: starFilterColor[4].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(5)} variant="determinate" value={16} /></div>
-                                        <p className='book-review-rating-differences-amount-text'>4</p>
-                                    </div>
-                                    <div className='book-review-rating-differences-row'>
-                                        <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(4)}>4 stars</p>
-                                        <div style={{color: starFilterColor[3].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(4)} variant="determinate" value={34} /></div>
-                                        <p className='book-review-rating-differences-amount-text'>9</p>
-                                    </div>
-                                    <div className='book-review-rating-differences-row'>
-                                        <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(3)}>3 stars</p>
-                                        <div style={{color: starFilterColor[2].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(3)} variant="determinate" value={22} /></div>
-                                        <p className='book-review-rating-differences-amount-text'>6</p>
-                                    </div>
-                                    <div className='book-review-rating-differences-row'>
-                                        <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(2)}>2 stars</p>
-                                        <div style={{color: starFilterColor[1].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(2)} variant="determinate" value={12} /></div>
-                                        <p className='book-review-rating-differences-amount-text'>3</p>
-                                    </div>
-                                    <div className='book-review-rating-differences-row'>
-                                        <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(1)}>1 star</p>
-                                        <div style={{color: starFilterColor[0].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(1)} variant="determinate" value={8} /></div>
-                                        <p className='book-review-rating-differences-amount-text'>2</p>
-                                    </div>
+                                    {
+                                        ratingData.length < 1 ? 
+                                            <LoadingSpinner /> 
+                                        : 
+                                            <>
+                                            <div className='book-review-rating-differences-row'>
+                                                <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(5)}>5 stars</p>
+                                                <div style={{color: starFilterColor[4].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(5)} variant="determinate" value={ratingData[4].percentage} /></div>
+                                                <p className='book-review-rating-differences-amount-text'>{ratingData[4].numberOfReviews}</p>
+                                            </div>
+                                            <div className='book-review-rating-differences-row'>
+                                                <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(4)}>4 stars</p>
+                                                <div style={{color: starFilterColor[3].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(4)} variant="determinate" value={ratingData[3].percentage} /></div>
+                                                <p className='book-review-rating-differences-amount-text'>{ratingData[3].numberOfReviews}</p>
+                                            </div>
+                                            <div className='book-review-rating-differences-row'>
+                                                <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(3)}>3 stars</p>
+                                                <div style={{color: starFilterColor[2].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(3)} variant="determinate" value={ratingData[2].percentage} /></div>
+                                                <p className='book-review-rating-differences-amount-text'>{ratingData[2].numberOfReviews}</p>
+                                            </div>
+                                            <div className='book-review-rating-differences-row'>
+                                                <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(2)}>2 stars</p>
+                                                <div style={{color: starFilterColor[1].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(2)} variant="determinate" value={ratingData[1].percentage} /></div>
+                                                <p className='book-review-rating-differences-amount-text'>{ratingData[1].numberOfReviews}</p>
+                                            </div>
+                                            <div className='book-review-rating-differences-row'>
+                                                <p className='book-review-rating-differences-stars-text' onClick={() => handleStarFilter(1)}>1 star</p>
+                                                <div style={{color: starFilterColor[0].color, width: '90%'}}><LinearProgress className='book-review-rating-differences-bar' color='inherit' onClick={() => handleStarFilter(1)} variant="determinate" value={ratingData[0].percentage} /></div>
+                                                <p className='book-review-rating-differences-amount-text'>{ratingData[0].numberOfReviews}</p>
+                                            </div>
+                                            </>
+                                    }
                                 </div>
                                 <div className='book-review-list'>
                                     {
