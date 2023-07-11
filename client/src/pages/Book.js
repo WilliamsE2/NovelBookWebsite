@@ -376,17 +376,23 @@ const Book = () => {
                         <img className='amazon-image' src={require('../assets/amazon-logo.png')} alt='Amazon Logo'/>
                     </a>
                     <div className='book-user-rating-button'>
-                        <Rating
-                            className='book-user-rating-stars'
-                            name="simple-controlled"
-                            value={userRating}
-                            defaultValue={0}
-                            size='large'
-                            onChange={(event, newRating) => {
-                                changeUserRating(newRating);
-                            }}
-                        />
-                        <p className='book-user-rating-write-review-button' onClick={() => handleScrollToReview()}>Write a Review</p>
+                        {
+                            userBookReviewData.length < 1 ? 
+                                <p className='book-user-rating-go-review-button write-review-button' onClick={() => handleScrollToReview()}>Write a Review</p>
+                            : 
+                                <>
+                                <Rating
+                                    className='book-user-rating-stars'
+                                    name="simple-controlled"
+                                    value={userRating}
+                                    defaultValue={0}
+                                    size='large'
+                                    readOnly
+                                />
+                                <p className='book-user-rating-go-review-button' onClick={() => handleScrollToReview()}>Go To Review</p>
+                                </>
+                        }
+                        
                     </div>
                 </div>
                 <div className='book-column-right'>

@@ -206,14 +206,18 @@
     transform-origin: center;
 }
 
-.book-user-rating-write-review-button {
+.book-user-rating-go-review-button {
     margin-top: 0.5em;
     font-size: 1.2em;
 }
 
-.book-user-rating-write-review-button:hover {
+.book-user-rating-go-review-button:hover {
     text-decoration: underline;
     text-decoration-color: orange;
+}
+
+.write-review-button {
+    margin-top: 0em;
 }
 
 .book-column-right {
