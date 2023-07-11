@@ -33,7 +33,7 @@ const Review = ({name, profilePicId, bookCoverId, bookId, bookTitle, rating, con
                         defaultValue={0}
                         readOnly
                     />
-                    <p className="review-date-text">{date}</p>
+                    <p className="review-date-text">{new Date(date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}</p>
                 </div>
                 <div className="review-content">
                     <p className="review-content-description">{content}</p>
