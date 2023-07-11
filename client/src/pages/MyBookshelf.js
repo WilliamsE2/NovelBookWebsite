@@ -232,6 +232,7 @@ const MyBookshelf = () => {
                                                 }
                                             }).map((book, index) => (
                                                 <BookshelfCard 
+                                                    bookCoverId={book.cover_pic_id} 
                                                     bookId={book.book_id}
                                                     title={book.book_title}
                                                     author={book.author_name}

@@ -3,13 +3,13 @@ import { Rating } from '@mui/material';
 
 import '../styles/BookshelfCard.css';
 
-const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate, removeBookFunc}) => {
+const BookshelfCard = ({ bookCoverId, bookId, title, author, rating, isCommunity, addedDate, removeBookFunc }) => {
 
     return (
         <div className='bookshelf-card'>
             <div className='bookshelf-card-margin'>
                 <Link to={`/layout/book/${bookId}`}>
-                    <img className='bookshelf-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                    <img className='bookshelf-cover-image' src={require(`../assets/book-covers/${bookCoverId}.jpeg`)} alt='Book Cover'/>
                 </Link>
                 <div className='bookshelf-card-info-details'>
                     <Link to={`/layout/book/${bookId}`} className="bookshelf-card-title-link">

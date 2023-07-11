@@ -2,13 +2,13 @@ import { Rating } from '@mui/material';
 
 import '../styles/ReviewEdit.css';
 
-const ReviewEdit = ({rating, ratingFunc, content, contentFunc, postFunc}) => {
+const ReviewEdit = ({bookCoverId, rating, ratingFunc, content, contentFunc, postFunc}) => {
 
     return (
         <div className="review">
             <div className="review-left">
                 <div>
-                    <img className='review-book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                    <img className='review-book-cover-image' src={require(`../assets/book-covers/${bookCoverId}.jpeg`)} alt='Book Cover'/>
                 </div>
             </div>
             <div className="review-right">

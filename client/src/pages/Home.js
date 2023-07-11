@@ -37,7 +37,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookCoverId={rec.cover_pic_id} bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -54,7 +54,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookCoverId={rec.cover_pic_id} bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -71,7 +71,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookCoverId={rec.cover_pic_id} bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>
@@ -88,7 +88,7 @@ const Home = () => {
                             <LoadingSpinner />
                         :
                             bookRecs.map(rec => (
-                                <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
+                                <BookSelector bookCoverId={rec.cover_pic_id} bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                             ))
                     }
                 </div>

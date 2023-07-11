@@ -89,8 +89,9 @@ const Account = () => {
                         reviewData.map((review) => (
                             <div className='account-review-list-element'>
                                 <Review 
+                                    bookCoverId={review.cover_pic_id} 
                                     bookId={review.book_id}
-                                    bookTitle={review.book_title}
+                                    bookTitle={review.book_title} 
                                     rating={review.rating} 
                                     content={review.review_description} 
                                     date={review.update_date} 

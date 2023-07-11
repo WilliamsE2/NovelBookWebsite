@@ -3,7 +3,7 @@ import { Rating } from '@mui/material';
 
 import '../styles/Review.css';
 
-const Review = ({name, bookId, bookTitle, rating, content, date, showUser, deletable, deleteFunc}) => {
+const Review = ({name, profilePicId, bookCoverId, bookId, bookTitle, rating, content, date, showUser, deletable, deleteFunc}) => {
 
     return (
         <div className="review">
@@ -11,13 +11,13 @@ const Review = ({name, bookId, bookTitle, rating, content, date, showUser, delet
                 {
                     showUser ? 
                         <div>
-                            <img className='review-user-image' src={require('../assets/profile-photo.png')} alt='Profile'/>
+                            <img className='review-user-image' src={require(`../assets/profile-pics/${profilePicId}.jpeg`)} alt='Profile'/>
                             <p className="review-username-text">{name}</p>
                         </div>
                     :
                         <div>
                             <Link to={`/layout/book/${bookId}`} className="review-book-link">
-                                <img className='review-book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                                <img className='review-book-cover-image' src={require(`../assets/book-covers/${bookCoverId}.jpeg`)} alt='Book Cover'/>
                             </Link>
                             <Link to={`/layout/book/${bookId}`} className="review-book-link">
                                 <p className='review-book-title'>{bookTitle}</p>

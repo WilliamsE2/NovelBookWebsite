@@ -176,6 +176,7 @@ const Book = () => {
             }
         })
         .then(data => {
+            console.log(JSON.parse(data));
             changeUserBookReviewData(JSON.parse(data));
             changeUserRating(JSON.parse(data)[0]?.rating);
         });
@@ -331,7 +332,7 @@ const Book = () => {
                 :
                 <>
                 <div className='book-column-left'>
-                    <img className='book-cover-image' src={require('../assets/book-cover-test.jpeg')} alt='Book Cover'/>
+                    <img className='book-cover-image' src={require(`../assets/book-covers/${bookData.cover_pic_id}.jpeg`)} alt='Book Cover'/>
                     <div className='book-add-list'>
                         <div className='book-button' onClick={() => changeOpenList(!openList)}>
                             <p className='book-button-text'>Add to List</p>
@@ -417,7 +418,7 @@ const Book = () => {
                                         <LoadingSpinner /> 
                                     : 
                                         bookRecData.map(rec => (
-                                            <BookSelector bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
+                                            <BookSelector bookCoverId={rec.cover_pic_id} bookId={rec.book_id} title={rec.book_title} author={rec.author_name} />
                                         ))
                                 }
                             </div>
@@ -427,7 +428,8 @@ const Book = () => {
                                 <p className='book-review-user-title'>My Review</p>
                                 {
                                     userBookReviewData.length < 1 ? 
-                                        <ReviewEdit
+                                        <ReviewEdit 
+                                            bookCoverId={bookData.cover_pic_id} 
                                             rating={userRating} 
                                             ratingFunc={changeUserRating} 
                                             content={userReviewContent} 
@@ -436,7 +438,8 @@ const Book = () => {
                                         /> 
                                     : 
                                         <Review 
-                                            bookId={bookId}
+                                            bookId={bookId} 
+                                            bookCoverId={userBookReviewData[0].cover_pic_id} 
                                             rating={userBookReviewData[0].rating} 
                                             content={userBookReviewData[0].review_description} 
                                             date={userBookReviewData[0].update_date} 
@@ -514,6 +517,7 @@ const Book = () => {
                                             <div className='book-review-list-element'>
                                                 <Review 
                                                     name={review.first_name.concat(' ', review.last_name)} 
+                                                    profilePicId={review.profile_pic_id}
                                                     rating={review.rating} 
                                                     content={review.review_description} 
                                                     date={review.update_date} 

@@ -57,7 +57,7 @@ const getDuplicateEmail = (body) => {
 
 const getAllBooks = () => {
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id, coalesce(br.overall_rating, 0) as overall_rating from book b left join book_rating br on br.book_id = b.book_id and br.is_active = true where b.is_active = true order by book_id;', 
+        pool.query('select b.book_id, b.book_title, b.cover_pic_id, b.author_name, b.genre_id, coalesce(br.overall_rating, 0) as overall_rating from book b left join book_rating br on br.book_id = b.book_id and br.is_active = true where b.is_active = true order by book_id;', 
             (error, results) => 
         {
             if (error) {
@@ -70,7 +70,7 @@ const getAllBooks = () => {
 
 const getHomeBooks = () => {
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_id, b.book_title, b.author_name from book b order by b.book_id asc limit 4;', 
+        pool.query('select b.book_id, b.book_title, b.cover_pic_id, b.author_name from book b order by b.book_id asc limit 4;', 
             (error, results) => 
         {
             if (error) {
@@ -84,7 +84,7 @@ const getHomeBooks = () => {
 const getRecommendedBooks = (body) => {
     const { bookId, genreId } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id from book b where b.book_id != $1 order by case b.genre_id when $2 then 1 else 2 end, random() limit 4;', 
+        pool.query('select b.book_id, b.book_title, b.cover_pic_id, b.author_name, b.genre_id from book b where b.book_id != $1 order by case b.genre_id when $2 then 1 else 2 end, random() limit 4;', 
             [bookId, genreId], 
             (error, results) => 
         {
@@ -99,7 +99,7 @@ const getRecommendedBooks = (body) => {
 const getBook = (body) => {
     const { bookId } = body;
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_title, b.author_name, b.publishing_date_display, b.page_count, b.genre_id, g.genre_title, b.description, b.link from book b inner join genres g on g.genre_id = b.genre_id where b.book_id = $1;', 
+        pool.query('select b.cover_pic_id, b.book_title, b.author_name, b.publishing_date_display, b.page_count, b.genre_id, g.genre_title, b.description, b.link from book b inner join genres g on g.genre_id = b.genre_id where b.book_id = $1;', 
             [bookId], 
             (error, results) => 
         {
@@ -114,7 +114,7 @@ const getBook = (body) => {
 const getUserBookReview = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId, bookId } = body;
-        pool.query('select br.rating, br.review_description, br.update_date from book_review br inner join book b on b.book_id = br.book_id and b.is_active = true where br.user_id = $1 and br.book_id = $2 and br.is_active = true;', 
+        pool.query('select b.cover_pic_id, br.rating, br.review_description, br.update_date from book_review br inner join book b on b.book_id = br.book_id and b.is_active = true where br.user_id = $1 and br.book_id = $2 and br.is_active = true;', 
             [userId, bookId], 
             (error, results) => 
         {
@@ -266,7 +266,7 @@ const getListsBookDropdown = (body) => {
 const getLists = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId } = body;
-        pool.query('select row_number() over (order by list_id), * from (select l.list_id, l.list_name, json_agg(json_build_object(\'book_id\', b.book_id, \'book_title\', b.book_title, \'author_name\', b.author_name, \'rating\', coalesce(br.rating, 0))) as book_list, l.deletable from list l cross join unnest(l.list) as listId inner join book b on b.book_id = listId left join book_review br on br.book_id = b.book_id and br.user_id = $1 and br.is_active = true where l.user_id = $1 and l.is_active = true group by l.list_id union all select l2.list_id, l2.list_name, json_agg(json_build_object(\'book_id\', -1, \'book_title\', \'\', \'author_name\', \'\', \'rating\', \'\')) as book_list, l2.deletable from list l2 where l2.user_id = $1 and l2.is_active = true and l2.list = \'{}\' group by l2.list_id) lists;', 
+        pool.query('select row_number() over (order by list_id), * from (select l.list_id, l.list_name, json_agg(json_build_object(\'book_id\', b.book_id, \'book_title\', b.book_title, \'cover_pic_id\', b.cover_pic_id, \'author_name\', b.author_name, \'rating\', coalesce(br.rating, 0))) as book_list, l.deletable from list l cross join unnest(l.list) as listId inner join book b on b.book_id = listId left join book_review br on br.book_id = b.book_id and br.user_id = $1 and br.is_active = true where l.user_id = $1 and l.is_active = true group by l.list_id union all select l2.list_id, l2.list_name, json_agg(json_build_object(\'book_id\', -1, \'book_title\', \'\', \'cover_pic_id\', \'\', \'author_name\', \'\', \'rating\', \'\')) as book_list, l2.deletable from list l2 where l2.user_id = $1 and l2.is_active = true and l2.list = \'{}\' group by l2.list_id) lists;', 
             [userId], 
             (error, results) => 
         {
