@@ -190,7 +190,7 @@ const getAllBookReviews = (body) => {
 const getBookRatings = (body) => {
     return new Promise(function(resolve, reject) {
         const { bookId } = body;
-        pool.query('select bra.overall_rating, bra.number_of_reviews, sum(case when br.rating = 5 then 1 else 0 end) as five_count, sum(case when br.rating = 4 then 1 else 0 end) as four_count, sum(case when br.rating = 3 then 1 else 0 end) as three_count, sum(case when br.rating = 2 then 1 else 0 end) as two_count, sum(case when br.rating = 1 then 1 else 0 end) as one_count from book_rating bra inner join book_review br on br.book_id = bra.book_id and br.is_active = true where bra.book_id = $1 and bra.is_active = true group by bra.overall_rating, bra.number_of_reviews;', 
+        pool.query('select bra.overall_rating, bra.number_of_reviews, sum(case when br.rating = 5 then 1 else 0 end) as five_count, sum(case when br.rating = 4 then 1 else 0 end) as four_count, sum(case when br.rating = 3 then 1 else 0 end) as three_count, sum(case when br.rating = 2 then 1 else 0 end) as two_count, sum(case when br.rating = 1 then 1 else 0 end) as one_count from book_rating bra left join book_review br on br.book_id = bra.book_id and br.is_active = true where bra.book_id = $1 and bra.is_active = true group by bra.overall_rating, bra.number_of_reviews;', 
             [bookId], 
             (error, results) => 
         {
