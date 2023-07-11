@@ -33,7 +33,7 @@ const Account = () => {
         })
         .then(data => {
             changeAccountData(JSON.parse(data));
-            changeJoinDate(new Date(JSON.parse(data).creation_date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }));
+            changeJoinDate(new Date(JSON.parse(data).creation_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
         }); 
     }, [userId]);
 
