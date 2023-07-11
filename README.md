@@ -2,6 +2,8 @@
 
 A web application to discover new books, write reviews, and create customized book lists.
 
+[Documentation](https://docs.google.com/document/d/1I5g8ovHcx7U_pNx9KnZ7aaJqe90TJhyVs7A9HKnt15M/edit?usp=sharing)
+
 ## NodeJS Express API
 
 ```bash
