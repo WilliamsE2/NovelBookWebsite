@@ -126,6 +126,52 @@ const getUserBookReview = (body) => {
     })
 };
 
+const createReview = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { bookId, userId, userRating, userReviewContent } = body;
+        pool.query('insert into book_review(book_id, user_id, rating, review_description, is_active, update_date, creation_date) values($1, $2, $3, $4, true, current_timestamp, current_timestamp);', 
+            [bookId, userId, userRating, userReviewContent], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const updateUserReviewStats = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId } = body;
+        pool.query('update user_review set number_of_reviews = number_of_reviews + 1, books_read = books_read + 1, update_date = current_timestamp where user_id = $1 and is_active = true;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const updateBookRatingStats = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { bookId, userRating, overallRating, numberOfReviews } = body;
+        const newOverallRating = overallRating + ((userRating - overallRating) / (numberOfReviews + 1));
+        pool.query('update book_rating set number_of_reviews = number_of_reviews + 1, overall_rating = $2, update_date = current_timestamp where book_id = $1 and is_active = true;', 
+            [bookId, newOverallRating], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
 const getAllBookReviews = (body) => {
     return new Promise(function(resolve, reject) {
         const { bookId } = body;
@@ -374,6 +420,9 @@ module.exports = {
     getRecommendedBooks, 
     getBook, 
     getUserBookReview, 
+    createReview, 
+    updateUserReviewStats, 
+    updateBookRatingStats, 
     getAllBookReviews, 
     getBookRatings, 
     getListsBookDropdown, 

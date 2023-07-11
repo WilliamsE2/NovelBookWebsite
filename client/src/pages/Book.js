@@ -38,6 +38,8 @@ const Book = () => {
 
     const [userRating, changeUserRating] = useState(0);
     const [userReviewContent, changeUserReviewContent] = useState('');
+    const [overallRating, changeOverallRating] = useState(0);
+    const [numberOfReviews, changeNumberOfReviews] = useState(0);
     
     const [listTrigger, changeListTrigger] = useState(false);
     const [reviewTrigger, changeReviewTrigger] = useState(false);
@@ -129,9 +131,12 @@ const Book = () => {
             }
         })
         .then(data => {
-            changeBookRatingData(JSON.parse(data));
+            const jsonData = JSON.parse(data);
+            changeBookRatingData(jsonData);
+            changeOverallRating(jsonData.overall_rating);
+            changeNumberOfReviews(jsonData.number_of_reviews);
         });
-    }, [bookId]);
+    }, [bookId, reviewTrigger]);
 
     useEffect(() => {
         fetch('http://localhost:3001/book/reviews', {
@@ -151,7 +156,7 @@ const Book = () => {
         .then(data => {
             changeBookReviewData(JSON.parse(data));
         });
-    }, [bookId]);
+    }, [bookId, reviewTrigger]);
 
     useEffect(() => {
         fetch('http://localhost:3001/book/user-review', {
@@ -171,7 +176,7 @@ const Book = () => {
         .then(data => {
             changeUserBookReviewData(JSON.parse(data));
         });
-    }, [userId, bookId]);
+    }, [userId, bookId, reviewTrigger]);
 
     const addBookToList = (listId) => {
         fetch('http://localhost:3001/lists/add', {
@@ -242,7 +247,7 @@ const Book = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({userId, newListName, bookId}),
+            body: JSON.stringify({bookId, userId, userRating, userReviewContent, overallRating, numberOfReviews}),
         })
         .then(response => {
             if (!response.ok) {

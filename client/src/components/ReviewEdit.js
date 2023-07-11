@@ -31,7 +31,7 @@ const ReviewEdit = ({rating, ratingFunc, content, contentFunc, postFunc}) => {
                     />
                 </div>
                 <div>
-                    <div className='review-content-post-button' onClick={() => postFunc}>Post</div>
+                    <div className='review-content-post-button' onClick={postFunc}>Post</div>
                 </div>
             </div>
         </div>

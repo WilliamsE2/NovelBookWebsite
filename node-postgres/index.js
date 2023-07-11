@@ -100,8 +100,24 @@ app.post('/book/user-review', (req, res) => {
   })
 });
 
-app.post('/book/review/post', (req, res) => {
-  auth_model.getUserBookReview(req.body)
+app.post('/book/reviews/post', (req, res) => {
+  auth_model.createReview(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+
+  auth_model.updateUserReviewStats(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+
+  auth_model.updateBookRatingStats(req.body)
   .then(response => {
     res.status(200).send(response);
   })
