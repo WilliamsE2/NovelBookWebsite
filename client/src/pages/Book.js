@@ -184,6 +184,7 @@ const Book = () => {
         })
         .then(data => {
             changeUserBookReviewData(JSON.parse(data));
+            changeUserRating(JSON.parse(data)[0]?.rating);
         });
     }, [userId, bookId, reviewTrigger]);
 
@@ -257,6 +258,33 @@ const Book = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({bookId, userId, userRating, userReviewContent, overallRating, numberOfReviews}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            changeReviewTrigger(!reviewTrigger);
+        });
+    };
+
+    const deleteReview = () => {
+        console.log(bookId);
+        console.log(userId);
+        console.log(userRating);
+        console.log(overallRating);
+        console.log(numberOfReviews);
+        console.log(((overallRating * numberOfReviews) - userRating) / (numberOfReviews - 1));
+
+        fetch('http://localhost:3001/book/reviews/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({bookId, userId, userRating, overallRating, numberOfReviews}),
         })
         .then(response => {
             if (!response.ok) {
@@ -421,6 +449,8 @@ const Book = () => {
                                             content={userBookReviewData[0].review_description} 
                                             date={userBookReviewData[0].update_date} 
                                             showUser={false} 
+                                            deletable={true} 
+                                            deleteFunc={deleteReview}
                                         />
                                 }
                             </div>
@@ -495,7 +525,8 @@ const Book = () => {
                                                     rating={review.rating} 
                                                     content={review.review_description} 
                                                     date={review.update_date} 
-                                                    showUser={true}
+                                                    showUser={true} 
+                                                    deletable={false}
                                                 />
                                             </div>
                                         ))

@@ -126,6 +126,32 @@ app.post('/book/reviews/post', (req, res) => {
   })
 });
 
+app.post('/book/reviews/delete', (req, res) => {
+  auth_model.deleteReview(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+
+  auth_model.reduceUserReviewStats(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+
+  auth_model.reduceBookRatingStats(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+});
+
 app.post('/book/reviews', (req, res) => {
   auth_model.getAllBookReviews(req.body)
   .then(response => {

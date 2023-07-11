@@ -3,7 +3,7 @@ import { Rating } from '@mui/material';
 
 import '../styles/Review.css';
 
-const Review = ({name, bookId, bookTitle, rating, content, date, showUser}) => {
+const Review = ({name, bookId, bookTitle, rating, content, date, showUser, deletable, deleteFunc}) => {
 
     return (
         <div className="review">
@@ -38,6 +38,13 @@ const Review = ({name, bookId, bookTitle, rating, content, date, showUser}) => {
                 <div className="review-content">
                     <p className="review-content-description">{content}</p>
                 </div>
+                {
+                    deletable ? 
+                        <div>
+                            <div className='review-content-delete-button' onClick={deleteFunc}>Delete</div>
+                        </div>
+                    : ''
+                }
             </div>
         </div>
     );

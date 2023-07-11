@@ -77,3 +77,27 @@
 .review-content-description {
     font-family: 'Arial';
 }
+
+.review-content-delete-button {
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    float: right;
+    padding-top: 0.2em;
+    padding-bottom: 0.3em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-top: 1em;
+    width: fit-content;
+    height: fit-content;
+    font-size: 0.9em;
+    border: 2px red solid;
+    border-radius: 6px;
+}
+
+.review-content-delete-button:hover {
+    transition: 0.1s;
+    background-color: lightsalmon;
+}

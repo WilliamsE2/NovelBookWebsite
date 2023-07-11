@@ -172,6 +172,52 @@ const updateBookRatingStats = (body) => {
     })
 };
 
+const deleteReview = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId } = body;
+        pool.query('update book_review set is_active = false, update_date = current_timestamp where user_id = $1 and is_active = true;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const reduceUserReviewStats = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId } = body;
+        pool.query('update user_review set number_of_reviews = number_of_reviews - 1, update_date = current_timestamp where user_id = $1 and is_active = true;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
+const reduceBookRatingStats = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { bookId, userRating, overallRating, numberOfReviews } = body;
+        const newOverallRating = ((overallRating * numberOfReviews) - userRating) / (numberOfReviews - 1);
+        pool.query('update book_rating set number_of_reviews = number_of_reviews - 1, overall_rating = $2, update_date = current_timestamp where book_id = $1 and is_active = true;', 
+            [bookId, newOverallRating], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    })
+};
+
 const getAllBookReviews = (body) => {
     return new Promise(function(resolve, reject) {
         const { bookId } = body;
@@ -423,6 +469,9 @@ module.exports = {
     createReview, 
     updateUserReviewStats, 
     updateBookRatingStats, 
+    deleteReview, 
+    reduceUserReviewStats, 
+    reduceBookRatingStats, 
     getAllBookReviews, 
     getBookRatings, 
     getListsBookDropdown, 
