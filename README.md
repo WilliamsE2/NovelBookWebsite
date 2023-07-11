@@ -1,6 +1,6 @@
 # novel. - A Book Review Platform
 
-Description here.
+A web application to discover new books, write reviews, and create customized book lists.
 
 ## NodeJS Express API
 
@@ -23,6 +23,13 @@ npm start
 ```
 ```bash
 npx kill-port 3000
+```
+
+## Postgres
+
+```bash
+brew services start postgresql@15
+brew services stop postgresql@15
 ```
 
 ## Installation
