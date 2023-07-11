@@ -382,6 +382,21 @@ const getAccount = (body) => {
     }) 
 };
 
+const getAllUserReviews = (body) => {
+    return new Promise(function(resolve, reject) {
+        const { userId } = body;
+        pool.query('select b.book_id, b.book_title, b.cover_pic_id, br.rating, br.review_description, br.update_date from book_review br inner join book b on b.book_id = br.book_id and b.is_active = true where br.user_id = $1 and br.is_active = true;', 
+            [userId], 
+            (error, results) => 
+        {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    })
+};
+
 const getEditAccount = (body) => {
     const { userId } = body;
     return new Promise(function(resolve, reject) {
@@ -483,6 +498,7 @@ module.exports = {
     removeBookFromList, 
     getGenres, 
     getAccount, 
+    getAllUserReviews, 
     getEditAccount, 
     updateProfilePic, 
     updateName, 

@@ -7,13 +7,12 @@ import '../styles/Account.css';
 import Review from '../components/Review.js';
 import LoadingSpinner from '../components/LoadingSpinner.js';
 
-import reviewData from '../review-data.json';
-
 const Account = () => {
 
     const userId = sessionStorage.getItem('userId');
 
     const [accountData, changeAccountData] = useState([]);
+    const [reviewData, changeReviewData] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:3001/account', {
@@ -32,6 +31,27 @@ const Account = () => {
         })
         .then(data => {
             changeAccountData(JSON.parse(data));
+        }); 
+    }, [userId]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/account/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            console.log(JSON.parse(data));
+            changeReviewData(JSON.parse(data));
         }); 
     }, [userId]);
 
@@ -69,13 +89,12 @@ const Account = () => {
                         reviewData.map((review) => (
                             <div className='account-review-list-element'>
                                 <Review 
-                                    name={review.name} 
+                                    bookId={review.book_id}
+                                    bookTitle={review.book_title}
                                     rating={review.rating} 
-                                    content={review.content} 
+                                    content={review.review_description} 
                                     date={review.update_date} 
-                                    readOnly={true} 
                                     showUser={false}
-                                    bookTitle={'Harry Potter and the Deathly Hallows'}
                                 />
                             </div>
                         ))

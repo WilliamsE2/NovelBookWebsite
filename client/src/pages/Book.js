@@ -47,13 +47,6 @@ const Book = () => {
 
     const scrollToMyReview = useRef(null);
 
-    let userReview = {
-        'name': 'Mia Joy',
-        'rating': 0,
-        'content': '',
-        'date': 'May 11, 2023'
-    }
-
     useEffect(() => {
         fetch('http://localhost:3001/book', {
             method: 'POST',
@@ -272,13 +265,6 @@ const Book = () => {
     };
 
     const deleteReview = () => {
-        console.log(bookId);
-        console.log(userId);
-        console.log(userRating);
-        console.log(overallRating);
-        console.log(numberOfReviews);
-        console.log(((overallRating * numberOfReviews) - userRating) / (numberOfReviews - 1));
-
         fetch('http://localhost:3001/book/reviews/delete', {
             method: 'POST',
             headers: {
