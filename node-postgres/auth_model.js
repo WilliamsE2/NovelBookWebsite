@@ -57,7 +57,7 @@ const getDuplicateEmail = (body) => {
 
 const getAllBooks = () => {
     return new Promise(function(resolve, reject) {
-        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id, coalesce(br.overall_rating, 0) from book b left join book_rating br on br.book_id = b.book_id and br.is_active = true where b.is_active = true order by book_id;', 
+        pool.query('select b.book_id, b.book_title, b.author_name, b.genre_id, coalesce(br.overall_rating, 0) as overall_rating from book b left join book_rating br on br.book_id = b.book_id and br.is_active = true where b.is_active = true order by book_id;', 
             (error, results) => 
         {
             if (error) {
@@ -266,7 +266,7 @@ const getListsBookDropdown = (body) => {
 const getLists = (body) => {
     return new Promise(function(resolve, reject) {
         const { userId } = body;
-        pool.query('select row_number() over (order by list_id), * from (select l.list_id, l.list_name, json_agg(json_build_object(\'book_id\', b.book_id, \'book_title\', b.book_title, \'author_name\', b.author_name)) as book_list, l.deletable from list l cross join unnest(l.list) as listId inner join book b on b.book_id = listId where l.user_id = $1 and l.is_active = true group by l.list_id union all select l2.list_id, l2.list_name, json_agg(json_build_object(\'book_id\', -1, \'book_title\', \'\', \'author_name\', \'\', \'rating\', \'\')) as book_list, l2.deletable from list l2 where l2.user_id = $1 and l2.is_active = true and l2.list = \'{}\' group by l2.list_id) lists;', 
+        pool.query('select row_number() over (order by list_id), * from (select l.list_id, l.list_name, json_agg(json_build_object(\'book_id\', b.book_id, \'book_title\', b.book_title, \'author_name\', b.author_name, \'rating\', coalesce(br.rating, 0))) as book_list, l.deletable from list l cross join unnest(l.list) as listId inner join book b on b.book_id = listId left join book_review br on br.book_id = b.book_id and br.user_id = $1 and br.is_active = true where l.user_id = $1 and l.is_active = true group by l.list_id union all select l2.list_id, l2.list_name, json_agg(json_build_object(\'book_id\', -1, \'book_title\', \'\', \'author_name\', \'\', \'rating\', \'\')) as book_list, l2.deletable from list l2 where l2.user_id = $1 and l2.is_active = true and l2.list = \'{}\' group by l2.list_id) lists;', 
             [userId], 
             (error, results) => 
         {

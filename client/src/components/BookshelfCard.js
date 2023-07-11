@@ -27,6 +27,7 @@ const BookshelfCard = ({bookId, title, author, rating, isCommunity, addedDate, r
                                     name="simple-controlled"
                                     value={rating}
                                     defaultValue={0}
+                                    precision={0.01}
                                     readOnly
                                 />
                             </div>

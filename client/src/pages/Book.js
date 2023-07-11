@@ -459,7 +459,7 @@ const Book = () => {
                                                 name="read-only"
                                                 value={bookRatingData.overall_rating}
                                                 defaultValue={2.5}
-                                                precision={0.1}
+                                                precision={0.01}
                                                 size='large'
                                                 readOnly
                                             />
